@@ -10,16 +10,12 @@ Implementa una gestión de usuarios con acceso seguro, de forma que cada usuario
 
 ## Diseño y tecnologías
 
-La arquitectura de la aplicación consta de 3 partes: front-end, back-end y base de datos.
+La arquitectura de la aplicación consta fundamentalmente de 2 partes: front-end y back-end.
 
-La parte de front-end se implementa básicamente con HTML, CSS y JavaScript. Se utiliza el framework CSS Bootstrap junto con sus componentes para facilitar el desarrollo de la interfaz gráfica, empleando el preprocesador CSS Sass para personalizar un poco Bootstrap modificando la paleta de colores y otros aspectos.
+La parte de front-end se implementa básicamente con la librería React, haciendo uso de su sintaxis JSX y sus nuevos componentes basados en programación funcional. Se empleará una librería de componentes open source como Material UI o Mantine (o incluso el framework React Bootstrap) para aprovechar la reutilización de componentes siempre que sea posible al tiempo que se desarrolla una interfaz de usuario responsiva.
 
-Para guardar la información de las películas y los usuarios se emplea la base de datos MySQL. El autocompletado de nuevos registros se realiza a través de llamadas a la API de The Movie Database, guardando la información obtenida en la base de datos únicamente si no ha sido guardada previamente. En el caso de las imágenes de portada de las películas, se almacenan directamente en una carpeta del servidor, guardando en la base de datos únicamente su ruta con el fin de potenciar el rendimiento. Para administrar la base de datos se utiliza la herramienta PHPMyAdmin.
+Por otro lado, se hará uso de la plataforma de desarrollo Firebase para implementar la funcionalidad del back-end. Se aprovecharán las características de dicha plataforma para implementar la gestión de usuarios y su autenticación segura, así como para almacenar el listado de películas vistas por cada uno de ellos. Finalmente, se hará uso Firebase para desplegar la aplicación.
 
-En lo que respecta a la parte de back-end, se utiliza el servidor web Apache junto con PHP y el framework Symfony, aprovechando funcionalidades de este como el ORM Doctrine o el motor de plantillas de Twig. Para la instalación y gestión de paquetes en el proyecto se emplea el gestor Composer.
+A la hora de inicializar el proyecto, además de su posterior construcción y empaquetado, y para disponer de un servidor de desarrollo para la programación del front-end se hará uso de la herramienta Vite, junto con el gestor de paquetes NPM.
 
-Puesto que ha optado por el uso de Symfony en el servidor, el back-end lleva a cabo la mayor parte del procesamiento de la aplicación con el fin de aprovechar sus funcionalidades. No obstante, se emplea JavsScript junto con sus funcionalidades de asincronismo en el lado del cliente para realizar cambios en la interfaz de forma dinámica.
-
-Con el fin de facilitar tanto el desarrollo como el despliegue, se emplea Docker para containerizar la aplicación. Al emplear base de datos se hace necesario el uso de Docker Compose, generando un contenededor para MySQL, otro para el gestor PHPMyAdmin y otro para el servidor web Apache junto con PHP, Symfony y todos los demás ficheros del proyecto.
-
-Para su utilización, la aplicación web se despliega a través de Render.
+La obtención de la información de cada película, así como la provisión de la funcionalidad de autocompletado al añadir nuevos registros, se harán a través de llamadas a la API de The Movie Database.
