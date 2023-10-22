@@ -19,4 +19,3 @@ module.exports = {
     'react/prop-types': false,
   },
 }
-
