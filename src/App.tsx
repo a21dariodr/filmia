@@ -14,11 +14,11 @@ const App = () => {
     measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENTID,
   }
 
-  console.log('App iniciada')
-
   const firebaseApp = initializeApp(firebaseConfig)
   const tmdApiKey = import.meta.env.VITE_TMD_ACCESS_TOKEN
-  
+
+  if (firebaseApp && tmdApiKey) console.log('App iniciada')
+    
   return (
     <>
       <h1>Filmia</h1>

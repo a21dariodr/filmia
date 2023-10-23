@@ -15,6 +15,9 @@ build:
   stage: build
   script:
     - npm run build
+  artifacts:
+    paths:
+      - "dist"
 
 deploy:
   stage: deploy
