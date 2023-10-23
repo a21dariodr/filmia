@@ -4,29 +4,12 @@ stages:
 
 image: node:latest
 
-cache:
-  paths:
-    - node_modules/
-
-before_script:
-  - npm install
-
 build:
   stage: build
   script:
-    - npm run build -- --base=/$CI_PROJECT_NAME/
-  artifacts:
-    paths:
-      - "dist"
-  only:
-    - /^.*\/develop$/
+    - npm run build
 
 deploy:
   stage: deploy
   script:
     - npm run deploy
-  artifacts:
-    paths:
-      - public
-  only:
-    - /^.*\/develop$/
