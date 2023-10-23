@@ -21,7 +21,7 @@ build:
   only:
     - /^.*\/develop$/
 
-pages:
+deploy:
   stage: deploy
   script:
     - npm run deploy
