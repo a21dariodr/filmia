@@ -1,5 +1,7 @@
 # Proyecto fin de ciclo
 
+URL del la aplicación web: [https://filmia-ee910.web.app/](https://filmia-ee910.web.app/)
+
 > *TODO*: Este documento será la "*página de aterrizaje*" de tu proyecto. Será lo primero que vean los que se interesen por él. Cúida su redacción con todo tu mimo. Elimina posteriormente todas las lineas "*TODO*" cuando creas finalizada su redacción.
 > Puedes acompañar a la redacción de este fichero con imágenes o gifs, pero no abuses de ellos.
 
@@ -26,7 +28,6 @@
 > *TODO*: Es requisito INDISPENSABLE el licenciar explícitamente el proyecto software. Se recomienda licenciar con *GNU Free Documentation License Version 1.3*. Crear un fichero `LICENSE` en la raiz del repo, con tu fichero de licencia. Recuerda que si empleas una licencia de software libre estás autorizando la derivación de tu obra bajo la misma licencia que elijas, pudiendo dar continuidad, p. e. otro alumno, para continuar tu proyecto en otro curso.
 > Si tu proyecto es documental, recomendamos los términos de *GNU Free Documentation License Version 1.3*, crea igualmente el fichero `LICENSE`. Será especialmente valorado en este caso, la claridad de la especificación para que el proyecto pueda ser ejecutado partiendo de lo proyectado.
 
-
 ## Índice
 
 > *TODO*: Simplemente indexa ordenadamente todo tu proyecto.
@@ -38,7 +39,6 @@
 3. [Planificación](doc/templates/4_planificacion.md)
 4. [Diseño](doc/templates/5_deseño.md)
 5. [Implantación](doc/templates/6_implantacion.md)
-
 
 ## Guía de contribución
 

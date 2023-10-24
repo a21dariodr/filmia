@@ -10,35 +10,37 @@ import {
 
 const googleProvider = new GoogleAuthProvider()
 
-// Servicio para manejar autenticación a través de Firebase
+// Servicio para manejar autenticación a través de Firebase Authenticator
 export default class FirebaseAuthService {
 
+    private readonly auth = firebase.auth
+
     public createUserWithEmail(email: string, password: string) {
-        createUserWithEmailAndPassword(firebase.auth, email, password)
+        createUserWithEmailAndPassword(this.auth, email, password)
             .then( userCredential => userCredential.user )
             .catch( error => error )
     }
 
     public signInGoogle() {
-        signInWithPopup(firebase.auth, googleProvider)
-            .then( userCredential => userCredential.user )
-            .catch( error => error )
+        signInWithPopup(this.auth, googleProvider)
+            .then(userCredential => userCredential.user)
+            .catch(error => error)
     }
 
     public signInWithEmail(email: string, password: string) {
-        signInWithEmailAndPassword(firebase.auth, email, password)
+        signInWithEmailAndPassword(this.auth, email, password)
             .then( userCredential => userCredential.user )
             .catch( error => error )
     }
 
     public logOut() {
-        signOut(firebase.auth)
+        signOut(this.auth)
             .then ( result => result)
             .catch ( error => error )
     }
 
     public dropUser() {
-        deleteUser(firebase.auth.currentUser!)
+        deleteUser(this.auth.currentUser!)
             .then ( response => response)
             .catch ( error => error )
     }
