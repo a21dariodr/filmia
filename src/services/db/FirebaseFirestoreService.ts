@@ -21,12 +21,12 @@ export default class FirebaseFirestoreService {
         userId: string,
         filmId: string,
         puntuacion: number | null = null,
-        vista: boolean = false,
+        vista: boolean = false
     ) {
         const filmDoc = doc(this.firestore, 'usuarios', userId, 'peliculas', filmId)
         await setDoc(filmDoc, {
             puntuacion: puntuacion,
-            vista: vista,
+            vista: vista
         })
     }
 
@@ -34,12 +34,12 @@ export default class FirebaseFirestoreService {
         userId: string,
         filmId: string,
         puntuacion?: number,
-        vista?: boolean,
+        vista?: boolean
     ) { const filmDoc = doc(this.firestore, 'usuarios', userId, 'peliculas', filmId)
         if (puntuacion && vista) {
             await setDoc(filmDoc, {
                 puntuacion: puntuacion,
-                vista: vista,
+                vista: vista
             })
         } else if (puntuacion) {
             await setDoc(filmDoc, { puntuacion: puntuacion }, { merge: true })
