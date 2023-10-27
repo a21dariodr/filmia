@@ -41,7 +41,7 @@ const App = () => {
 					&nbsp;&nbsp;&nbsp;
 				</span>
 			))}
-			<h2>{t("deploy_test")}</h2>
+			<h2>{t("deploy_test")} {t("common.with_pipeline")}</h2>
         </>
     )
 }

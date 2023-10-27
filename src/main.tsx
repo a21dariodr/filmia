@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import '../i18n'
@@ -8,11 +8,13 @@ import { ThemeProvider } from '@material-tailwind/react'
 
 const router = createBrowserRouter([
     {
-        path: '/',
+        path: "/",
         element: (
-            <ThemeProvider>
-                <App />
-            </ThemeProvider>
+            <Suspense fallback='Cargando...'>
+                <ThemeProvider>
+                    <App />
+                </ThemeProvider>
+            </Suspense>
         )
     }
 ])

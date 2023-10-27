@@ -1,0 +1,6 @@
+{
+    "deploy_test": "Proba de despregamento automático",
+    "common": {
+        "with_pipeline": "con pipeline"
+    }
+}
