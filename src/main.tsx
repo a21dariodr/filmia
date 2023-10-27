@@ -1,25 +1,25 @@
-import React, { Suspense } from 'react'
-import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import '../i18n'
-import App from './App.tsx'
-import './index.css'
-import { ThemeProvider } from '@material-tailwind/react'
+import React, { Suspense } from "react"
+import ReactDOM from "react-dom/client"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import "../i18n"
+import Home from "./layouts/Home.tsx"
+import "./styles/index.css"
+import { ThemeProvider } from "@material-tailwind/react"
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: (
-            <Suspense fallback='Cargando...'>
+            <Suspense fallback="Cargando...">
                 <ThemeProvider>
-                    <App />
+                    <Home />
                 </ThemeProvider>
             </Suspense>
         )
     }
 ])
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <RouterProvider router={router} />
     </React.StrictMode>

@@ -1,8 +1,8 @@
-import firebase from "./util/firebase/firebase"
-import FirebaseAuthService from "./services/auth/FirebaseAuthService"
+import firebase from "../util/firebase/firebase"
+import FirebaseAuthService from "../services/auth/FirebaseAuthService"
 import { onAuthStateChanged } from "firebase/auth"
 import { useTranslation } from "react-i18next"
-import "./App.css"
+import "../styles/Home.css"
 import { Button } from "@material-tailwind/react"
 
 type Langtype = {
@@ -15,7 +15,7 @@ const langs: Langtype = {
     gl: { nativeName: "Galego" }
 }
 
-const App = () => {
+const Home = () => {
     const { t, i18n } = useTranslation()
     const tmdApiKey = import.meta.env.VITE_TMD_ACCESS_TOKEN
     const firebaseAuth = new FirebaseAuthService()
@@ -33,17 +33,19 @@ const App = () => {
     return (
         <>
             <h1>Filmia</h1>
-			{Object.keys(langs).map(lang => (
-				<span key={lang}>
-					<Button onClick={() => i18n.changeLanguage(lang)} style={{ fontWeight: i18n.resolvedLanguage === lang ? "bold" : "normal" }}>
-						{langs[lang].nativeName}
-					</Button>
-					&nbsp;&nbsp;&nbsp;
-				</span>
-			))}
-			<h2>{t("deploy_test")} {t("common.with_pipeline")}</h2>
+            {Object.keys(langs).map(lang => (
+                <span key={lang}>
+                    <Button onClick={() => i18n.changeLanguage(lang)} style={{ fontWeight: i18n.resolvedLanguage === lang ? "bold" : "normal" }}>
+                        {langs[lang].nativeName}
+                    </Button>
+                    &nbsp;&nbsp;&nbsp;
+                </span>
+            ))}
+            <h2>
+                {t("deploy_test")} {t("common.with_pipeline")}
+            </h2>
         </>
     )
 }
 
-export default App
+export default Home
