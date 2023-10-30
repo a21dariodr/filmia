@@ -2,5 +2,9 @@
     "deploy_test": "Proba de despregamento automático",
     "common": {
         "with_pipeline": "con pipeline"
-    }
+    },
+	"error": {
+		"generic_message": "Vaites! Aconteceu un erro ao obter o recurso solicitado!",
+		"recover": "Voltar á páxina principal"
+	}
 }

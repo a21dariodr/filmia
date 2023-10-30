@@ -1,6 +1,10 @@
 {
     "deploy_test": "Automatic deploy test",
-	"common": {
-		"with_pipeline": "with pipeline"
-	}
+    "common": {
+        "with_pipeline": "with pipeline"
+    },
+    "error": {
+        "generic_message": "Oh no! The resource you're looking for could not be found!",
+        "recover": "Go back home"
+    }
 }

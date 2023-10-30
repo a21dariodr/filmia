@@ -2,5 +2,9 @@
     "deploy_test": "Prueba de despliegue automático",
     "common": {
         "with_pipeline": "con pipeline"
+    },
+    "error": {
+        "generic_message": "Vaya! Ha ocurrido un error al obtener el recurso solicitado!",
+        "recover": "Regresar a la página principal"
     }
 }

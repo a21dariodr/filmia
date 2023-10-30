@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import "../i18n"
 import Home from "./layouts/Home.tsx"
+import ErrorPage from "./layouts/ErrorPage.tsx"
 import "./styles/index.css"
 import { ThemeProvider } from "@material-tailwind/react"
 
@@ -15,7 +16,16 @@ const router = createBrowserRouter([
                     <Home />
                 </ThemeProvider>
             </Suspense>
-        )
+        ),
+		errorElement: <ErrorPage />,
+		children: [
+			{
+				errorElement: <ErrorPage />,
+				children: [
+					
+				]
+			}
+		]
     }
 ])
 
