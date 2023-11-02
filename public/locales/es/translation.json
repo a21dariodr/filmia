@@ -6,5 +6,19 @@
     "error": {
         "generic_message": "Vaya! Ha ocurrido un error al obtener el recurso solicitado!",
         "recover": "Regresar a la página principal"
+    },
+    "login": {
+        "title": "Inicio de sesión",
+        "google": "Iniciar sesión con Google",
+        "or": "o",
+        "email": "Email",
+        "email_placeholder": "email@ejemplo.com",
+        "password": "Contraseña",
+        "password_placeholder": "Introduce tu contraseña",
+        "keep_login": "Manetener la sesión iniciada",
+        "forget_password": "¿No recuerdas tu contraseña?",
+        "not_registered": "¿Aún no tienes una cuenta?",
+        "sign_in": "Iniciar Sesión",
+        "sign_up": "Crear una nueva cuenta"
     }
 }

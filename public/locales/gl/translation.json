@@ -3,8 +3,22 @@
     "common": {
         "with_pipeline": "con pipeline"
     },
-	"error": {
-		"generic_message": "Vaites! Aconteceu un erro ao obter o recurso solicitado!",
-		"recover": "Voltar á páxina principal"
-	}
+    "error": {
+        "generic_message": "Vaites! Aconteceu un erro ao obter o recurso solicitado!",
+        "recover": "Voltar á páxina principal"
+    },
+    "login": {
+        "title": "Inicio de sesión",
+        "google": "Iniciar sesión con Google",
+        "or": "ou",
+        "email": "Email",
+        "email_placeholder": "email@exemplo.com",
+        "password": "Contrasinal",
+        "password_placeholder": "Introduce o teu contrasinal",
+        "keep_login": "Manter a sesión iniciada",
+        "forget_password": "Esqueceches o teu contrasinal?",
+        "not_registered": "Aínda non tes unha conta?",
+        "sign_in": "Iniciar Sesión",
+        "sign_up": "Crear unha nova conta"
+    }
 }

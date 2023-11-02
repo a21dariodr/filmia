@@ -6,5 +6,19 @@
     "error": {
         "generic_message": "Oh no! The resource you're looking for could not be found!",
         "recover": "Go back home"
-    }
+    },
+	"login": {
+		"title": "Login",
+		"google": "Sign in with Google",
+		"or": "or",
+		"email": "Email",
+		"email_placeholder": "email@example.com",
+		"password": "Password",
+		"password_placeholder": "Enter your password",
+		"keep_login": "Keep session started",
+		"forget_password": "Forget password?",
+		"not_registered": "Not registered yet?",
+		"sign_in": "Sign In",
+		"sign_up": "Create an Account"
+	}
 }
