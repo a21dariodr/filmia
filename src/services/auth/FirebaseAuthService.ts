@@ -2,7 +2,8 @@ import firebase from '../../util/firebase/firebase'
 import { useNavigate } from 'react-router-dom'
 import {
     createUserWithEmailAndPassword,
-    signInWithPopup,
+	signInWithRedirect,
+	getRedirectResult,
     signInWithEmailAndPassword,
     GoogleAuthProvider,
     signOut,
@@ -28,14 +29,20 @@ export default class FirebaseAuthService {
     }
 
     public signInGoogle() {
-        signInWithPopup(this.auth, googleProvider)
+		signInWithRedirect(this.auth, googleProvider)
+    }
+
+	public getSignInGoogleResult() {
+		getRedirectResult(this.auth)
             .then(userCredential => {
-                localStorage.setItem('userEmail', userCredential.user.email!)
-                console.log('User email: ', userCredential.user.email)
-                this.navigate("/")
+				if (userCredential) {
+					localStorage.setItem('userEmail', userCredential.user.email!)
+                    console.log('User email: ', userCredential.user.email)
+                    this.navigate('/')
+				}
             })
             .catch(error => error)
-    }
+	}
 
     public signInWithEmail(email: string, password: string) {
         signInWithEmailAndPassword(this.auth, email, password)

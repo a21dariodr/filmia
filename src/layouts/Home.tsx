@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import "../styles/Home.css"
@@ -20,18 +20,20 @@ const Home = () => {
 	const navigate = useNavigate()
 	const [ userEmail, setUserEmail ] = useState<string | null>()
 
-	if (localStorage.getItem('userEmail')) {
-		if (!userEmail) setUserEmail(localStorage.getItem("userEmail"))
-	} else {
-		navigate('/login')
-	}
+	useEffect(() => {
+		if (localStorage.getItem('userEmail')) {
+            if (!userEmail) setUserEmail(localStorage.getItem('userEmail'))
+        } else {
+            navigate('/login')
+        }
+	})
 
     return (
         <>
             <h1>Filmia</h1>
             {Object.keys(langs).map(lang => (
                 <span key={lang}>
-                    <Button onClick={() => i18n.changeLanguage(lang)} style={{ fontWeight: i18n.resolvedLanguage === lang ? "bold" : "normal" }}>
+                    <Button onClick={() => i18n.changeLanguage(lang)} style={{ fontWeight: i18n.resolvedLanguage === lang ? 'bold' : 'normal' }}>
                         {langs[lang].nativeName}
                     </Button>
                     &nbsp;&nbsp;&nbsp;
@@ -40,6 +42,7 @@ const Home = () => {
             <h2>
                 {t('deploy_test')} {t('common.with_pipeline')}
             </h2>
+            <span className="material-symbols-outlined text-red-800">error</span>
         </>
     )
 }
