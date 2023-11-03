@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import FirebaseAuthService from "../services/auth/FirebaseAuthService"
 import { useTranslation } from "react-i18next"
-import '../styles/Login.css'
 
 const Login = () => {
 	const { t } = useTranslation()
@@ -24,10 +23,10 @@ const Login = () => {
 						<div className="flex xl:p-10">
 							<form className="flex flex-col w-full h-full text-center bg-white">
 								<h3 className="mb-14 text-4xl font-extrabold text-gray-900">{t('login.title')}</h3>
-								<div onClick={signUpGoogle} onKeyDown={signUpGoogle} className="login-google flex items-center justify-center w-full py-4 mb-6 text font-medium rounded-2xl text-gray-800 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300">
-									<img className="h-5 mr-2" src="google-logo.png" alt="" />
+								<button type="button" onClick={signUpGoogle} className="flex items-center justify-center w-full py-4 mb-6 text font-medium rounded-2xl text-gray-800 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300">
+									<img className="h-5 mr-2" src="google-logo.png" alt="Google logo" />
 									{t('login.google')}
-								</div>
+								</button>
 								<div className="flex items-center mb-3">
 									<hr className="h-0 border-b border-solid border-gray-500 grow" />
 									<p className="mx-4 text-gray-600">{t('login.or')}</p>
