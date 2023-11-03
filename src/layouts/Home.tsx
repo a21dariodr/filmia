@@ -1,10 +1,9 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import firebase from "../util/firebase/firebase"
-import { onAuthStateChanged } from "firebase/auth"
 import { useTranslation } from "react-i18next"
 import "../styles/Home.css"
 import { Button } from "@material-tailwind/react"
+// import { onAuthStateChanged } from "firebase/auth"
 
 type Langtype = {
     [key: string]: { nativeName: string }
