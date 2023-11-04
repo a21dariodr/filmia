@@ -4,13 +4,15 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import "../i18n"
 import Home from "./layouts/Home.tsx"
 import Login from "./layouts/Login.tsx"
+import SignUp from "./layouts/SignUp.tsx"
+import ResetPassword from "./layouts/ResetPassword.tsx"
 import ErrorPage from "./layouts/ErrorPage.tsx"
 import "./styles/index.css"
 import { ThemeProvider } from "@material-tailwind/react"
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: '/',
         element: (
             <Suspense fallback="Cargando...">
                 <ThemeProvider>
@@ -27,8 +29,18 @@ const router = createBrowserRouter([
         ]
     },
     {
-        path: "/login",
-		element: <Login />,
+        path: '/login',
+        element: <Login />,
+        errorElement: <ErrorPage />
+    },
+    {
+        path: '/signup',
+        element: <SignUp />,
+        errorElement: <ErrorPage />
+    },
+    {
+        path: '/resetpassword',
+        element: <ResetPassword />,
         errorElement: <ErrorPage />
     }
 ])

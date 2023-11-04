@@ -1,7 +1,8 @@
 {
     "deploy_test": "Prueba de despliegue automático",
     "common": {
-        "with_pipeline": "con pipeline"
+        "with_pipeline": "con pipeline",
+        "come_back": "Volver"
     },
     "error": {
         "generic_message": "Vaya! Ha ocurrido un error al obtener el recurso solicitado!",
@@ -11,6 +12,7 @@
         "title": "Inicio de sesión",
         "google": "Iniciar sesión con Google",
         "or": "o",
+        "invalid": "Email o contraseña incorrectos",
         "email": "Email",
         "email_placeholder": "email@ejemplo.com",
         "password": "Contraseña",
@@ -20,5 +22,21 @@
         "not_registered": "¿Aún no tienes una cuenta?",
         "sign_in": "Iniciar Sesión",
         "sign_up": "Crear una nueva cuenta"
+    },
+    "reset_password": {
+        "title": "Recuperación de contraseña",
+        "email": "Email",
+        "email_placeholder": "email@ejemplo.com",
+        "send_email": "Enviar email de recuperación",
+        "wrong_email": "El email introducido no es válido"
+    },
+    "sign_up": {
+        "title": "Registro de usuario",
+        "email": "Email",
+        "email_placeholder": "email@ejemplo.com",
+        "password": "Contraseña",
+        "password_placeholder": "Introduce una contraseña",
+        "create_account": "Crer una nueva cuenta",
+        "invalid": "Email o contraseña no válidos"
     }
 }

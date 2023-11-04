@@ -2,13 +2,16 @@ import firebase from '../../util/firebase/firebase'
 import { useNavigate } from 'react-router-dom'
 import {
     createUserWithEmailAndPassword,
-	signInWithRedirect,
-	getRedirectResult,
+    signInWithRedirect,
+    getRedirectResult,
     signInWithEmailAndPassword,
     GoogleAuthProvider,
     signOut,
     deleteUser,
-	sendPasswordResetEmail
+    sendPasswordResetEmail,
+    setPersistence,
+    browserLocalPersistence,
+    inMemoryPersistence
 } from 'firebase/auth'
 
 const googleProvider = new GoogleAuthProvider()
@@ -18,61 +21,42 @@ export default class FirebaseAuthService {
     private readonly auth = firebase.auth
     private navigate = useNavigate()
 
-    public createUserWithEmail(email: string, password: string) {
-        createUserWithEmailAndPassword(this.auth, email, password)
-            .then(userCredential => {
-                localStorage.setItem("userEmail", userCredential.user.email!)
-                console.log('User email: ', userCredential.user.email)
-                this.navigate("/")
-            })
-            .catch(error => error)
+	// En todos los métodos, si el usuario no desea mantener la sesión iniciada, se modifica la persistencia de los métodos de Firebase
+    public async createUserWithEmail(email: string, password: string, keepLogin: boolean) {
+        if (keepLogin) await setPersistence(this.auth, browserLocalPersistence)
+		else await setPersistence(this.auth, inMemoryPersistence)
+        return createUserWithEmailAndPassword(this.auth, email, password)
     }
 
-    public signInGoogle() {
-		signInWithRedirect(this.auth, googleProvider)
+    public async signInGoogle(keepLogin: boolean) {
+        if (keepLogin) await setPersistence(this.auth, browserLocalPersistence)
+        else await setPersistence(this.auth, inMemoryPersistence)
+        return signInWithRedirect(this.auth, googleProvider)
     }
 
-	public getSignInGoogleResult() {
-		getRedirectResult(this.auth)
-            .then(userCredential => {
-				if (userCredential) {
-					localStorage.setItem('userEmail', userCredential.user.email!)
-                    console.log('User email: ', userCredential.user.email)
-                    this.navigate('/')
-				}
-            })
-            .catch(error => error)
-	}
+    public getSignInGoogleResult() {
+        return getRedirectResult(this.auth)
+    }
 
-    public signInWithEmail(email: string, password: string) {
-        signInWithEmailAndPassword(this.auth, email, password)
-            .then(userCredential => {
-                localStorage.setItem('userEmail', userCredential.user.email!)
-                console.log('User email: ', userCredential.user.email)
-                this.navigate("/")
-            })
-            .catch(error => error)
+    public async signInWithEmail(email: string, password: string, keepLogin: boolean) {
+        if (keepLogin) await setPersistence(this.auth, browserLocalPersistence)
+        else await setPersistence(this.auth, inMemoryPersistence)
+        return signInWithEmailAndPassword(this.auth, email, password)
     }
 
     public logOut() {
-		localStorage.removeItem('userEmail')
         signOut(this.auth)
-            .then(() => this.navigate("/"))
+            .then(() => this.navigate('/'))
             .catch(error => error)
     }
 
     public dropUser() {
         deleteUser(this.auth.currentUser!)
-            .then((response) => response)
+            .then(response => response)
             .catch(error => error)
     }
 
-	public resetPassword(email: string) {
-		sendPasswordResetEmail(this.auth, email)
-            .then(() => {
-                console.log("Enviado email de recuperación")
-                this.navigate("/")
-            })
-            .catch(error => error)
-	}
+    public resetPassword(email: string) {
+        return sendPasswordResetEmail(this.auth, email)
+    }
 }

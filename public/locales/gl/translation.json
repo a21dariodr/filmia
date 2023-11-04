@@ -1,7 +1,8 @@
 {
     "deploy_test": "Proba de despregamento automático",
     "common": {
-        "with_pipeline": "con pipeline"
+        "with_pipeline": "con pipeline",
+        "come_back": "Volver"
     },
     "error": {
         "generic_message": "Vaites! Aconteceu un erro ao obter o recurso solicitado!",
@@ -11,6 +12,7 @@
         "title": "Inicio de sesión",
         "google": "Iniciar sesión con Google",
         "or": "ou",
+        "invalid": "Email ou contrasinal incorrectos",
         "email": "Email",
         "email_placeholder": "email@exemplo.com",
         "password": "Contrasinal",
@@ -20,5 +22,21 @@
         "not_registered": "Aínda non tes unha conta?",
         "sign_in": "Iniciar Sesión",
         "sign_up": "Crear unha nova conta"
+    },
+    "reset_password": {
+        "title": "Recuperación de contrasinal",
+        "email": "Email",
+        "email_placeholder": "email@exemplo.com",
+        "send_email": "Enviar email de recuperación",
+        "wrong_email": "O email introducido non é válido"
+    },
+    "sign_up": {
+        "title": "Rexistro de usuario",
+        "email": "Email",
+        "email_placeholder": "email@exemplo.com",
+        "password": "Contrasinal",
+        "password_placeholder": "Introduce un contrasinal",
+        "create_account": "Crear unha nova conta",
+        "invalid": "Email ou contrasinal non válidos"
     }
 }

@@ -1,7 +1,8 @@
 {
     "deploy_test": "Automatic deploy test",
     "common": {
-        "with_pipeline": "with pipeline"
+        "with_pipeline": "with pipeline",
+		"come_back": "Back"
     },
     "error": {
         "generic_message": "Oh no! The resource you're looking for could not be found!",
@@ -11,6 +12,7 @@
 		"title": "Login",
 		"google": "Sign in with Google",
 		"or": "or",
+		"invalid": "Wrong email or password",
 		"email": "Email",
 		"email_placeholder": "email@example.com",
 		"password": "Password",
@@ -20,5 +22,21 @@
 		"not_registered": "Not registered yet?",
 		"sign_in": "Sign In",
 		"sign_up": "Create an Account"
-	}
+	},
+	"reset_password": {
+        "title": "Password recovery",
+        "email": "Email",
+        "email_placeholder": "email@example.com",
+        "send_email": "Send password recovery email",
+		"wrong_email": "The submitted email is not valid"
+    },
+	"sign_up": {
+        "title": "New user sign up",
+        "email": "Email",
+        "email_placeholder": "email@example.com",
+		"password": "Password",
+		"password_placeholder": "Enter your password",
+		"create_account": "Create a new account",
+		"invalid": "Invalid email or password"
+    }
 }

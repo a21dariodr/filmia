@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
+import firebase from "../util/firebase/firebase"
 import "../styles/Home.css"
 import { Button } from "@material-tailwind/react"
-// import { onAuthStateChanged } from "firebase/auth"
+import { onAuthStateChanged } from "firebase/auth"
 
 type Langtype = {
     [key: string]: { nativeName: string }
@@ -21,11 +22,13 @@ const Home = () => {
 	const [ userEmail, setUserEmail ] = useState<string | null>()
 
 	useEffect(() => {
-		if (localStorage.getItem('userEmail')) {
-            if (!userEmail) setUserEmail(localStorage.getItem('userEmail'))
-        } else {
-            navigate('/login')
-        }
+		onAuthStateChanged(firebase.auth, (user) => {
+			if (user) {
+                if (!userEmail) setUserEmail(user.email)	
+            } else {
+                navigate('/login')
+            }
+		})
 	})
 
     return (
