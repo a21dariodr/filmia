@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+		"pkief.material-icon-theme",
+		"jsayol.firebase-explorer",
+		"bradlc.vscode-tailwindcss", 
+		"christian-kohler.path-intellisense", 
+		"esbenp.prettier-vscode",
+		"pmneo.tsimporter", 
+		"sonarsource.sonarlint-vscode",
+		"gruntfuggly.todo-tree", 
+		"yzhang.markdown-all-in-one", 
+		"mikestead.dotenv",
+		"chrmarti.regex"]
+}

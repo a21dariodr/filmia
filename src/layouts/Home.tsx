@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import firebase from "../util/firebase/firebase"
+import { onAuthStateChanged } from 'firebase/auth'
+import { useSelector, useDispatch } from "react-redux"
+import { getEmail, setEmail, setId, getId } from "../state-slices/userSlice"
 import "../styles/Home.css"
 import { Button } from "@material-tailwind/react"
-import { onAuthStateChanged } from "firebase/auth"
+
 
 type Langtype = {
     [key: string]: { nativeName: string }
@@ -19,12 +22,20 @@ const langs: Langtype = {
 const Home = () => {
     const { t, i18n } = useTranslation()
 	const navigate = useNavigate()
-	const [ userEmail, setUserEmail ] = useState<string | null>()
+	const dispatch = useDispatch()
+	const userEmail = useSelector(getEmail)
+	const userId = useSelector(getId)
 
 	useEffect(() => {
 		onAuthStateChanged(firebase.auth, (user) => {
 			if (user) {
-                if (!userEmail) setUserEmail(user.email)	
+                if (!userEmail) {
+					dispatch(setEmail(user.email!))
+					dispatch(setId(user.uid))
+				}
+				console.log('User Firebase', user)
+				console.log('User email: ', userEmail)
+				console.log('User id: ', userId)			
             } else {
                 navigate('/login')
             }

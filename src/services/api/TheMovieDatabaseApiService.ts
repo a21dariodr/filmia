@@ -7,7 +7,7 @@ export default class TheMovieDatabaseApiService {
 
     options = {
         method: 'GET',
-        url: 'https://api.themoviedb.org/3/movie/575264',
+        url: 'https://api.themoviedb.org/3/',
         headers: {
             accept: 'application/json',
             Authorization: 'Bearer '+this.tmdApiKey
