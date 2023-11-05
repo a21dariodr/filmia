@@ -1,5 +1,12 @@
 const withMT = require("@material-tailwind/react/utils/withMT")
-const colors = require("tailwindcss/colors")
+let colors = require("tailwindcss/colors")
+
+delete colors['lightBlue']
+delete colors['warmGray']
+delete colors['trueGray']
+delete colors['coolGray']
+delete colors['blueGray']
+colors = { ...colors, ...{ transparent: 'transparent' } }
  
 module.exports = withMT({
   content: ['index.html', './src/**/*.{js,ts,jsx,tsx}'],
