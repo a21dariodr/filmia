@@ -6,6 +6,8 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { useSelector, useDispatch } from "react-redux"
 import { getEmail, setEmail, setId, getId } from "../state-slices/userSlice"
 import "../styles/Home.css"
+import Header from "../components/Header"
+import Footer from "../components/Footer"
 import { Button } from "@material-tailwind/react"
 
 
@@ -43,7 +45,8 @@ const Home = () => {
 	})
 
     return (
-        <>
+        <div className="w-full">
+			<Header />
             <h1>Filmia</h1>
             {Object.keys(langs).map(lang => (
                 <span key={lang}>
@@ -57,7 +60,8 @@ const Home = () => {
                 {t('deploy_test')} {t('common.with_pipeline')}
             </h2>
             <span className="material-symbols-outlined text-red-800">error</span>
-        </>
+			<Footer />
+        </div>
     )
 }
 
