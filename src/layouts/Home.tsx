@@ -45,7 +45,7 @@ const Home = () => {
 	})
 
     return (
-        <div className="w-full">
+        <>
 			<Header />
             <h1>Filmia</h1>
             {Object.keys(langs).map(lang => (
@@ -61,7 +61,7 @@ const Home = () => {
             </h2>
             <span className="material-symbols-outlined text-red-800">error</span>
 			<Footer />
-        </div>
+        </>
     )
 }
 

@@ -8,6 +8,12 @@
         "generic_message": "Vaya! Ha ocurrido un error al obtener el recurso solicitado!",
         "recover": "Regresar a la página principal"
     },
+    "languages": {
+        "select": "Idioma",
+        "galician": "Galego",
+        "spanish": "Español",
+        "english": "English"
+    },
     "login": {
         "title": "Inicio de sesión",
         "google": "Iniciar sesión con Google",
@@ -21,7 +27,9 @@
         "forget_password": "¿No recuerdas tu contraseña?",
         "not_registered": "¿Aún no tienes una cuenta?",
         "sign_in": "Iniciar Sesión",
-        "sign_up": "Crear una nueva cuenta"
+        "sign_up": "Crear una nueva cuenta",
+        "log_out_1_upper": "CERRAR",
+        "log_out_2_upper": "SESIÓN"
     },
     "reset_password": {
         "title": "Recuperación de contraseña",

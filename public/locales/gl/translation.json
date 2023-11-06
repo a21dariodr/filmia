@@ -8,6 +8,12 @@
         "generic_message": "Vaites! Aconteceu un erro ao obter o recurso solicitado!",
         "recover": "Voltar á páxina principal"
     },
+    "languages": {
+        "select": "Idioma",
+        "galician": "Galego",
+        "spanish": "Español",
+        "english": "English"
+    },
     "login": {
         "title": "Inicio de sesión",
         "google": "Iniciar sesión con Google",
@@ -21,7 +27,9 @@
         "forget_password": "Esqueceches o teu contrasinal?",
         "not_registered": "Aínda non tes unha conta?",
         "sign_in": "Iniciar Sesión",
-        "sign_up": "Crear unha nova conta"
+        "sign_up": "Crear unha nova conta",
+        "log_out_1_upper": "CERRAR",
+        "log_out_2_upper": "SESIÓN"
     },
     "reset_password": {
         "title": "Recuperación de contrasinal",
