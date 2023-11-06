@@ -1,0 +1,6 @@
+@media screen and (max-width: 768px) {
+    #languageSelect button,
+    #languageSelect div.relative {
+        min-width: 120px;
+    }
+}
