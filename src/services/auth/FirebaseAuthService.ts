@@ -1,4 +1,4 @@
-import firebase from '../../util/firebase/firebase'
+import firebase from '../firebase/firebase'
 import { useNavigate } from 'react-router-dom'
 import {
     createUserWithEmailAndPassword,
@@ -21,10 +21,10 @@ export default class FirebaseAuthService {
     private readonly auth = firebase.auth
     private navigate = useNavigate()
 
-	// En todos los métodos, si el usuario no desea mantener la sesión iniciada, se modifica la persistencia de los métodos de Firebase
+    // En todos los métodos, si el usuario no desea mantener la sesión iniciada, se modifica la persistencia de los métodos de Firebase
     public async createUserWithEmail(email: string, password: string, keepLogin: boolean) {
         if (keepLogin) await setPersistence(this.auth, browserLocalPersistence)
-		else await setPersistence(this.auth, inMemoryPersistence)
+        else await setPersistence(this.auth, inMemoryPersistence)
         return createUserWithEmailAndPassword(this.auth, email, password)
     }
 

@@ -7,7 +7,19 @@ const Login = () => {
 	const { t } = useTranslation()
 	const firebaseAuth = new FirebaseAuthService()
 	const navigate = useNavigate()
-	const [ keepLogin, setKeepLogin ] = useState<boolean>(true) 
+	const [ keepLogin, setKeepLogin ] = useState<boolean>(true)
+
+	useEffect(() => {
+        firebaseAuth
+            .getSignInGoogleResult()
+            .then(userCredential => {
+                if (userCredential) {
+                    console.log('User email: ', userCredential.user.email)
+                    navigate('/')
+                }
+            })
+            .catch(() => (document.querySelector('#warning') as HTMLInputElement).classList.remove('hidden'))
+    })
 
 	const toggleKeepLogin = () => setKeepLogin(!keepLogin)
 
@@ -24,18 +36,6 @@ const Login = () => {
             })
             .catch(() => (document.querySelector('#warning') as HTMLInputElement).classList.remove('hidden'))
 	}
-
-	useEffect(() => {
-		firebaseAuth
-            .getSignInGoogleResult()
-            .then(userCredential => {
-                if (userCredential) {
-                    console.log('User email: ', userCredential.user.email)
-                    navigate('/')
-                }
-            })
-            .catch(() => (document.querySelector('#warning') as HTMLInputElement).classList.remove('hidden'))
-	})
 
     return (
         <div className="bg-white rounded-lg h-full">

@@ -1,11 +1,5 @@
-import firebase from '../../util/firebase/firebase'
-import {
-	collection,
-	doc,
-	getDocs,
-	setDoc,
-	deleteDoc
-} from 'firebase/firestore/lite'
+import firebase from '../firebase/firebase'
+import { collection, doc, getDocs, setDoc, deleteDoc } from 'firebase/firestore/lite'
 
 // Servicio para obtener y guardar datos en la DB Firestore de Firebase
 export default class FirebaseFirestoreService {
@@ -17,12 +11,7 @@ export default class FirebaseFirestoreService {
         return await getDocs(filmsRef)
     }
 
-    public async addUserFilm(
-        userId: string,
-        filmId: string,
-        puntuacion: number | null = null,
-        vista: boolean = false
-    ) {
+    public async addUserFilm(userId: string, filmId: string, puntuacion: number | null = null, vista: boolean = false) {
         const filmDoc = doc(this.firestore, 'usuarios', userId, 'peliculas', filmId)
         await setDoc(filmDoc, {
             puntuacion: puntuacion,
@@ -30,12 +19,8 @@ export default class FirebaseFirestoreService {
         })
     }
 
-    public async updateUserFilm(
-        userId: string,
-        filmId: string,
-        puntuacion?: number,
-        vista?: boolean
-    ) { const filmDoc = doc(this.firestore, 'usuarios', userId, 'peliculas', filmId)
+    public async updateUserFilm(userId: string, filmId: string, puntuacion?: number, vista?: boolean) {
+        const filmDoc = doc(this.firestore, 'usuarios', userId, 'peliculas', filmId)
         if (puntuacion && vista) {
             await setDoc(filmDoc, {
                 puntuacion: puntuacion,
@@ -49,7 +34,7 @@ export default class FirebaseFirestoreService {
     }
 
     public async deleteUserFilm(userId: string, filmId: string) {
-		const filmDoc = doc(this.firestore, 'usuarios', userId, 'peliculas', filmId)
-		await deleteDoc(filmDoc)
-	}
+        const filmDoc = doc(this.firestore, 'usuarios', userId, 'peliculas', filmId)
+        await deleteDoc(filmDoc)
+    }
 }
