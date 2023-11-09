@@ -11,7 +11,7 @@ const ResetPassword = () => {
 		const email = (document.querySelector('#email') as HTMLInputElement).value
 		firebaseAuth.resetPassword(email)
 		.then(() => {
-            console.log('Changed password ', email)
+            console.debug('Changed password ', email)
             navigate('/')
 		})
 		.catch(() => {

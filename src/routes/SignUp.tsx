@@ -17,7 +17,7 @@ const SignUp = () => {
         firebaseAuth
             .createUserWithEmail(email, password, keepLogin)
             .then(userCredential => {
-                console.log('User email: ', userCredential.user.email)
+                console.debug('User email: ', userCredential.user.email)
                 navigate('/')
             })
             .catch(() => (document.querySelector('#warning') as HTMLInputElement).classList.remove('hidden'))

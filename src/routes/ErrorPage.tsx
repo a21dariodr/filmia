@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next"
 const ErrorPage = () => {
 	const { t } = useTranslation()
 	const error: any = useRouteError()
-	console.log(error)
+	console.debug(error)
 	
     return (
         <main className="grid min-h-full place-items-center bg-white px-6 lg:px-8">

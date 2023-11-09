@@ -34,9 +34,9 @@ const Home = () => {
                     dispatch(setEmail(user.email!))
                     dispatch(setId(user.uid))
                 }
-                console.log('User Firebase', user)
-                console.log('User email: ', userEmail)
-                console.log('User id: ', userId)
+                console.debug('User Firebase', user)
+                console.debug('User email: ', userEmail)
+                console.debug('User id: ', userId)
             } else {
                 navigate('/login')
             }
