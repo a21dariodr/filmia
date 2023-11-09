@@ -1,8 +1,7 @@
 {
     "deploy_test": "Automatic deploy test",
     "common": {
-        "with_pipeline": "with pipeline",
-		"come_back": "Back"
+        "add_film": "Add film"
     },
     "error": {
         "generic_message": "Oh no! The resource you're looking for could not be found!",

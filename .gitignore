@@ -30,3 +30,6 @@ dist-ssr
 # Firebase cache
 .firebase/*
 .firebase
+
+# Rollup-plugin-visualizer generated files
+stats.html

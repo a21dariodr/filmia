@@ -9,6 +9,8 @@ import Login from "./routes/Login.tsx"
 import SignUp from "./routes/SignUp.tsx"
 import ResetPassword from "./routes/ResetPassword.tsx"
 import ErrorPage from "./routes/ErrorPage.tsx"
+import Gallery from "./layouts/Gallery.tsx"
+import NewFilmForm from "./layouts/NewFilmForm.tsx"
 import "./styles/index.css"
 import { ThemeProvider } from "@material-tailwind/react"
 
@@ -26,7 +28,12 @@ const router = createBrowserRouter([
         children: [
             {
                 errorElement: <ErrorPage />,
-                children: []
+                children: [
+					{
+						index: true,
+						element: <Gallery />
+					}
+				]
             }
         ]
     },
@@ -44,7 +51,12 @@ const router = createBrowserRouter([
         path: '/resetpassword',
         element: <ResetPassword />,
         errorElement: <ErrorPage />
-    }
+    },
+	{
+		path: '/newFilm',
+		element: <NewFilmForm />,
+		errorElement: <ErrorPage />
+	}
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

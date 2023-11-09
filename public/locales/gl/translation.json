@@ -1,8 +1,7 @@
 {
     "deploy_test": "Proba de despregamento automático",
     "common": {
-        "with_pipeline": "con pipeline",
-        "come_back": "Volver"
+        "add_film": "Engadir filme"
     },
     "error": {
         "generic_message": "Vaites! Aconteceu un erro ao obter o recurso solicitado!",
