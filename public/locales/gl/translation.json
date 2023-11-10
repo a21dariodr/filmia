@@ -1,7 +1,8 @@
 {
     "deploy_test": "Proba de despregamento automático",
     "common": {
-        "add_film": "Engadir filme"
+        "add_film": "Engadir filme",
+        "come_back": "Volver"
     },
     "error": {
         "generic_message": "Vaites! Aconteceu un erro ao obter o recurso solicitado!",

@@ -1,7 +1,8 @@
 {
     "deploy_test": "Prueba de despliegue automático",
     "common": {
-        "add_film": "Añadir película"
+        "add_film": "Añadir película",
+        "come_back": "Volver"
     },
     "error": {
         "generic_message": "Vaya! Ha ocurrido un error al obtener el recurso solicitado!",

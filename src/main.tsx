@@ -29,11 +29,16 @@ const router = createBrowserRouter([
             {
                 errorElement: <ErrorPage />,
                 children: [
-					{
-						index: true,
-						element: <Gallery />
-					}
-				]
+                    {
+                        index: true,
+                        element: <Gallery />
+                    },
+                    {
+                        path: '/newFilm',
+                        element: <NewFilmForm />,
+                        errorElement: <ErrorPage />
+                    }
+                ]
             }
         ]
     },
@@ -51,12 +56,7 @@ const router = createBrowserRouter([
         path: '/resetpassword',
         element: <ResetPassword />,
         errorElement: <ErrorPage />
-    },
-	{
-		path: '/newFilm',
-		element: <NewFilmForm />,
-		errorElement: <ErrorPage />
-	}
+    }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

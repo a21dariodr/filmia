@@ -6,15 +6,13 @@ const Gallery = () => {
     const { t } = useTranslation()
 	const navigate = useNavigate()
 
-	const newFilmHandler = () => {
-		navigate('/newFilm')
-	}
+	const newFilmHandler = () => navigate('/newFilm')
 
     return (
         <>
             <h1>Filmia</h1>
             <h2>
-                {t('deploy_test')} {t('common.with_pipeline')}
+                {t('deploy_test')}
             </h2>
             <span className="material-symbols-outlined text-red-800">error</span>
             <Button onClick={newFilmHandler} size="sm" className="text-xs bg-violet-700 hover:bg-violet-600">

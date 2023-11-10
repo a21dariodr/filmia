@@ -1,7 +1,8 @@
 {
     "deploy_test": "Automatic deploy test",
     "common": {
-        "add_film": "Add film"
+        "add_film": "Add film",
+        "come_back": "Back"
     },
     "error": {
         "generic_message": "Oh no! The resource you're looking for could not be found!",
