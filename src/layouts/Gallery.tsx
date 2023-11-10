@@ -10,12 +10,11 @@ const Gallery = () => {
 
     return (
         <>
-            <h1>Filmia</h1>
             <h2>
                 {t('deploy_test')}
             </h2>
-            <span className="material-symbols-outlined text-red-800">error</span>
-            <Button onClick={newFilmHandler} size="sm" className="text-xs bg-violet-700 hover:bg-violet-600">
+
+            <Button onClick={newFilmHandler} size="md" className="text-xs bg-violet-700 hover:bg-violet-600">
                 {t('common.add_film')}
             </Button>
         </>

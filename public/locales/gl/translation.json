@@ -28,7 +28,7 @@
         "not_registered": "Aínda non tes unha conta?",
         "sign_in": "Iniciar Sesión",
         "sign_up": "Crear unha nova conta",
-        "log_out_1_upper": "CERRAR",
+        "log_out_1_upper": "PECHAR",
         "log_out_2_upper": "SESIÓN"
     },
     "reset_password": {
@@ -46,5 +46,11 @@
         "password_placeholder": "Introduce un contrasinal",
         "create_account": "Crear unha nova conta",
         "invalid": "Email ou contrasinal non válidos"
+    },
+    "new_film": {
+        "title": "Nova película",
+        "save_film": "Gardar",
+        "film_title": "Título",
+        "film_original_title": "Título orixinal"
     }
 }

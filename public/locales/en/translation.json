@@ -46,5 +46,11 @@
 		"password_placeholder": "Enter your password",
 		"create_account": "Create a new account",
 		"invalid": "Invalid email or password"
+    },
+	"new_film": {
+        "title": "New film",
+		"save_film": "Save",
+        "film_title": "Title",
+        "film_original_title": "Original title"
     }
 }
