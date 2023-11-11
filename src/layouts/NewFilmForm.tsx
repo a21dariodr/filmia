@@ -84,7 +84,7 @@ const NewFilmForm = () => {
                             </Button>
                         </div>
 
-                        <div id="searchResults" className="hidden flex-wrap absolute z-10 top-[30vh] left-[4vw] bg-white">
+                        <div id="searchResults" className="hidden flex-wrap absolute z-10 top-[32vh] left-[4vw] bg-white">
                             { filmsFound.map( (film: Film) => {
 								return (
                                     <div key={film.id} className="flex flex-wrap w-full">
