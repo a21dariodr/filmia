@@ -1,10 +1,25 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
+import TheMovieDatabaseApiService from '../services/api/TheMovieDatabaseApiService'
 import { Button } from '@material-tailwind/react'
 
 const NewFilmForm = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
+	const tmd = new TheMovieDatabaseApiService()
+	const [ titleSearch, setTitleSearch] = useState('')
+
+	// TODO terminar implementación
+	const searchByTitleHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        setTitleSearch(event.target.value)
+		try {
+			const filmsFound = await tmd.searchMovieByTitle(titleSearch)
+			console.log('Films found: ', filmsFound)
+		} catch (error) {
+			console.debug(error)
+		}
+    }
 
     const closeHandler = () => navigate(-1)
 
@@ -27,6 +42,8 @@ const NewFilmForm = () => {
                                     id="title"
                                     type="text"
                                     placeholder={t('new_film.film_title')}
+									value={titleSearch}
+									onChange={ searchByTitleHandler }
                                     className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-gray-200 mb-5 placeholder:text-gray-700 bg-gray-100 text-dark-gray-900 rounded-2xl"
                                 />
                             </div>

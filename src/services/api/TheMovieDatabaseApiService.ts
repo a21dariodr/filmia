@@ -42,14 +42,15 @@ export default class TheMovieDatabaseApiService {
         options.params.include_adult = 'true'
 
         const response: any = await axios.request(options)
-        const searchResult = response.results
+        const searchResult = response.data.results		
         const filmsFound: Film[] = this.movieSearchByTitleMapper(searchResult)
+		console.log('Films found: ', filmsFound);
 
         return filmsFound
     }
 
     private movieGetByIdMapper(filmInfo: any): Film {
-        const posterUrl = this.baseUrl + this.imageSizes[4] + filmInfo.poster_path
+        const posterUrl = this.imageBaseUrl + this.imageSizes[4] + filmInfo.poster_path
 
         const film: Film = new Film(filmInfo.id, filmInfo.title, filmInfo.original_title, filmInfo.release_date, posterUrl, filmInfo.vote_average)
 
@@ -69,12 +70,13 @@ export default class TheMovieDatabaseApiService {
     private movieSearchByTitleMapper(searchResult: any): Film[] {
         const filmsFound: Film[] = []
 
-        searchResult.forEach((filmResult: any) => {
-            const posterUrl = this.baseUrl + this.imageSizes[2] + filmResult.poster_path
-            const film = new Film(searchResult.id, searchResult.title, searchResult.original_title, searchResult.release_date, posterUrl, searchResult.vote_average)
-            filmsFound.push(film)
-        })
-
+		if (searchResult) {			
+			searchResult.forEach((filmResult: any) => {
+                const posterUrl = this.imageBaseUrl + this.imageSizes[2] + filmResult.poster_path				
+                const film = new Film(filmResult.id, filmResult.title, filmResult.original_title, filmResult.release_date, posterUrl, filmResult.vote_average)				
+                filmsFound.push(film)				
+            })
+		}
         return filmsFound
     }
 
