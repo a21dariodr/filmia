@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import TheMovieDatabaseApiService from '../services/api/TheMovieDatabaseApiService'
+import { Film } from '../models/Film'
 import { Button } from '@material-tailwind/react'
 
 const NewFilmForm = () => {
@@ -9,13 +10,26 @@ const NewFilmForm = () => {
     const navigate = useNavigate()
 	const tmd = new TheMovieDatabaseApiService()
 	const [ titleSearch, setTitleSearch] = useState('')
+	const [ filmsFound, setFilmsFound ] = useState<Film[]>([])
 
-	// TODO terminar implementación
+	// TODO terminar implementación (mostrar error)
 	const searchByTitleHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitleSearch(event.target.value)
+
+		const searchResults = document.querySelector('#searchResults')
+		if (event.target.value) {
+			searchResults?.classList.remove('hidden')
+			searchResults?.classList.add('flex')
+		}
+		else {
+			searchResults?.classList.remove('flex')
+			searchResults?.classList.add('hidden')
+		}
+
 		try {
-			const filmsFound = await tmd.searchMovieByTitle(titleSearch)
-			console.log('Films found: ', filmsFound)
+			const films = await tmd.searchMovieByTitle(titleSearch)
+			setFilmsFound([...films])
+			console.log('Films found search: ', filmsFound)
 		} catch (error) {
 			console.debug(error)
 		}
@@ -42,8 +56,8 @@ const NewFilmForm = () => {
                                     id="title"
                                     type="text"
                                     placeholder={t('new_film.film_title')}
-									value={titleSearch}
-									onChange={ searchByTitleHandler }
+                                    value={titleSearch}
+                                    onChange={searchByTitleHandler}
                                     className="flex items-center w-full px-5 py-4 mr-2 text-sm font-medium outline-none focus:bg-gray-200 mb-5 placeholder:text-gray-700 bg-gray-100 text-dark-gray-900 rounded-2xl"
                                 />
                             </div>
@@ -68,6 +82,17 @@ const NewFilmForm = () => {
                             <Button onClick={saveFilm} size="lg" className="text-xs bg-violet-700 hover:bg-violet-600 ml-1">
                                 {t('new_film.save_film')}
                             </Button>
+                        </div>
+
+                        <div id="searchResults" className="hidden flex-wrap absolute z-10 top-[30vh] left-[4vw] bg-white">
+                            { filmsFound.map( (film: Film) => {
+								return (
+                                    <div key={film.id} className="flex flex-wrap w-full">
+                                        <img src={film.posterPath} className="w-20 h-20 object-cover" />
+                                        <div>{film.title}</div>
+                                    </div>
+                                )
+							}) }
                         </div>
                     </form>
                 </div>

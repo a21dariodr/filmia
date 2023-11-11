@@ -14,7 +14,7 @@ export default class TheMovieDatabaseApiService {
         url: '',
         params: {
             query: '',
-            include_adult: '',
+            include_adult: 'false',
             language: 'es-ES',
             page: ''
         },
@@ -39,7 +39,6 @@ export default class TheMovieDatabaseApiService {
         options.url = this.baseUrl + 'search/movie'
         options.params.query = titleQuery
         options.params.page = '1'
-        options.params.include_adult = 'true'
 
         const response: any = await axios.request(options)
         const searchResult = response.data.results		
