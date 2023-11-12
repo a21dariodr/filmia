@@ -52,6 +52,7 @@
         "save_film": "Guardar",
         "film_title": "Título",
         "film_original_title": "Título original",
-        "select_film": "Selecciona una película"
+        "select_film": "Selecciona una película",
+        "image_error": "Imagen no disponible"
     }
 }

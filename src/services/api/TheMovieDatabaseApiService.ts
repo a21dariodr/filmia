@@ -43,7 +43,6 @@ export default class TheMovieDatabaseApiService {
         const response: any = await axios.request(options)
         const searchResult = response.data.results		
         const filmsFound: Film[] = this.movieSearchByTitleMapper(searchResult)
-		console.log('Films found: ', filmsFound);
 
         return filmsFound
     }
@@ -71,7 +70,10 @@ export default class TheMovieDatabaseApiService {
 
 		if (searchResult) {			
 			searchResult.forEach((filmResult: any) => {
-                const posterUrl = this.imageBaseUrl + this.imageSizes[2] + filmResult.poster_path				
+				let posterUrl: string
+				if (filmResult.poster_path) posterUrl = this.imageBaseUrl + this.imageSizes[2] + filmResult.poster_path
+				else posterUrl = ''
+				
                 const film = new Film(filmResult.id, filmResult.title, filmResult.original_title, filmResult.release_date, posterUrl, filmResult.vote_average)				
                 filmsFound.push(film)				
             })

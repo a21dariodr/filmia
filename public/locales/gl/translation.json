@@ -52,6 +52,7 @@
         "save_film": "Gardar",
         "film_title": "Título",
         "film_original_title": "Título orixinal",
-        "select_film": "Selecciona unha película"
+        "select_film": "Selecciona unha película",
+        "image_error": "Imaxe non dispoñible"
     }
 }

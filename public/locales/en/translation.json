@@ -52,6 +52,7 @@
 		"save_film": "Save",
         "film_title": "Title",
         "film_original_title": "Original title",
-		"select_film": "Select a film"
+		"select_film": "Select a film",
+		"image_error": "Image not available"
     }
 }
