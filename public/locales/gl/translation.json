@@ -2,6 +2,7 @@
     "deploy_test": "Proba de despregamento automático",
     "common": {
         "add_film": "Engadir filme",
+        "cancel": "Cancelar",
         "come_back": "Volver"
     },
     "error": {
@@ -50,9 +51,27 @@
     "new_film": {
         "title": "Nova película",
         "save_film": "Gardar",
+        "select_film": "Selecciona unha película"        
+    },
+	"film": {
         "film_title": "Título",
         "film_original_title": "Título orixinal",
-        "select_film": "Selecciona unha película",
+        "film_duration": "Duración",
+        "film_genres": "Xéneros",
+        "film_id": "Id",
+        "film_original_language": "Linguaxe orixinal",
+        "film_overview": "Sinopse",
+        "film_popularity": "Popularidade",
+        "film_poster": "Cartel",
+        "film_production_companies": "Compañías produtoras",
+        "film_production_countries": "Países",
+        "film_release_year": "Ano",
+        "film_revenue": "Beneficios",
+        "film_tagline": "Slogan",
+        "film_vote_average": "Puntuación media",
+        "film_watched": "Vista",
+        "film_score": "Puntuación persoal",
+        "film_score_placeholder": "Puntuación persoal p.e. 6.75",
         "image_error": "Imaxe non dispoñible"
     }
 }

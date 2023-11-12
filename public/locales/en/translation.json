@@ -2,6 +2,7 @@
     "deploy_test": "Automatic deploy test",
     "common": {
         "add_film": "Add film",
+		"cancel": "Cancel",
         "come_back": "Back"
     },
     "error": {
@@ -49,10 +50,28 @@
     },
 	"new_film": {
         "title": "New film",
-		"save_film": "Save",
+        "save_film": "Save",
+        "select_film": "Select a film"
+    },
+	"film": {
         "film_title": "Title",
         "film_original_title": "Original title",
-		"select_film": "Select a film",
-		"image_error": "Image not available"
+        "film_duration": "Duration",
+        "film_genres": "Genres",
+        "film_id": "Id",
+        "film_original_language": "Original language",
+        "film_overview": "Overview",
+        "film_popularity": "Popularity",
+        "film_poster": "Poster",
+        "film_production_companies": "Production companies",
+        "film_production_countries": "Production countries",
+        "film_release_year": "Release year",
+        "film_revenue": "Revenue",
+        "film_tagline": "Tagline",
+        "film_vote_average": "Vote average",
+        "film_pending": "Pending",
+        "film_watched": "Watched",
+        "film_score_placeholder": "Score e.g. 6.75",
+        "image_error": "Image not available"
     }
 }
