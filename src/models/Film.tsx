@@ -76,10 +76,10 @@ export class Film {
         this._duration = value
     }
 
-    public get releaseDate(): string {
+    public get releaseYear(): string {
         return this._releaseYear
     }
-    public set releaseDate(value: string) {
+    public set releaseYear(value: string) {
         this._releaseYear = value
     }
 

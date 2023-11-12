@@ -26,7 +26,7 @@ const ResetPassword = () => {
                 <div className="flex w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5 draggable">
                     <div className="flex items-center justify-center w-full lg:p-12">
                         <div className="flex px-4 xl:p-10">
-                            <form className="flex flex-col w-full h-full text-center bg-white">
+                            <form autoComplete="on" className="flex flex-col w-full h-full text-center bg-white">
                                 <h1 className="pb-14 mb-14 text-6xl text-bold">FILMIA</h1>
                                 <h3 className="mb-14 text-4xl font-extrabold text-gray-900">{t('reset_password.title')}</h3>
                                 <label htmlFor="email" className="mb-2 mt-4 text-sm text-start text-gray-900">

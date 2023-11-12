@@ -41,7 +41,7 @@ const NewFilmForm = () => {
     const saveFilm = () => 'ey'
 
     return (
-        <div className="bg-white rounded-lg">
+        <div className="bg-white rounded-lg box-border">
             <div className="container flex flex-col mx-auto bg-white rounded-lg place-items-center">
                 <div className="flex items-center justify-center w-full">
                     <form className="flex flex-col w-full text-center bg-white">
@@ -68,6 +68,7 @@ const NewFilmForm = () => {
                                 <input
                                     id="originalTitle"
                                     type="text"
+									readOnly
                                     placeholder={t('new_film.film_original_title')}
                                     className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none focus:bg-gray-200 placeholder:text-gray-700 bg-gray-100 text-dark-gray-900 rounded-2xl"
                                 />
@@ -84,15 +85,17 @@ const NewFilmForm = () => {
                             </Button>
                         </div>
 
-                        <div id="searchResults" className="hidden flex-wrap absolute z-10 top-[32vh] left-[4vw] bg-white">
-                            { filmsFound.map( (film: Film) => {
-								return (
-                                    <div key={film.id} className="flex flex-wrap w-full">
+                        <div id="searchResults" className="hidden flex-wrap w-full max-w-fit h-max absolute z-10 top-[15rem] md:top-[17rem] left-0 bg-white border m-2">
+                            <p className="w-full text-center text-xl text-deep-purple-700 font-bold italic mb-5 mt-2">{t('new_film.select_film')}</p>
+                            {filmsFound.map((film: Film) => {
+                                return (
+                                    <div key={film.id} className="flex w-full md:w-1/2 gap-2 mb-2 px-2">
                                         <img src={film.posterPath} className="w-20 h-20 object-cover" />
-                                        <div>{film.title}</div>
+                                        <div className='w-[70%] text-start'>{film.title}</div>
+                                        <div>{film.releaseYear}</div>
                                     </div>
                                 )
-							}) }
+                            })}
                         </div>
                     </form>
                 </div>

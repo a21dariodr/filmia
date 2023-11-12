@@ -43,10 +43,13 @@ const Login = () => {
                 <div className="flex w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5 draggable">
                     <div className="flex items-center justify-center w-full lg:p-12">
                         <div className="flex px-4 xl:p-10">
-                            <form className="flex flex-col w-full h-full text-center bg-white">
+                            <form autoComplete="on" className="flex flex-col w-full h-full text-center bg-white">
                                 <h1 className="hidden md:block pb-14 text-6xl text-bold">FILMIA</h1>
                                 <h3 className="mb-14 text-4xl font-extrabold text-gray-900">{t('login.title')}</h3>
-                                <button type="button" onClick={signUpGoogleHandler} className="flex items-center justify-center w-full py-4 mb-6 text font-medium rounded-2xl text-gray-800 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300">
+                                <button
+                                    type="button"
+                                    onClick={signUpGoogleHandler}
+                                    className="flex items-center justify-center w-full py-4 mb-6 text font-medium rounded-2xl text-gray-800 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300">
                                     <img className="h-5 mr-2" src="google-logo.png" alt="Google logo" />
                                     {t('login.google')}
                                 </button>
@@ -55,7 +58,9 @@ const Login = () => {
                                     <p className="mx-4 text-gray-600">{t('login.or')}</p>
                                     <hr className="h-0 border-b border-solid border-gray-500 grow" />
                                 </div>
-								<p id="warning" className='hidden pb-3 font-semibold text-red-800'>{t('login.invalid')}</p>
+                                <p id="warning" className="hidden pb-3 font-semibold text-red-800">
+                                    {t('login.invalid')}
+                                </p>
                                 <label htmlFor="email" className="mb-2 text-sm text-start text-gray-900">
                                     {t('login.email')}*
                                 </label>
@@ -86,7 +91,10 @@ const Login = () => {
                                         {t('login.forget_password')}
                                     </NavLink>
                                 </div>
-                                <button type="button" onClick={emailLoginHandler} className="w-full px-6 py-5 my-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-violet-600 focus:ring-4 focus:ring-purple-blue-100 bg-violet-700">
+                                <button
+                                    type="button"
+                                    onClick={emailLoginHandler}
+                                    className="w-full px-6 py-5 my-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-violet-600 focus:ring-4 focus:ring-purple-blue-100 bg-violet-700">
                                     {t('login.sign_in')}
                                 </button>
                                 <p className="text-sm leading-relaxed text-gray-900">

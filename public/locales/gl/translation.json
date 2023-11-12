@@ -51,6 +51,7 @@
         "title": "Nova película",
         "save_film": "Gardar",
         "film_title": "Título",
-        "film_original_title": "Título orixinal"
+        "film_original_title": "Título orixinal",
+        "select_film": "Selecciona unha película"
     }
 }
