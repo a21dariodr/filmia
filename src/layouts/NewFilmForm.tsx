@@ -28,7 +28,7 @@ const NewFilmForm = () => {
 		console.debug('Selected film: ', film)
 		document.querySelector('#filmPoster')!.classList.remove('hidden')
 		const saveButton = (document.querySelector('#saveFilm') as HTMLInputElement)
-		saveButton.disabled = false
+		saveButton.removeAttribute('disabled')
 		setSearching(false)
 		setTitleSearch(film.title)
 		setSelectedFilm(film)
@@ -37,9 +37,6 @@ const NewFilmForm = () => {
 	const saveFilm = () => {
 		const score = Number((document.querySelector('#score') as HTMLInputElement)!.value)
 		const filmId = selectedFilm!.id.toString()
-
-		// TODO eliminar cuando Firestore funcione!
-		firestore.getUserFilms().then( (films) => console.log(films))
 
 		if (score) { 
 			firestore.addUserFilm(filmId, score, watched)
@@ -65,8 +62,8 @@ const NewFilmForm = () => {
 		const searchResultsDiv = document.querySelector('#searchResults')
 		const saveButton = document.querySelector('#saveFilm') as HTMLInputElement
 
-		if (!titleSearch && !saveButton.disabled) saveButton.disabled = true
-		else if (titleSearch && saveButton.disabled) saveButton.disabled = false
+		if (!titleSearch && !saveButton.disabled) saveButton.setAttribute('disabled', '')
+		else if (titleSearch && saveButton.disabled) saveButton.removeAttribute('disabled')
 
 		if (searching && titleSearch) {
 			tmd.searchMovieByTitle(titleSearch)
@@ -181,7 +178,7 @@ const NewFilmForm = () => {
                                     type="text"
                                     readOnly
                                     placeholder={t('film.film_vote_average')}
-                                    value={selectedFilm ? Math.round(selectedFilm.voteAverage * 100) / 100 : ''}
+                                    value={selectedFilm ? (Math.round(selectedFilm.voteAverage * 100) / 100).toString().replace('.', ',') : ''}
                                     className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none placeholder:text-gray-700 bg-gray-100 text-dark-gray-900 rounded-2xl"
                                 />
                             </div>
@@ -219,7 +216,7 @@ const NewFilmForm = () => {
                                 {t('common.cancel')}
                             </Button>
 
-                            <Button disabled id='saveFilm' onClick={saveFilm} size="lg" className="text-xs bg-violet-700 hover:bg-violet-600 ml-1">
+                            <Button id='saveFilm' onClick={saveFilm} size="lg" className="text-xs bg-violet-700 hover:bg-violet-600 ml-1">
                                 {t('new_film.save_film')}
                             </Button>
                         </div>
