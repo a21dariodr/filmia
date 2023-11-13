@@ -35,8 +35,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: '/newFilm',
-                        element: <NewFilmForm />,
-                        errorElement: <ErrorPage />
+                        element: <NewFilmForm />
                     }
                 ]
             }

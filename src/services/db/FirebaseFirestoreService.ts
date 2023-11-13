@@ -10,7 +10,7 @@ export default class FirebaseFirestoreService {
 
     // Se accede a cada elemento devuelto con .foreach(doc => doc.id / doc.data)
     public async getUserFilms() {
-        const filmsRef = collection(this.firestore, "usuarios", this.userId, "peliculas")
+        const filmsRef = collection(this.firestore, 'usuarios', this.userId, 'peliculas')
         return await getDocs(filmsRef)
     }
 

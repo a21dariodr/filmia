@@ -1,12 +1,23 @@
-import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import FirebaseFirestoreService from '../services/db/FirebaseFirestoreService'
 import { Button } from '@material-tailwind/react'
 
 const Gallery = () => {
     const { t } = useTranslation()
 	const navigate = useNavigate()
+	const firestore = new FirebaseFirestoreService()
 
 	const newFilmHandler = () => navigate('/newFilm')
+
+	useEffect( () => {
+		const films = firestore.getUserFilms()
+
+		console.log(films)
+		
+	})
 
     return (
         <>
