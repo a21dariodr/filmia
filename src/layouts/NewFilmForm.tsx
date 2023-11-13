@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import TheMovieDatabaseApiService from '../services/api/TheMovieDatabaseApiService'
+import FirebaseFirestoreService from '../services/db/FirebaseFirestoreService'
 import { Film } from '../models/Film'
 import { Button } from '@material-tailwind/react'
 
@@ -9,6 +10,7 @@ const NewFilmForm = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
 	const tmd = new TheMovieDatabaseApiService()
+	const firestore = new FirebaseFirestoreService()
 	const [ searching, setSearching ] = useState<boolean>(false)
 	const [ titleSearch, setTitleSearch] = useState('')
 	const [ filmsFound, setFilmsFound ] = useState<Film[]>([])
@@ -33,7 +35,26 @@ const NewFilmForm = () => {
 	}
 
 	const saveFilm = () => {
-		console.debug('ey')
+		const score = Number((document.querySelector('#score') as HTMLInputElement)!.value)
+		const filmId = selectedFilm!.id.toString()
+
+		// TODO eliminar cuando Firestore funcione!
+		firestore.getUserFilms().then( (films) => console.log(films))
+
+		if (score) { 
+			firestore.addUserFilm(filmId, score, watched)
+			.then ( () => {
+				console.debug('New film saved!')
+				navigate('/')
+			})
+		}
+		else {
+			firestore.addUserFilm(filmId, null, watched)
+			.then(() => {
+                console.debug('New film saved!')
+                navigate('/')
+            })
+		} 
 	}
 
 	const closeHandler = () => navigate(-1)
