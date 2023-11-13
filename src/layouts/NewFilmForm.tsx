@@ -25,12 +25,16 @@ const NewFilmForm = () => {
     const selectFilmHandler = (film: Film) => {
 		console.debug('Selected film: ', film)
 		document.querySelector('#filmPoster')!.classList.remove('hidden')
+		const saveButton = (document.querySelector('#saveFilm') as HTMLInputElement)
+		saveButton.disabled = false
 		setSearching(false)
 		setTitleSearch(film.title)
 		setSelectedFilm(film)
 	}
 
-	const saveFilm = () => {console.debug('ey')}
+	const saveFilm = () => {
+		console.debug('ey')
+	}
 
 	const closeHandler = () => navigate(-1)
 
@@ -38,6 +42,10 @@ const NewFilmForm = () => {
 
 	useEffect( () => {
 		const searchResultsDiv = document.querySelector('#searchResults')
+		const saveButton = document.querySelector('#saveFilm') as HTMLInputElement
+
+		if (!titleSearch && !saveButton.disabled) saveButton.disabled = true
+		else if (titleSearch && saveButton.disabled) saveButton.disabled = false
 
 		if (searching && titleSearch) {
 			tmd.searchMovieByTitle(titleSearch)
@@ -74,6 +82,7 @@ const NewFilmForm = () => {
                                 <input
                                     id="title"
                                     type="text"
+									required
                                     placeholder={t('film.film_title')}
                                     value={titleSearch}
                                     onChange={searchByTitleHandler}
@@ -137,7 +146,8 @@ const NewFilmForm = () => {
                                     max="10"
                                     step="0.01"
                                     placeholder={t('film.film_score_placeholder')}
-                                    className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none hover:bg-indigo-200 placeholder:text-gray-700 bg-indigo-100 text-dark-gray-900 rounded-2xl"
+                                    className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none hover:bg-indigo-200 placeholder:text-gray-700 bg-indigo-100 text-dark-gray-900
+										invalid:text-red-800 invalid:bg-red-200 invalid:hover:bg-red-200 invalid:font-bold rounded-2xl"
                                 />
                             </div>
                             <div className="flex flex-wrap w-full md:w-1/2">
@@ -183,12 +193,12 @@ const NewFilmForm = () => {
                             </div>
                         </div>
 
-                        <div className="text-sm leading-relaxed my-3 text-gray-900">
+                        <div className="text-sm leading-relaxed my-3 mr-0 md:mr-6 text-gray-900">
                             <Button onClick={closeHandler} size="lg" className="text-xs text-dark-gray-900 font-bold bg-gray-300 hover:bg-gray-200 mr-2">
                                 {t('common.cancel')}
                             </Button>
 
-                            <Button onClick={saveFilm} size="lg" className="text-xs bg-violet-700 hover:bg-violet-600 ml-1">
+                            <Button disabled id='saveFilm' onClick={saveFilm} size="lg" className="text-xs bg-violet-700 hover:bg-violet-600 ml-1">
                                 {t('new_film.save_film')}
                             </Button>
                         </div>
@@ -197,7 +207,8 @@ const NewFilmForm = () => {
                             <p className="w-full text-center text-xl text-deep-purple-700 font-bold italic mb-5 mt-2">{t('new_film.select_film')}</p>
                             {filmsFound.map((film: Film) => {
                                 return (
-                                    <div onClick={() => selectFilmHandler(film)} onKeyDown={() => selectFilmHandler(film)} key={film.id} id={film.id.toString()} className="flex place-items-center w-full md:w-1/2 gap-2 mb-2 px-2 hover:bg-violet-200">
+                                    <div onClick={() => selectFilmHandler(film)} onKeyDown={() => selectFilmHandler(film)} key={film.id} id={film.id.toString()} className="flex place-items-center w-full
+										md:w-1/2 gap-2 mb-2 px-2 hover:bg-violet-200">
                                         {film.posterPath ? (
                                             <img src={film.posterPath} className="w-20 h-20 object-cover" />
                                         ) : (

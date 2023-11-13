@@ -71,7 +71,7 @@
         "film_vote_average": "Puntuación media",
         "film_watched": "Vista",
         "film_score": "Puntuación personal",
-        "film_score_placeholder": "Puntuación personal p.e. 6.75",
+        "film_score_placeholder": "Puntuación personal p.e. 6,75",
         "image_error": "Imagen no disponible"
     }
 }

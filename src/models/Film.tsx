@@ -28,6 +28,8 @@ export class Film {
     private _revenue?: number
     private _popularity?: number
     private _tagLine?: string
+    private _score?: number
+    private _watched?: boolean
 
     /* Constructor con parámetros obligatorios usados en la búsqueda de películas
      * Los demás parámetros de emplean a través de los getters y setters
@@ -144,5 +146,19 @@ export class Film {
     }
     public set tagLine(value: string | undefined) {
         this._tagLine = value
+    }
+
+    public get score(): number | undefined {
+        return this._score
+    }
+    public set score(value: number | undefined) {
+        this._score = value
+    }
+
+    public get watched(): boolean | undefined {
+        return this._watched
+    }
+    public set watched(value: boolean | undefined) {
+        this._watched = value
     }
 }
