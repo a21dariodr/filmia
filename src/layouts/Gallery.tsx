@@ -1,22 +1,42 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import FirebaseFirestoreService from '../services/db/FirebaseFirestoreService'
+import TheMovieDatabaseApiService from '../services/api/TheMovieDatabaseApiService'
+import { Film } from '../models/Film'
 import { Button } from '@material-tailwind/react'
 
 const Gallery = () => {
     const { t } = useTranslation()
 	const navigate = useNavigate()
 	const firestore = new FirebaseFirestoreService()
+	const tmd = new TheMovieDatabaseApiService()
 
 	const newFilmHandler = () => navigate('/newFilm')
 
 	useEffect( () => {
-		const films = firestore.getUserFilms()
+		const films: Film[] = [];
 
-		console.log(films)
-		
+		firestore.getUserFilms()
+			.then( (filmsDocs) => {
+                filmsDocs.forEach(doc => {
+                    const id = doc.id
+                    const data = doc.data()
+                    const score = data.puntuacion
+                    const watched = data.vista
+
+                    tmd.getMovieById(id).then( film => {
+                        film.score = score
+                        film.watched = watched
+
+                        films.push(film)
+                    })
+                })
+
+                // TODO añadir array de películas a Redux tras finalizar el mapeo! (CREAR ANTES EL STATESLICE PARA LAS PELIS!!)
+                console.log('Films: ', films)
+            })
 	})
 
     return (

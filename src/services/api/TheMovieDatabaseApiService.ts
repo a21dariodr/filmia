@@ -9,14 +9,27 @@ export default class TheMovieDatabaseApiService {
     readonly appendToResponse = '&append_to_response='
     readonly imageSizes = ['w92', 'w154', 'w185', 'w342', 'w500', 'w780', 'original']
 
-    private options = {
+    private optionsGetFilm = {
         method: 'GET',
         url: '',
+        params: {
+            include_adult: 'false',
+            language: 'es-ES',
+        },
+        headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer ' + this.tmdApiAccessToken
+        }
+    }
+
+    private optionsSearchFilm = {
+        method: 'GET',
+        url: this.baseUrl + 'search/movie',
         params: {
             query: '',
             include_adult: 'false',
             language: 'es-ES',
-            page: ''
+            page: '1'
         },
         headers: {
             accept: 'application/json',
@@ -25,23 +38,21 @@ export default class TheMovieDatabaseApiService {
     }
 
     public async getMovieById(id: string) {
-        let options = { ...this.options }
+        let options = { ...this.optionsGetFilm }
         options.url = this.baseUrl + 'movie/' + id
 
         const filmInfo: any = await axios.request(options)
-        const film: Film = this.movieGetByIdMapper(filmInfo)
+        const film: Film = this.movieGetByIdMapper(filmInfo.data)
 
         return film
     }
 
     public async searchMovieByTitle(titleQuery: string) {
-        let options = { ...this.options }
-        options.url = this.baseUrl + 'search/movie'
+        let options = { ...this.optionsSearchFilm }
         options.params.query = titleQuery
-        options.params.page = '1'
 
         const response: any = await axios.request(options)
-        const searchResult = response.data.results		
+        const searchResult = response.data.results
         const filmsFound: Film[] = this.movieSearchByTitleMapper(searchResult)
 
         return filmsFound
@@ -57,8 +68,8 @@ export default class TheMovieDatabaseApiService {
         film.genres = this.filmGenresMapper(filmInfo.genres)
         film.overview = filmInfo.overview
         film.productionCountries = this.filmProductionCountriesMapper(filmInfo.production_countries)
-		film.productionCompanies = this.filmProductionCompaniesMapper(filmInfo.production_companies)
-		film.revenue = filmInfo.revenue
+        film.productionCompanies = this.filmProductionCompaniesMapper(filmInfo.production_companies)
+        film.revenue = filmInfo.revenue
         film.popularity = filmInfo.popularity
         film.tagLine = filmInfo.tagline
 
@@ -68,16 +79,16 @@ export default class TheMovieDatabaseApiService {
     private movieSearchByTitleMapper(searchResult: any): Film[] {
         const filmsFound: Film[] = []
 
-		if (searchResult) {			
-			searchResult.forEach((filmResult: any) => {
-				let posterUrl: string
-				if (filmResult.poster_path) posterUrl = this.imageBaseUrl + this.imageSizes[2] + filmResult.poster_path
-				else posterUrl = ''
-				
-                const film = new Film(filmResult.id, filmResult.title, filmResult.original_title, filmResult.release_date, posterUrl, filmResult.vote_average)				
-                filmsFound.push(film)				
+        if (searchResult) {
+            searchResult.forEach((filmResult: any) => {
+                let posterUrl: string
+                if (filmResult.poster_path) posterUrl = this.imageBaseUrl + this.imageSizes[2] + filmResult.poster_path
+                else posterUrl = ''
+
+                const film = new Film(filmResult.id, filmResult.title, filmResult.original_title, filmResult.release_date, posterUrl, filmResult.vote_average)
+                filmsFound.push(film)
             })
-		}
+        }
         return filmsFound
     }
 
@@ -87,19 +98,17 @@ export default class TheMovieDatabaseApiService {
     }
 
     private filmProductionCountriesMapper(productionCountriesResult: any): ProductionCountry[] {
-		const productionCountries: ProductionCountry[] = productionCountriesResult.map( (productionCountry: any): ProductionCountry => {
-			return { name: productionCountry.name, iso3166: productionCountry.iso_3166_1 }
-		} )
-		return productionCountries
-	}
+        const productionCountries: ProductionCountry[] = productionCountriesResult.map((productionCountry: any): ProductionCountry => {
+            return { name: productionCountry.name, iso3166: productionCountry.iso_3166_1 }
+        })
+        return productionCountries
+    }
 
     private filmProductionCompaniesMapper(productionCompaniesResult: any): ProductionCompany[] {
-		const productionCompanies: ProductionCompany[] = productionCompaniesResult.map( (productionCompany: any): ProductionCompany => {
-			return { name: productionCompany.name,
-				originCountry: productionCompany.origin_country,
-				logoUrl: this.baseUrl + this.imageSizes[2] + productionCompany.logo_path }
-		})
+        const productionCompanies: ProductionCompany[] = productionCompaniesResult.map((productionCompany: any): ProductionCompany => {
+            return { name: productionCompany.name, originCountry: productionCompany.origin_country, logoUrl: this.baseUrl + this.imageSizes[2] + productionCompany.logo_path }
+        })
 
-		return productionCompanies
-	}
+        return productionCompanies
+    }
 }
