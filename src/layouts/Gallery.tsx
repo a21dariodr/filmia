@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
@@ -12,8 +12,11 @@ const Gallery = () => {
 	const navigate = useNavigate()
 	const firestore = new FirebaseFirestoreService()
 	const tmd = new TheMovieDatabaseApiService()
+	const [ userFilms, setUserFilms ] = useState<Film[]>([])
 
 	const newFilmHandler = () => navigate('/newFilm')
+
+	console.debug('User films: ', userFilms)
 
 	useEffect( () => {
 		const films: Film[] = [];
@@ -35,9 +38,10 @@ const Gallery = () => {
                 })
 
                 // TODO añadir array de películas a Redux tras finalizar el mapeo! (CREAR ANTES EL STATESLICE PARA LAS PELIS!!)
-                console.log('Films: ', films)
+				console.debug('Films: ', films)
+				setUserFilms(films)
             })
-	})
+	}, [])
 
     return (
         <>
@@ -48,6 +52,8 @@ const Gallery = () => {
             <Button onClick={newFilmHandler} size="md" className="text-xs bg-violet-700 hover:bg-violet-600">
                 {t('common.add_film')}
             </Button>
+
+			{userFilms.map( (film) => (<p key={film.id}>{film.title} {film.watched}</p>) )}
         </>
     )
 }
