@@ -21,31 +21,29 @@ const Gallery = () => {
 	console.debug('User films: ', userFilms)
 
 	useEffect( () => {
-		const films: Film[] = [];
+		const fetchUserFilms = async () => {
+			const filmsDocs = await firestore.getUserFilms()
+			const filmsInfo: any[] = []
 
-		firestore.getUserFilms()
-			.then( (filmsDocs) => {
-                filmsDocs.forEach(doc => {
-                    const id = doc.id
-                    const data = doc.data()
-                    const score = data.puntuacion
-                    const watched = data.vista
+			filmsDocs.forEach( filmDoc => filmsInfo.push( {
+				id: filmDoc.id,
+            	score: filmDoc.data().puntuacion,
+            	watched: filmDoc.data().vista
+			}))
 
-                    tmd.getMovieById(id).then( film => {
-                        film.score = score
-                        film.watched = watched
+			const filmsPromise = filmsInfo.map( async filmInfo => {
+				const film = await tmd.getMovieById(filmInfo.id)
+				film.score = filmInfo.score
+                film.watched = filmInfo.watched
+                return film
+			})
 
-                        films.push(film)
-						setUserFilms([...films])
+			// TODO añadir a Redux con dispatch tras crear state slice para Films!!
+			Promise.all( filmsPromise )
+				.then( films => setUserFilms(films))
+		}
 
-						// TODO añadir aquí películas a Redux??
-                    })
-                })
-
-                // TODO añadir array de películas a Redux tras finalizar el mapeo! (CREAR ANTES EL STATESLICE PARA LAS PELIS!!)
-				console.debug('Films: ', films)
-				
-            })
+		fetchUserFilms()
 	}, [ userId ])
 
     return (
