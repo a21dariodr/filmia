@@ -4,7 +4,6 @@ import firebase from '../services/firebase/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import { useSelector, useDispatch } from 'react-redux'
 import { getEmail, setEmail, setId, getId } from '../state-slices/userSlice'
-import '../styles/Home.css'
 import Header from '../layouts/Header'
 import Footer from '../layouts/Footer'
 

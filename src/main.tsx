@@ -12,6 +12,7 @@ import ErrorPage from "./routes/ErrorPage.tsx"
 import Gallery from "./layouts/Gallery.tsx"
 import NewFilmForm from "./layouts/NewFilmForm.tsx"
 import "./styles/index.css"
+import 'atropos/css'
 import { ThemeProvider } from "@material-tailwind/react"
 
 const router = createBrowserRouter([

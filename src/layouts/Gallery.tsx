@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import FirebaseFirestoreService from '../services/db/FirebaseFirestoreService'
 import TheMovieDatabaseApiService from '../services/api/TheMovieDatabaseApiService'
 import { Film } from '../models/Film'
+import Atropos from 'atropos/react'
 import { Button } from '@material-tailwind/react'
 
 const Gallery = () => {
@@ -48,15 +49,21 @@ const Gallery = () => {
 
     return (
         <>
-            <h2>
-                {t('deploy_test')}
-            </h2>
+            <h2>{t('deploy_test')}</h2>
 
             <Button onClick={newFilmHandler} size="md" className="text-xs bg-violet-700 hover:bg-violet-600">
                 {t('common.add_film')}
             </Button>
 
-			{userFilms.map( (film) => (<p key={film.id}>{film.title} {film.watched}</p>) )}
+            {userFilms.map(film => (
+                <p key={film.id}>
+                    {film.title}
+                    {<Atropos className="inline w-32">
+						<img src={film.posterPath} className="inline-block w-32" />
+					</Atropos>}
+                    {film.watched ? 'Vista' : 'No vista'} {film.score}
+                </p>
+            ))}
         </>
     )
 }
