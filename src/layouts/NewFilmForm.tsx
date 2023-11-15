@@ -24,8 +24,10 @@ const NewFilmForm = () => {
 		setTitleSearch(searchInputValue)
     }
 
-    const selectFilmHandler = (film: Film) => {
+    const selectFilmHandler = async (selectedFilm: Film) => {
+		const film = await tmd.getMovieById(selectedFilm.id)
 		console.debug('Selected film: ', film)
+		
 		document.querySelector('#filmPoster')!.classList.remove('hidden')
 		const saveButton = (document.querySelector('#saveFilm') as HTMLInputElement)
 		saveButton.removeAttribute('disabled')
@@ -36,21 +38,27 @@ const NewFilmForm = () => {
 
 	const saveFilm = () => {
 		const score = Number((document.querySelector('#score') as HTMLInputElement)!.value)
-		const filmId = selectedFilm!.id.toString()
+		const filmId = selectedFilm!.id
 
 		if (score) { 
-			firestore.addUserFilm(filmId, score, watched)
-			.then ( () => {
-				console.debug('New film saved!')
-				navigate('/')
-			})
+			selectedFilm!.score = score
+			selectedFilm!.watched = watched
+			firestore
+                .addUserFilm(filmId, selectedFilm!)
+                .then(() => {
+                    console.debug('New film saved!')
+                    navigate('/')
+                })
 		}
 		else {
-			firestore.addUserFilm(filmId, null, watched)
-			.then(() => {
-                console.debug('New film saved!')
-                navigate('/')
-            })
+			selectedFilm!.score = null
+			selectedFilm!.watched = watched
+			firestore
+                .addUserFilm(filmId, selectedFilm!)
+                .then(() => {
+                    console.debug('New film saved!')
+                    navigate('/')
+                })
 		} 
 	}
 

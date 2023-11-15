@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Film, ProductionCompany, ProductionCountry } from '../../models/Film';
+import { Film, ProductionCompany, ProductionCountry, Actor, CrewMember } from '../../models/Film';
 
 // Servicio para la obtención de datos de películas de la API The Movie Database
 export default class TheMovieDatabaseApiService {
@@ -13,8 +13,8 @@ export default class TheMovieDatabaseApiService {
         method: 'GET',
         url: '',
         params: {
-            include_adult: 'false',
-            language: 'es-ES',
+            append_to_response: 'credits',
+            language: 'es-ES'
         },
         headers: {
             accept: 'application/json',
@@ -37,7 +37,7 @@ export default class TheMovieDatabaseApiService {
         }
     }
 
-    public async getMovieById(id: string) {
+    public async getMovieById(id: number) {
         let options = { ...this.optionsGetFilm }
         options.url = this.baseUrl + 'movie/' + id
 
@@ -59,7 +59,9 @@ export default class TheMovieDatabaseApiService {
     }
 
     private movieGetByIdMapper(filmInfo: any): Film {
-        const posterUrl = this.imageBaseUrl + this.imageSizes[4] + filmInfo.poster_path
+        const posterUrl: string = filmInfo.poster_path
+			? this.imageBaseUrl + this.imageSizes[4] + filmInfo.poster_path
+			: ''
 
         const film: Film = new Film(filmInfo.id, filmInfo.title, filmInfo.original_title, filmInfo.release_date, posterUrl, filmInfo.vote_average)
 
@@ -72,6 +74,8 @@ export default class TheMovieDatabaseApiService {
         film.revenue = filmInfo.revenue
         film.popularity = filmInfo.popularity
         film.tagLine = filmInfo.tagline
+        film.cast = this.filmCastMapper(filmInfo.credits.cast)
+        film.crew = this.filmCrewMapper(filmInfo.credits.crew)
 
         return film
     }
@@ -81,10 +85,10 @@ export default class TheMovieDatabaseApiService {
 
         if (searchResult) {
             searchResult.forEach((filmResult: any) => {
-                let posterUrl: string
-                if (filmResult.poster_path) posterUrl = this.imageBaseUrl + this.imageSizes[2] + filmResult.poster_path
-                else posterUrl = ''
-
+				const posterUrl: string = filmResult.poster_path
+					? this.imageBaseUrl + this.imageSizes[2] + filmResult.poster_path
+					: ''
+              
                 const film = new Film(filmResult.id, filmResult.title, filmResult.original_title, filmResult.release_date, posterUrl, filmResult.vote_average)
                 filmsFound.push(film)
             })
@@ -98,17 +102,41 @@ export default class TheMovieDatabaseApiService {
     }
 
     private filmProductionCountriesMapper(productionCountriesResult: any): ProductionCountry[] {
-        const productionCountries: ProductionCountry[] = productionCountriesResult.map((productionCountry: any): ProductionCountry => {
+        const productionCountries: ProductionCountry[] = productionCountriesResult.map( (productionCountry: any): ProductionCountry => {
             return { name: productionCountry.name, iso3166: productionCountry.iso_3166_1 }
         })
         return productionCountries
     }
 
     private filmProductionCompaniesMapper(productionCompaniesResult: any): ProductionCompany[] {
-        const productionCompanies: ProductionCompany[] = productionCompaniesResult.map((productionCompany: any): ProductionCompany => {
+        const productionCompanies: ProductionCompany[] = productionCompaniesResult.map( (productionCompany: any): ProductionCompany => {
             return { name: productionCompany.name, originCountry: productionCompany.origin_country, logoUrl: this.baseUrl + this.imageSizes[2] + productionCompany.logo_path }
         })
 
         return productionCompanies
     }
+
+    private filmCastMapper(castResult: any): Actor[] {
+		const cast: Actor[] = castResult.map( (castMember: any): Actor => {
+			const profilePath: string = castMember.profile_path
+				? this.imageBaseUrl + this.imageSizes[2] + castMember.profile_path
+				: ''
+
+			return { name: castMember.name, profilePath }
+		})
+
+		return cast
+	}
+
+    private filmCrewMapper(crewResult: any): CrewMember[] {
+		const crew: CrewMember[] = crewResult.map( (crewMember: any): CrewMember => {
+			const profilePath: string = crewMember.profile_path
+				? this.imageBaseUrl + this.imageSizes[2] + crewMember.profile_path
+				: ''
+
+			return { name: crewMember.name, profilePath, job: crewMember.job }
+		})
+
+		return crew
+	}
 }

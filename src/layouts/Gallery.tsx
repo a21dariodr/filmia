@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getId } from '../state-slices/userSlice'
 import { useTranslation } from 'react-i18next'
 import FirebaseFirestoreService from '../services/db/FirebaseFirestoreService'
-import TheMovieDatabaseApiService from '../services/api/TheMovieDatabaseApiService'
 import { Film } from '../models/Film'
 import Atropos from 'atropos/react'
 import { Button } from '@material-tailwind/react'
@@ -13,7 +12,6 @@ const Gallery = () => {
     const { t } = useTranslation()
 	const navigate = useNavigate()
 	const firestore = new FirebaseFirestoreService()
-	const tmd = new TheMovieDatabaseApiService()
 	const [ userFilms, setUserFilms ] = useState<Film[]>([])
 	const userId = useSelector(getId)
 
@@ -21,30 +19,12 @@ const Gallery = () => {
 
 	console.debug('User films: ', userFilms)
 
+	// TODO añadir lista de pelis a Redux con dispatch!!
 	useEffect( () => {
-		const fetchUserFilms = async () => {
-			const filmsDocs = await firestore.getUserFilms()
-			const filmsInfo: any[] = []
-
-			filmsDocs.forEach( filmDoc => filmsInfo.push( {
-				id: filmDoc.id,
-            	score: filmDoc.data().puntuacion,
-            	watched: filmDoc.data().vista
-			}))
-
-			const filmsPromise = filmsInfo.map( async filmInfo => {
-				const film = await tmd.getMovieById(filmInfo.id)
-				film.score = filmInfo.score
-                film.watched = filmInfo.watched
-                return film
+		firestore.getUserFilms()
+			.then( (films: Film[]) => {
+				setUserFilms(films)
 			})
-
-			// TODO añadir a Redux con dispatch tras crear state slice para Films!!
-			Promise.all( filmsPromise )
-				.then( films => setUserFilms(films))
-		}
-
-		fetchUserFilms()
 	}, [ userId ])
 
     return (
@@ -56,13 +36,13 @@ const Gallery = () => {
             </Button>
 
             {userFilms.map(film => (
-                <p key={film.id}>
+                <div key={film.id}>
                     {film.title}
                     {<Atropos className="inline w-32">
 						<img src={film.posterPath} className="inline-block w-32" />
 					</Atropos>}
                     {film.watched ? 'Vista' : 'No vista'} {film.score}
-                </p>
+                </div>
             ))}
         </>
     )

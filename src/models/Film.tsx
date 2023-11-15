@@ -1,3 +1,14 @@
+export type Actor = {
+	name: string
+	profilePath: string
+}
+
+export type CrewMember = {
+    name: string
+    profilePath: string
+	job: string
+}
+
 export type ProductionCompany = {
 	name: string
 	logoUrl: string
@@ -16,20 +27,22 @@ export class Film {
     private _id: number
     private _title: string
     private _originalTitle: string
-    private _originalLanguage?: string
-    private _duration?: number
+    private _originalLanguage?: string | null
+    private _duration?: number | null
     private _releaseYear: string
-    private _genres?: string[]
-    private _overview?: string
+    private _genres?: string[] | null
+    private _overview?: string | null
     private _posterPath: string
-    private _productionCountries?: ProductionCountry[]
-    private _productionCompanies?: ProductionCompany[]
+    private _productionCountries?: ProductionCountry[] | null
+    private _productionCompanies?: ProductionCompany[] | null
     private _voteAverage: number
-    private _revenue?: number
-    private _popularity?: number
-    private _tagLine?: string
-    private _score?: number
+    private _revenue?: number | null
+    private _popularity?: number | null
+    private _tagLine?: string | null
+    private _score?: number | null
     private _watched?: boolean
+    private _cast?: Actor[] | null
+    private _crew?: CrewMember[] | null
 
     /* Constructor con parámetros obligatorios usados en la búsqueda de películas
      * Los demás parámetros de emplean a través de los getters y setters
@@ -64,17 +77,17 @@ export class Film {
         this._originalTitle = value
     }
 
-    public get originalLanguage(): string | undefined {
+    public get originalLanguage(): string | undefined | null {
         return this._originalLanguage
     }
-    public set originalLanguage(value: string | undefined) {
+    public set originalLanguage(value: string | undefined | null) {
         this._originalLanguage = value
     }
 
-    public get duration(): number | undefined {
+    public get duration(): number | undefined | null {
         return this._duration
     }
-    public set duration(value: number | undefined) {
+    public set duration(value: number | undefined | null) {
         this._duration = value
     }
 
@@ -85,17 +98,17 @@ export class Film {
         this._releaseYear = value
     }
 
-    public get genres(): string[] | undefined {
+    public get genres(): string[] | undefined | null {
         return this._genres
     }
-    public set genres(value: string[] | undefined) {
+    public set genres(value: string[] | undefined | null) {
         this._genres = value
     }
 
-    public get overview(): string | undefined {
+    public get overview(): string | undefined | null {
         return this._overview
     }
-    public set overview(value: string | undefined) {
+    public set overview(value: string | undefined | null) {
         this._overview = value
     }
 
@@ -106,17 +119,17 @@ export class Film {
         this._posterPath = value
     }
 
-    public get productionCountries(): ProductionCountry[] | undefined {
+    public get productionCountries(): ProductionCountry[] | undefined | null {
         return this._productionCountries
     }
-    public set productionCountries(value: ProductionCountry[] | undefined) {
+    public set productionCountries(value: ProductionCountry[] | undefined | null) {
         this._productionCountries = value
     }
 
-    public get productionCompanies(): ProductionCompany[] | undefined {
+    public get productionCompanies(): ProductionCompany[] | undefined | null {
         return this._productionCompanies
     }
-    public set productionCompanies(value: ProductionCompany[] | undefined) {
+    public set productionCompanies(value: ProductionCompany[] | undefined | null) {
         this._productionCompanies = value
     }
 
@@ -127,31 +140,31 @@ export class Film {
         this._voteAverage = value
     }
 
-    public get revenue(): number | undefined {
+    public get revenue(): number | undefined | null {
         return this._revenue
     }
-    public set revenue(value: number | undefined) {
+    public set revenue(value: number | undefined | null) {
         this._revenue = value
     }
 
-    public get popularity(): number | undefined {
+    public get popularity(): number | undefined | null {
         return this._popularity
     }
-    public set popularity(value: number | undefined) {
+    public set popularity(value: number | undefined | null) {
         this._popularity = value
     }
 
-    public get tagLine(): string | undefined {
+    public get tagLine(): string | undefined | null {
         return this._tagLine
     }
-    public set tagLine(value: string | undefined) {
+    public set tagLine(value: string | undefined | null) {
         this._tagLine = value
     }
 
-    public get score(): number | undefined {
+    public get score(): number | undefined | null {
         return this._score
     }
-    public set score(value: number | undefined) {
+    public set score(value: number | undefined | null) {
         this._score = value
     }
 
@@ -160,5 +173,19 @@ export class Film {
     }
     public set watched(value: boolean | undefined) {
         this._watched = value
+    }
+
+    public get cast(): Actor[] | undefined | null {
+        return this._cast
+    }
+    public set cast(value: Actor[] | undefined | null) {
+        this._cast = value
+    }
+
+    public get crew(): CrewMember[] | undefined | null {
+        return this._crew
+    }
+    public set crew(value: CrewMember[] | undefined | null) {
+        this._crew = value
     }
 }
