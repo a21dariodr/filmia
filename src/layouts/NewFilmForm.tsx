@@ -15,6 +15,7 @@ const NewFilmForm = () => {
 	const [ titleSearch, setTitleSearch] = useState('')
 	const [ filmsFound, setFilmsFound ] = useState<Film[]>([])
 	const [ selectedFilm, setSelectedFilm ] = useState<Film | null>(null)
+	const [ score, setScore ] = useState()
 	const [ watched, setWatched ] = useState<boolean>(false)
 
 	const searchByTitleHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +38,6 @@ const NewFilmForm = () => {
 	}
 
 	const saveFilm = () => {
-		const score = Number((document.querySelector('#score') as HTMLInputElement)!.value)
 		const filmId = selectedFilm!.id
 
 		if (score) { 
@@ -65,6 +65,17 @@ const NewFilmForm = () => {
 	const closeHandler = () => navigate(-1)
 
 	const toggleWatched = () => setWatched(!watched)
+
+	const scoreChangeHandler = (e: any) => {
+		const saveButton = document.querySelector('#saveFilm') as HTMLInputElement
+		const scoreInput = document.querySelector('#score') as HTMLInputElement
+
+		if (scoreInput.validity.valid && saveButton.disabled) saveButton.removeAttribute('disabled')
+		else if (!scoreInput.validity.valid && !saveButton.disabled) saveButton.setAttribute('disabled', '')
+
+		setScore(e.target.value)
+	}
+
 
 	useEffect( () => {
 		const searchResultsDiv = document.querySelector('#searchResults')
@@ -172,6 +183,8 @@ const NewFilmForm = () => {
                                     max="10"
                                     step="0.01"
                                     placeholder={t('film.film_score_placeholder')}
+									value={score}
+									onChange={scoreChangeHandler}
                                     className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none hover:bg-indigo-200 placeholder:text-gray-700 bg-indigo-100 text-dark-gray-900
 										invalid:text-red-800 invalid:bg-red-200 invalid:hover:bg-red-200 invalid:font-bold rounded-2xl"
                                 />
