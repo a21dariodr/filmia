@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Film, ProductionCompany, ProductionCountry, Actor, CrewMember } from '../../models/Film';
+import { Film, ProductionCompany, ProductionCountry, Actor, CrewMember, WatchProvider } from '../../models/Film';
 
 // Servicio para la obtención de datos de películas de la API The Movie Database
 export default class TheMovieDatabaseApiService {
@@ -13,7 +13,7 @@ export default class TheMovieDatabaseApiService {
         method: 'GET',
         url: '',
         params: {
-            append_to_response: 'credits',
+            append_to_response: 'watch/providers,credits',
             language: 'es-ES'
         },
         headers: {
@@ -59,9 +59,7 @@ export default class TheMovieDatabaseApiService {
     }
 
     private movieGetByIdMapper(filmInfo: any): Film {
-        const posterUrl: string = filmInfo.poster_path
-			? this.imageBaseUrl + this.imageSizes[4] + filmInfo.poster_path
-			: ''
+        const posterUrl: string = filmInfo.poster_path ? this.imageBaseUrl + this.imageSizes[4] + filmInfo.poster_path : ''
 
         const film: Film = new Film(filmInfo.id, filmInfo.title, filmInfo.original_title, filmInfo.release_date, posterUrl, filmInfo.vote_average)
 
@@ -76,6 +74,8 @@ export default class TheMovieDatabaseApiService {
         film.tagLine = filmInfo.tagline
         film.cast = this.filmCastMapper(filmInfo.credits.cast)
         film.crew = this.filmCrewMapper(filmInfo.credits.crew)
+        if (filmInfo['watch/providers']) film.watchProviders = this.filmWatchProvidersMapper(filmInfo['watch/providers'])
+		
 
         return film
     }
@@ -85,10 +85,8 @@ export default class TheMovieDatabaseApiService {
 
         if (searchResult) {
             searchResult.forEach((filmResult: any) => {
-				const posterUrl: string = filmResult.poster_path
-					? this.imageBaseUrl + this.imageSizes[2] + filmResult.poster_path
-					: ''
-              
+                const posterUrl: string = filmResult.poster_path ? this.imageBaseUrl + this.imageSizes[2] + filmResult.poster_path : ''
+
                 const film = new Film(filmResult.id, filmResult.title, filmResult.original_title, filmResult.release_date, posterUrl, filmResult.vote_average)
                 filmsFound.push(film)
             })
@@ -102,14 +100,14 @@ export default class TheMovieDatabaseApiService {
     }
 
     private filmProductionCountriesMapper(productionCountriesResult: any): ProductionCountry[] {
-        const productionCountries: ProductionCountry[] = productionCountriesResult.map( (productionCountry: any): ProductionCountry => {
+        const productionCountries: ProductionCountry[] = productionCountriesResult.map((productionCountry: any): ProductionCountry => {
             return { name: productionCountry.name, iso3166: productionCountry.iso_3166_1 }
         })
         return productionCountries
     }
 
     private filmProductionCompaniesMapper(productionCompaniesResult: any): ProductionCompany[] {
-        const productionCompanies: ProductionCompany[] = productionCompaniesResult.map( (productionCompany: any): ProductionCompany => {
+        const productionCompanies: ProductionCompany[] = productionCompaniesResult.map((productionCompany: any): ProductionCompany => {
             return { name: productionCompany.name, originCountry: productionCompany.origin_country, logoUrl: this.baseUrl + this.imageSizes[2] + productionCompany.logo_path }
         })
 
@@ -117,26 +115,36 @@ export default class TheMovieDatabaseApiService {
     }
 
     private filmCastMapper(castResult: any): Actor[] {
-		const cast: Actor[] = castResult.map( (castMember: any): Actor => {
-			const profilePath: string = castMember.profile_path
-				? this.imageBaseUrl + this.imageSizes[2] + castMember.profile_path
-				: ''
+        const cast: Actor[] = castResult.map((castMember: any): Actor => {
+            const profilePath: string = castMember.profile_path ? this.imageBaseUrl + this.imageSizes[2] + castMember.profile_path : ''
 
-			return { name: castMember.name, profilePath }
-		})
+            return { name: castMember.name, profilePath }
+        })
 
-		return cast
-	}
+        return cast
+    }
 
     private filmCrewMapper(crewResult: any): CrewMember[] {
-		const crew: CrewMember[] = crewResult.map( (crewMember: any): CrewMember => {
-			const profilePath: string = crewMember.profile_path
-				? this.imageBaseUrl + this.imageSizes[2] + crewMember.profile_path
-				: ''
+        const crew: CrewMember[] = crewResult.map((crewMember: any): CrewMember => {
+            const profilePath: string = crewMember.profile_path ? this.imageBaseUrl + this.imageSizes[2] + crewMember.profile_path : ''
 
-			return { name: crewMember.name, profilePath, job: crewMember.job }
-		})
+            return { name: crewMember.name, profilePath, job: crewMember.job }
+        })
 
-		return crew
+        return crew
+    }
+
+    private filmWatchProvidersMapper(watchProvidersResult: any): WatchProvider[] | null {	
+		const spainResults = watchProvidersResult.results['ES'] || null
+		
+		const spainWatchProviders = spainResults?.flatrate
+			? spainResults.flatrate.map( (result: any): WatchProvider => { 
+				return {
+                    name: result.provider_name,
+                    logoUrl: result.logo_path ? this.imageBaseUrl + this.imageSizes[2] + result.logo_path : ''
+                } })
+			: null
+
+		return spainWatchProviders
 	}
 }

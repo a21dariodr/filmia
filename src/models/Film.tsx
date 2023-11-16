@@ -20,6 +20,11 @@ export type ProductionCountry = {
     iso3166: string
 }
 
+export type WatchProvider = {
+	name: string,
+	logoUrl: string
+}
+
 /* Clase para mapear los resultados de consultas a la API de TMDB, que puede ser muy útil para un posible
  * guardado de películas en Firestore
  */
@@ -43,6 +48,7 @@ export class Film {
     private _watched?: boolean
     private _cast?: Actor[] | null
     private _crew?: CrewMember[] | null
+    private _watchProviders?: WatchProvider[] | null
 
     /* Constructor con parámetros obligatorios usados en la búsqueda de películas
      * Los demás parámetros de emplean a través de los getters y setters
@@ -187,5 +193,12 @@ export class Film {
     }
     public set crew(value: CrewMember[] | undefined | null) {
         this._crew = value
+    }
+
+    public get watchProviders(): WatchProvider[] | undefined | null {
+        return this._watchProviders
+    }
+    public set watchProviders(value: WatchProvider[] | undefined | null) {
+        this._watchProviders = value
     }
 }

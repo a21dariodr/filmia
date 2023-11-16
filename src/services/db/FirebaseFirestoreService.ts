@@ -61,6 +61,7 @@ export default class FirebaseFirestoreService {
 			const watched = filmData._watched
 			const cast = filmData._cast
 			const crew = filmData._crew
+			const watchProviders = filmData._watchProviders
 			
 			const film = new Film(id, title, originalTitle, releaseYear, posterPath, voteAverage)
 
@@ -76,6 +77,7 @@ export default class FirebaseFirestoreService {
             film.watched = watched
 			film.cast = cast
 			film.crew = crew
+			film.watchProviders = watchProviders
 			
             films.push(film)
         })
