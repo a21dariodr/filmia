@@ -34,7 +34,7 @@ export class Film {
     private _originalTitle: string
     private _originalLanguage?: string | null
     private _duration?: number | null
-    private _releaseYear: string
+    private _releaseYear: number
     private _genres?: string[] | null
     private _overview?: string | null
     private _posterPath: string
@@ -53,11 +53,11 @@ export class Film {
     /* Constructor con parámetros obligatorios usados en la búsqueda de películas
      * Los demás parámetros de emplean a través de los getters y setters
      */
-    constructor(id: number, title: string, originalTitle: string, releseaseDate: string, posterPath: string, voteAverage: number) {
+    constructor(id: number, title: string, originalTitle: string, releseaseYear: number, posterPath: string, voteAverage: number) {
         this._id = id
         this._title = title
         this._originalTitle = originalTitle
-        this._releaseYear = releseaseDate.substring(0, 4)
+        this._releaseYear = releseaseYear
         this._posterPath = posterPath
         this._voteAverage = voteAverage
     }
@@ -97,10 +97,10 @@ export class Film {
         this._duration = value
     }
 
-    public get releaseYear(): string {
+    public get releaseYear(): number {
         return this._releaseYear
     }
-    public set releaseYear(value: string) {
+    public set releaseYear(value: number) {
         this._releaseYear = value
     }
 

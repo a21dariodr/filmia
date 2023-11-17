@@ -38,28 +38,15 @@ const NewFilmForm = () => {
 	}
 
 	const saveFilm = () => {
-		const filmId = selectedFilm!.id
+		selectedFilm!.watched = watched
+		selectedFilm!.score = score ? Number(score) : null
 
-		if (score) { 
-			selectedFilm!.score = score
-			selectedFilm!.watched = watched
-			firestore
-                .addUserFilm(filmId, selectedFilm!)
-                .then(() => {
-                    console.debug('New film saved!')
-                    navigate('/')
-                })
-		}
-		else {
-			selectedFilm!.score = null
-			selectedFilm!.watched = watched
-			firestore
-                .addUserFilm(filmId, selectedFilm!)
-                .then(() => {
-                    console.debug('New film saved!')
-                    navigate('/')
-                })
-		} 
+		firestore
+			.addUserFilm(selectedFilm!)
+			.then(() => {
+				console.debug('New film saved!')
+				navigate('/')
+			})
 	}
 
 	const closeHandler = () => navigate(-1)
@@ -102,7 +89,7 @@ const NewFilmForm = () => {
             searchResultsDiv?.classList.remove('flex')
             searchResultsDiv?.classList.add('hidden')
         }
-	}, [titleSearch])
+	}, [titleSearch, searching])
 
     return (
         <div className="bg-white rounded-lg box-border">
@@ -119,7 +106,7 @@ const NewFilmForm = () => {
                                 <input
                                     id="title"
                                     type="text"
-									required
+                                    required
                                     placeholder={t('film.film_title')}
                                     value={titleSearch}
                                     onChange={searchByTitleHandler}
@@ -183,8 +170,8 @@ const NewFilmForm = () => {
                                     max="10"
                                     step="0.01"
                                     placeholder={t('film.film_score_placeholder')}
-									value={score}
-									onChange={scoreChangeHandler}
+                                    value={score}
+                                    onChange={scoreChangeHandler}
                                     className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none hover:bg-indigo-200 placeholder:text-gray-700 bg-indigo-100 text-dark-gray-900
 										invalid:text-red-800 invalid:bg-red-200 invalid:hover:bg-red-200 invalid:font-bold rounded-2xl"
                                 />
@@ -217,16 +204,16 @@ const NewFilmForm = () => {
                                 </div>
                             </div>
                             <div className="flex flex-wrap w-full md:w-1/2">
-                                <label htmlFor="id" className="mb-2 text-sm text-start text-gray-900">
-                                    {t('film.film_id')}
+                                <label htmlFor="duration" className="mb-2 text-sm text-start text-gray-900">
+                                    {t('film.film_duration')}
                                     <span className="material-symbols-outlined text-sm ml-1">lock</span>
                                 </label>
                                 <input
-                                    id="id"
+                                    id="duration"
                                     type="text"
                                     readOnly
-                                    placeholder={t('film.film_id')}
-                                    value={selectedFilm ? selectedFilm.id : ''}
+                                    placeholder={t('film.film_duration')}
+                                    value={selectedFilm ? selectedFilm.duration?.toString() + ' ' + t('film.film_duration_units') : ''}
                                     className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none placeholder:text-gray-700 bg-gray-100 text-dark-gray-900 rounded-2xl"
                                 />
                             </div>
@@ -237,16 +224,21 @@ const NewFilmForm = () => {
                                 {t('common.cancel')}
                             </Button>
 
-                            <Button id='saveFilm' onClick={saveFilm} size="lg" className="text-xs bg-violet-700 hover:bg-violet-600 ml-1">
+                            <Button id="saveFilm" onClick={saveFilm} size="lg" className="text-xs bg-violet-700 hover:bg-violet-600 ml-1">
                                 {t('new_film.save_film')}
                             </Button>
                         </div>
 
-                        <div id="searchResults" className="hidden flex-wrap w-full max-w-fit md:max-w-[99%] h-max absolute z-10 top-[15rem] md:top-[17rem] left-0 bg-white border m-2">
+                        <div id="searchResults" className="hidden flex-wrap w-full max-w-fit md:max-w-[99%] h-max absolute z-10 top-[15rem] md:top-[16rem] left-0 bg-white border m-2">
                             <p className="w-full text-center text-xl text-deep-purple-700 font-bold italic mb-5 mt-2">{t('new_film.select_film')}</p>
                             {filmsFound.map((film: Film) => {
                                 return (
-                                    <div onClick={() => selectFilmHandler(film)} onKeyDown={() => selectFilmHandler(film)} key={film.id} id={film.id.toString()} className="flex place-items-center w-full
+                                    <div
+                                        onClick={() => selectFilmHandler(film)}
+                                        onKeyDown={() => selectFilmHandler(film)}
+                                        key={film.id}
+                                        id={film.id.toString()}
+                                        className="flex place-items-center w-full
 										md:w-1/2 gap-2 mb-2 px-2 hover:bg-violet-200">
                                         {film.posterPath ? (
                                             <img src={film.posterPath} className="w-20 h-20 object-cover" />

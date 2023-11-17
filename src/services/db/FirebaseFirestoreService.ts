@@ -16,68 +16,61 @@ export default class FirebaseFirestoreService {
         return this.filmsMapper(filmsDocs)
     }
 
-    public async addUserFilm(filmId: number, film: Film) {
-        const filmDoc = doc(this.firestore, 'usuarios', this.userId, 'peliculas', filmId.toString())
-        return await setDoc( filmDoc, { ...film } )
+    public async addUserFilm(film: Film) {
+        const filmDoc = doc(this.firestore, 'usuarios', this.userId, 'peliculas', film.id.toString())
+		const genres = film.genres?.join(',')
+        return await setDoc(filmDoc, {
+            title: film.title,
+            originalTitle: film.originalTitle,
+            duration: film.duration,
+            releaseYear: film.releaseYear,
+            genres,
+            posterPath: film.posterPath,
+			voteAverage: film.voteAverage,
+            score: film.score,
+            watched: film.watched
+        })
     }
 
-    public async updateUserFilm(filmId: string, puntuacion: number | null, vista: boolean) {
-        const filmDoc = doc(this.firestore, 'usuarios', this.userId, 'peliculas', filmId)
+    public async updateUserFilm(film: Film) {
+        const filmDoc = doc(this.firestore, 'usuarios', this.userId, 'peliculas', film.id.toString())
         return await setDoc(
             filmDoc,
             {
-                puntuacion,
-                vista
+                score: film.score,
+                watched: film.watched
             },
             { merge: true }
         )
     }
 
-    public async deleteUserFilm(filmId: string) {
-        const filmDoc = doc(this.firestore, 'usuarios', this.userId, 'peliculas', filmId)
+    public async deleteUserFilm(film: Film) {
+        const filmDoc = doc(this.firestore, 'usuarios', this.userId, 'peliculas', film.id.toString())
         return await deleteDoc(filmDoc)
     }
 
     private filmsMapper(filmsDocs: any): Film[] {
         const films: Film[] = []
         filmsDocs.forEach((filmDoc: any) => {
+			const id = filmDoc.id
 			const filmData = filmDoc.data()
-
-			const id = filmData._id
-			const title = filmData._title
-			const originalTitle = filmData._originalTitle
-			const originalLanguage = filmData._originalLanguage
-			const duration = filmData._duration
-			const releaseYear = filmData._releaseYear
-			const genres = filmData._genres
-			const overview = filmData._overview
-			const posterPath = filmData._posterPath
-			const productionCountries = filmData._productionCountries
-			const productionCompanies = filmData._productionCompanies
-			const voteAverage = filmData._voteAverage
-			const revenue = filmData._revenue
-			const popularity = filmData._popularity
-			const score = filmData._score
-			const watched = filmData._watched
-			const cast = filmData._cast
-			const crew = filmData._crew
-			const watchProviders = filmData._watchProviders
+			
+			const title = filmData.title
+			const originalTitle = filmData.originalTitle
+			const duration = filmData.duration
+            const releaseYear = filmData.releaseYear
+            const genres = filmData.genres.split(',')
+			const posterPath = filmData.posterPath
+			const voteAverage = filmData.voteAverage
+			const score = filmData.score
+			const watched = filmData.watched
 			
 			const film = new Film(id, title, originalTitle, releaseYear, posterPath, voteAverage)
 
-			film.originalLanguage = originalLanguage
             film.duration = duration
 			film.genres = genres
-            film.overview = overview
-			film.productionCountries = productionCountries
-            film.productionCompanies = productionCompanies
-			film.revenue = revenue
-            film.popularity = popularity
 			film.score = score
             film.watched = watched
-			film.cast = cast
-			film.crew = crew
-			film.watchProviders = watchProviders
 			
             films.push(film)
         })

@@ -67,11 +67,15 @@
         "film_production_countries": "Países",
         "film_release_year": "Ano",
         "film_revenue": "Beneficios",
+        "film_score": "Puntuación persoal",
         "film_tagline": "Slogan",
         "film_vote_average": "Puntuación media",
         "film_watched": "Vista",
-        "film_score": "Puntuación persoal",
+        "film_cast": "Casting",
+        "film_crew": "Equipo",
+        "film_watch_providers": "Plataformas",
         "film_score_placeholder": "Puntuación persoal p.e. 6,75",
+        "film_duration_units": "minutos",
         "image_error": "Imaxe non dispoñible"
     }
 }

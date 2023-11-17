@@ -67,11 +67,15 @@
         "film_production_countries": "Países",
         "film_release_year": "Año",
         "film_revenue": "Beneficios",
+        "film_score": "Puntuación personal",
         "film_tagline": "Eslogan",
         "film_vote_average": "Puntuación media",
         "film_watched": "Vista",
-        "film_score": "Puntuación personal",
+        "film_cast": "Casting",
+        "film_crew": "Equipo",
+        "film_watch_providers": "Plataformas",
         "film_score_placeholder": "Puntuación personal p.e. 6,75",
+        "film_duration_units": "minutos",
         "image_error": "Imagen no disponible"
     }
 }

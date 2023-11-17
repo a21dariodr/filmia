@@ -67,11 +67,16 @@
         "film_production_countries": "Production countries",
         "film_release_year": "Release year",
         "film_revenue": "Revenue",
+        "film_score": "Score",
         "film_tagline": "Tagline",
         "film_vote_average": "Vote average",
         "film_pending": "Pending",
         "film_watched": "Watched",
+        "film_cast": "Cast",
+        "film_crew": "Crew",
+        "film_watch_providers": "Watch providers",
         "film_score_placeholder": "Score e.g. 6.75",
+        "film_duration_units": "minutes",
         "image_error": "Image not available"
     }
 }

@@ -60,8 +60,9 @@ export default class TheMovieDatabaseApiService {
 
     private movieGetByIdMapper(filmInfo: any): Film {
         const posterUrl: string = filmInfo.poster_path ? this.imageBaseUrl + this.imageSizes[4] + filmInfo.poster_path : ''
+		const releaseYear = Number(filmInfo.release_date.substring(0, 4))
 
-        const film: Film = new Film(filmInfo.id, filmInfo.title, filmInfo.original_title, filmInfo.release_date, posterUrl, filmInfo.vote_average)
+        const film: Film = new Film(filmInfo.id, filmInfo.title, filmInfo.original_title, releaseYear, posterUrl, filmInfo.vote_average)
 
         film.originalLanguage = filmInfo.original_language
         film.duration = filmInfo.runtime
@@ -86,8 +87,9 @@ export default class TheMovieDatabaseApiService {
         if (searchResult) {
             searchResult.forEach((filmResult: any) => {
                 const posterUrl: string = filmResult.poster_path ? this.imageBaseUrl + this.imageSizes[2] + filmResult.poster_path : ''
+				const releaseYear = Number(filmResult.release_date.substring(0, 4))
 
-                const film = new Film(filmResult.id, filmResult.title, filmResult.original_title, filmResult.release_date, posterUrl, filmResult.vote_average)
+                const film = new Film(filmResult.id, filmResult.title, filmResult.original_title, releaseYear, posterUrl, filmResult.vote_average)
                 filmsFound.push(film)
             })
         }
