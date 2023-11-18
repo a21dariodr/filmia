@@ -51,9 +51,9 @@
     "new_film": {
         "title": "Nova película",
         "save_film": "Gardar",
-        "select_film": "Selecciona unha película"        
+        "select_film": "Selecciona unha película"
     },
-	"film": {
+    "film": {
         "film_title": "Título",
         "film_original_title": "Título orixinal",
         "film_duration": "Duración",
@@ -77,5 +77,8 @@
         "film_score_placeholder": "Puntuación persoal p.e. 6,75",
         "film_duration_units": "minutos",
         "image_error": "Imaxe non dispoñible"
+    },
+    "gallery": {
+        "3d_effect": "Efecto 3D"
     }
 }

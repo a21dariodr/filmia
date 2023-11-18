@@ -78,5 +78,8 @@
         "film_score_placeholder": "Score e.g. 6.75",
         "film_duration_units": "minutes",
         "image_error": "Image not available"
-    }
+    },
+	"gallery": {
+		"3d_effect": "3D effect"
+	}
 }

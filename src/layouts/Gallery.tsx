@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import FirebaseFirestoreService from '../services/db/FirebaseFirestoreService'
 import { Film } from '../models/Film'
 import Atropos from 'atropos/react'
-import { Button } from '@material-tailwind/react'
+import { Button, Switch } from '@material-tailwind/react'
 
 const Gallery = () => {
     const { t } = useTranslation()
@@ -15,13 +15,16 @@ const Gallery = () => {
 	const dispatch = useDispatch()
 	const firestore = new FirebaseFirestoreService()
 	const [ userFilms, setUserFilms ] = useState<Film[]>([])
-	const userId = useSelector(getId)
 	const filmsList = useSelector(getFilms)
+	const userId = useSelector(getId)
+	const [ atropos, setAtropos ] = useState(true)
 	
 	const newFilmHandler = () => navigate('/newFilm')
 
 	console.debug('User films: ', userFilms)
 	console.debug('List',filmsList)
+
+	const atroposHandler = () => setAtropos(!atropos)
 
 	useEffect( () => {
 		firestore.getUserFilms()
@@ -32,23 +35,47 @@ const Gallery = () => {
 	}, [ userId ])
 
     return (
-        <>
-            <h2>{t('deploy_test')}</h2>
+        <main className="w-full px-3 md:px-5">
+            <div className="flex gap-x-2 md:gap-x-5 justify-center align-middle">
+                <Switch label={t('gallery.3d_effect')} checked={atropos} onChange={atroposHandler} className="checked:bg-violet-700" crossOrigin="anonymous" />
 
-            <Button onClick={newFilmHandler} size="md" className="text-xs bg-violet-700 hover:bg-violet-600">
-                {t('common.add_film')}
-            </Button>
+                <Button onClick={newFilmHandler} size="md" className="text-xs bg-violet-700 hover:bg-violet-600">
+                    {t('common.add_film')}
+                </Button>
+            </div>
 
-            {userFilms.map(film => (
-                <div key={film.id}>
-                    {film.title}
-                    {<Atropos className="inline w-32">
-						<img src={film.posterPath} className="inline-block w-32" />
-					</Atropos>}
-                    {film.watched ? 'Vista' : 'No vista'} {film.score}
-                </div>
-            ))}
-        </>
+            <div id="films" className="flex flex-wrap justify-center gap-3 md:gap-5 w-full my-2 md:my-4">
+                {userFilms.map(film => (
+                    <div key={film.id} className="flex flex-wrap w-40 md:w-60">
+                        {
+							atropos
+
+							? (<Atropos className="">
+                                <figure className="relative">
+                                    <img src={film.posterPath} className="rounded-md" alt="Poster" />
+                                </figure>
+                                <figcaption className="absolute bottom-2 left-2 w-[calc(100%-1rem)] rounded-md border border-white bg-white/75 py-4 px-6 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
+                                    <div className="font-bold">{film.title}</div>
+                                    <div>
+                                        {film.watched ? 'Vista' : 'No vista'} {film.score}
+                                    </div>
+                                </figcaption>
+                            </Atropos>)
+
+							: (<figure className="relative">
+                                    <img src={film.posterPath} className="rounded-md" alt="Poster" />
+									<figcaption className="absolute bottom-2 left-2 w-[calc(100%-1rem)] rounded-md border border-white bg-white/75 py-4 px-6 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
+                                    <div className="font-bold">{film.title}</div>
+                                    <div>
+                                        {film.watched ? 'Vista' : 'No vista'} {film.score}
+                                    </div>
+                                </figcaption>
+                                </figure>)
+                        }
+                    </div>
+                ))}
+            </div>
+        </main>
     )
 }
 
