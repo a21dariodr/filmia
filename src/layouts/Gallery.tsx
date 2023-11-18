@@ -47,31 +47,29 @@ const Gallery = () => {
             <div id="films" className="flex flex-wrap justify-center gap-3 md:gap-5 w-full my-2 md:my-4">
                 {userFilms.map(film => (
                     <div key={film.id} className="flex flex-wrap w-40 md:w-60">
-                        {
-							atropos
-
-							? (<Atropos className="">
+                        {atropos ? (
+                            <Atropos rotateTouch={'scroll-y'} className="">
                                 <figure className="relative">
                                     <img src={film.posterPath} className="rounded-md" alt="Poster" />
                                 </figure>
+                                <figcaption data-atropos-offset="5" className="absolute bottom-2 left-2 w-[calc(100%-1rem)] rounded-md border border-white bg-white/75 py-4 px-6 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
+                                    <div className="font-bold">{film.title}</div>
+                                    <div>
+                                        {film.watched ? 'Vista' : 'No vista'} {film.score}
+                                    </div>
+                                </figcaption>
+                            </Atropos>
+                        ) : (
+                            <figure className="relative">
+                                <img src={film.posterPath} className="rounded-md" alt="Poster" />
                                 <figcaption className="absolute bottom-2 left-2 w-[calc(100%-1rem)] rounded-md border border-white bg-white/75 py-4 px-6 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
                                     <div className="font-bold">{film.title}</div>
                                     <div>
                                         {film.watched ? 'Vista' : 'No vista'} {film.score}
                                     </div>
                                 </figcaption>
-                            </Atropos>)
-
-							: (<figure className="relative">
-                                    <img src={film.posterPath} className="rounded-md" alt="Poster" />
-									<figcaption className="absolute bottom-2 left-2 w-[calc(100%-1rem)] rounded-md border border-white bg-white/75 py-4 px-6 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
-                                    <div className="font-bold">{film.title}</div>
-                                    <div>
-                                        {film.watched ? 'Vista' : 'No vista'} {film.score}
-                                    </div>
-                                </figcaption>
-                                </figure>)
-                        }
+                            </figure>
+                        )}
                     </div>
                 ))}
             </div>
