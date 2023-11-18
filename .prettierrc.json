@@ -8,5 +8,6 @@
     "bracketSameLine": true,
     "jsxBracketSameLine": true,
     "noMultipleEmptyLines": true,
-	"singleQuote": true
+	"singleQuote": true,
+	"jsxSingleQuote": false
 }

@@ -11,62 +11,51 @@ import { Button, ButtonGroup, Switch } from '@material-tailwind/react'
 
 const Gallery = () => {
     const { t } = useTranslation()
-	const navigate = useNavigate()
-	const dispatch = useDispatch()
-	const firestore = new FirebaseFirestoreService()
-	const [ userFilms, setUserFilms ] = useState<Film[]>([])
-	const filmsList = useSelector(getFilms)
-	const userId = useSelector(getId)
-	const [ atropos, setAtropos ] = useState(true)
-	const [ smallCards, setSmallCards ] = useState(false)
-	
-	const newFilmHandler = () => navigate('/newFilm')
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const firestore = new FirebaseFirestoreService()
+    const [userFilms, setUserFilms] = useState<Film[]>([])
+    const filmsList = useSelector(getFilms)
+    const userId = useSelector(getId)
+    const [atropos, setAtropos] = useState(true)
+    const [smallCards, setSmallCards] = useState(false)
 
-	console.debug('User films: ', userFilms)
-	console.debug('Redux filmList', filmsList)
-	console.debug('Small cards: ', smallCards)
+    const newFilmHandler = () => navigate('/newFilm')
 
-	const atroposHandler = () => setAtropos(!atropos)
+    console.debug('User films: ', userFilms)
+    console.debug('Redux filmList', filmsList)
+    console.debug('Small cards: ', smallCards)
 
-	const bigCardsHandler = () => {
-		const bigCardsButton = document.querySelector('#bigCards')
-		const smallCardsButton = document.querySelector('#smallCards')
-		const filmDivs = document.querySelectorAll('div.film')
+    const atroposHandler = () => setAtropos(!atropos)
 
-		if (smallCards) {
-			bigCardsButton?.classList.add('brightness-50')
-            smallCardsButton?.classList.remove('brightness-50')
-			filmDivs.forEach( filmDiv => {
-				filmDiv.classList.add('w-40', 'md:w-60')
-				filmDiv.classList.remove('w-24', 'md:w-32')
-			})
-			setSmallCards(false)
-		}
-	}
-
-	const smallCardsHandler = () => {
-		const bigCardsButton = document.querySelector('#bigCards')
+    const bigCardsHandler = () => {
+        const bigCardsButton = document.querySelector('#bigCards')
         const smallCardsButton = document.querySelector('#smallCards')
-		const filmDivs = document.querySelectorAll('div.film')
 
-		if (!smallCards) {
-            smallCardsButton?.classList.add('brightness-50')
-            bigCardsButton?.classList.remove('brightness-50')
-			filmDivs.forEach(filmDiv => {
-				filmDiv.classList.add('w-24', 'md:w-32')
-                filmDiv.classList.remove('w-40', 'md:w-60')
-            })
-			setSmallCards(true)
+        if (smallCards) {
+            bigCardsButton?.classList.add('brightness-50')
+            smallCardsButton?.classList.remove('brightness-50')
+            setSmallCards(false)
         }
     }
 
-	useEffect( () => {
-		firestore.getUserFilms()
-			.then( (films: Film[]) => {
-				if (films) dispatch(setFilms(films))
-				setUserFilms(films)
-			})
-	}, [ userId ])
+    const smallCardsHandler = () => {
+        const bigCardsButton = document.querySelector('#bigCards')
+        const smallCardsButton = document.querySelector('#smallCards')
+
+        if (!smallCards) {
+            smallCardsButton?.classList.add('brightness-50')
+            bigCardsButton?.classList.remove('brightness-50')
+            setSmallCards(true)
+        }
+    }
+
+    useEffect(() => {
+        firestore.getUserFilms().then((films: Film[]) => {
+            if (films) dispatch(setFilms(films))
+            setUserFilms(films)
+        })
+    }, [userId])
 
     return (
         <main className="w-full px-3 md:px-5">
@@ -89,7 +78,7 @@ const Gallery = () => {
 
             <div id="films" className="flex flex-wrap justify-center gap-3 md:gap-5 w-full my-2 md:my-4">
                 {userFilms.map(film => (
-                    <div key={film.id} className="film flex flex-wrap w-40 md:w-60">
+                    <div key={film.id} className={'flex flex-wrap ' + (!smallCards ? 'w-40 md:w-60' : 'w-24 md:w-32')}>
                         {atropos ? (
                             <Atropos rotateTouch={'scroll-y'}>
                                 <figure className="relative">
