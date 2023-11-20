@@ -70,12 +70,14 @@
         "film_score": "Puntuación personal",
         "film_tagline": "Eslogan",
         "film_vote_average": "Puntuación media",
+        "film_pending": "Pendiente",
         "film_watched": "Vista",
         "film_cast": "Casting",
         "film_crew": "Equipo",
         "film_watch_providers": "Plataformas",
         "film_score_placeholder": "Puntuación personal p.e. 6,75",
         "film_duration_units": "minutos",
+        "film_duration_units_abbreviation": "min",
         "image_error": "Imagen no disponible"
     },
     "gallery": {

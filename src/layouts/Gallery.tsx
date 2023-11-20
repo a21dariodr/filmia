@@ -7,7 +7,8 @@ import { useTranslation } from 'react-i18next'
 import FirebaseFirestoreService from '../services/db/FirebaseFirestoreService'
 import { Film } from '../models/Film'
 import Atropos from 'atropos/react'
-import { Button, ButtonGroup, Switch } from '@material-tailwind/react'
+import { Button, ButtonGroup, Chip, Switch } from '@material-tailwind/react'
+import '../styles/Gallery.css'
 
 const Gallery = () => {
     const { t } = useTranslation()
@@ -78,26 +79,100 @@ const Gallery = () => {
 
             <div id="films" className="flex flex-wrap justify-center gap-3 md:gap-5 w-full my-2 md:my-4">
                 {userFilms.map(film => (
-                    <div key={film.id} className={'flex flex-wrap ' + (!smallCards ? 'w-40 md:w-60' : 'w-24 md:w-32')}>
+                    <div key={film.id} className={'flex flex-wrap ' + (!smallCards ? 'w-40 md:w-60 text-xs md:text-base' : 'smallCards w-24 md:w-32 text-[9px] md:text-xs')}>
                         {atropos ? (
-                            <Atropos rotateTouch={'scroll-y'}>
-                                <figure className="relative">
-                                    <img src={film.posterPath} className="rounded-md" alt="Poster" />
+                            <Atropos rotateTouch={'scroll-y'} className="w-full h-full">
+                                <figure className="relative w-full h-full">
+                                    {film.posterPath ? (
+                                        <img src={film.posterPath} className="rounded-md" alt="Poster" />
+                                    ) : (
+                                        <div className="flex flex-wrap h-full place-content-center border">
+                                            <span className="material-symbols-outlined text-indigo-600 text-8xl">image</span>
+                                            <p className="text-sm md:text-lg font-bold text-indigo-600">{t('film.image_error')}</p>
+                                        </div>
+                                    )}
                                 </figure>
-                                <figcaption data-atropos-offset="5" className="absolute bottom-2 left-2 w-[calc(100%-1rem)] rounded-md border border-white bg-white/75 p-2 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
-                                    <div className="font-bold">{film.title}</div>
-                                    <div>
-                                        {film.watched ? 'Vista' : 'No vista'} {film.score}
+                                <figcaption
+                                    data-atropos-offset="5"
+                                    className="filmInfo absolute bottom-2 left-2 w-[calc(100%-1rem)] rounded-md border border-white bg-white/75 p-1
+									shadow-lg shadow-black/5 saturate-200 backdrop-blur-3xl">
+                                    <div className="font-black uppercase text-center pb-1">{film.title}</div>
+                                    <div className="flex flex-wrap gap-1 justify-center">
+                                        <Chip size="sm" value={film.releaseYear} className="chip chipYear" />
+                                        <Chip
+                                            size="sm"
+                                            value={
+                                                <span>
+                                                    <span className="material-symbols-outlined align-middle text-sm">timer</span>
+                                                    {' ' + film.duration} {t('film.film_duration_units_abbreviation')}
+                                                </span>
+                                            }
+                                            className="chip chipDuration lowercase bg-violet-800 pl-1"
+                                        />
+                                        <Chip
+                                            size="sm"
+                                            value={
+                                                film.watched ? (
+                                                    <span>
+                                                        <span className="material-symbols-outlined align-sub text-sm">star</span>
+                                                        {' ' + film.score}
+                                                    </span>
+                                                ) : (
+                                                    <span>
+                                                        <span className="material-symbols-outlined align-middle text-sm">close</span>
+                                                        {' 0.0'}
+                                                    </span>
+                                                )
+                                            }
+                                            className="chip capitalize bg-amber-900 pl-1"
+                                        />
                                     </div>
                                 </figcaption>
                             </Atropos>
                         ) : (
                             <figure className="relative">
-                                <img src={film.posterPath} className="rounded-md" alt="Poster" />
-                                <figcaption className="absolute bottom-2 left-2 w-[calc(100%-1rem)] rounded-md border border-white bg-white/75 p-2 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
-                                    <div className="font-bold">{film.title}</div>
-                                    <div>
-                                        {film.watched ? 'Vista' : 'No vista'} {film.score}
+                                {film.posterPath ? (
+                                    <img src={film.posterPath} className="rounded-md" alt="Poster" />
+                                ) : (
+                                    <div className="flex flex-wrap h-full place-content-center border">
+                                        <span className="material-symbols-outlined text-indigo-600 text-8xl">image</span>
+                                        <p className="text-sm md:text-lg font-bold text-indigo-600">{t('film.image_error')}</p>
+                                    </div>
+                                )}
+                                <figcaption
+                                    data-atropos-offset="5"
+                                    className="filmInfo absolute bottom-2 left-2 w-[calc(100%-1rem)] rounded-md border border-white bg-white/75 p-1
+									shadow-lg shadow-black/5 saturate-200 backdrop-blur-3xl">
+                                    <div className="font-black uppercase text-center pb-1">{film.title}</div>
+                                    <div className="flex flex-wrap gap-1 justify-center">
+                                        <Chip size="sm" value={film.releaseYear} className="chip chipYear" />
+                                        <Chip
+                                            size="sm"
+                                            value={
+                                                <span>
+                                                    <span className="material-symbols-outlined align-middle text-sm">timer</span>
+                                                    {' ' + film.duration} {t('film.film_duration_units_abbreviation')}
+                                                </span>
+                                            }
+                                            className="chip chipDuration lowercase bg-violet-800 pl-1"
+                                        />
+                                        <Chip
+                                            size="sm"
+                                            value={
+                                                film.watched ? (
+                                                    <span>
+                                                        <span className="material-symbols-outlined align-sub text-sm">star</span>
+                                                        {' ' + film.score}
+                                                    </span>
+                                                ) : (
+                                                    <span>
+                                                        <span className="material-symbols-outlined align-middle text-sm">close</span>
+                                                        {' 0.0'}
+                                                    </span>
+                                                )
+                                            }
+                                            className="chip capitalize bg-amber-900 pl-1"
+                                        />
                                     </div>
                                 </figcaption>
                             </figure>
