@@ -27,6 +27,8 @@ const Gallery = () => {
     console.debug('Redux filmList', filmsList)
     console.debug('Small cards: ', smallCards)
 
+	const filmClickHandler = (film: Film) => navigate('/films/' + film.id)
+
     const atroposHandler = () => setAtropos(!atropos)
 
     const bigCardsHandler = () => {
@@ -79,14 +81,18 @@ const Gallery = () => {
 
             <div id="films" className="flex flex-wrap justify-center gap-3 md:gap-5 w-full my-2 md:my-4">
                 {userFilms.map(film => (
-                    <div key={film.id} className={'flex flex-wrap ' + (!smallCards ? 'w-40 md:w-60 text-xs md:text-base' : 'smallCards w-24 md:w-32 text-[9px] md:text-xs')}>
+                    <div
+                        onClick={() => filmClickHandler(film)}
+                        onKeyDown={() => filmClickHandler(film)}
+                        key={film.id}
+                        className={'flex flex-wrap ' + (!smallCards ? 'w-40 md:w-60 text-xs md:text-base' : 'smallCards w-24 md:w-32 text-[9px] md:text-xs')}>
                         {atropos ? (
                             <Atropos rotateTouch={'scroll-y'} className="w-full h-full">
                                 <figure className="relative w-full h-full">
                                     {film.posterPath ? (
                                         <img src={film.posterPath} className="rounded-md" alt="Poster" />
                                     ) : (
-                                        <div className="flex flex-wrap h-full place-content-center border">
+                                        <div className="flex flex-wrap h-full place-content-center border bg-white">
                                             <span className="material-symbols-outlined text-indigo-600 text-8xl">image</span>
                                             <p className="text-sm md:text-lg font-bold text-indigo-600">{t('film.image_error')}</p>
                                         </div>
@@ -134,7 +140,7 @@ const Gallery = () => {
                                 {film.posterPath ? (
                                     <img src={film.posterPath} className="rounded-md" alt="Poster" />
                                 ) : (
-                                    <div className="flex flex-wrap h-full place-content-center border">
+                                    <div className="flex flex-wrap h-full place-content-center border bg-white">
                                         <span className="material-symbols-outlined text-indigo-600 text-8xl">image</span>
                                         <p className="text-sm md:text-lg font-bold text-indigo-600">{t('film.image_error')}</p>
                                     </div>

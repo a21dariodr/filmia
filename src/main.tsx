@@ -9,8 +9,9 @@ import Login from "./routes/Login.tsx"
 import SignUp from "./routes/SignUp.tsx"
 import ResetPassword from "./routes/ResetPassword.tsx"
 import ErrorPage from "./routes/ErrorPage.tsx"
-import Gallery from "./layouts/Gallery.tsx"
-import NewFilmForm from "./layouts/NewFilmForm.tsx"
+import Gallery from "./routes/Gallery.tsx"
+import Film from "./routes/Film.tsx"
+import NewFilmForm from "./routes/NewFilmForm.tsx"
 import "./styles/index.css"
 import 'atropos/css'
 import { ThemeProvider } from "@material-tailwind/react"
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
                     {
                         index: true,
                         element: <Gallery />
+                    },
+					{
+                        path: '/films/:filmId',
+                        element: <Film />
                     },
                     {
                         path: '/newFilm',
