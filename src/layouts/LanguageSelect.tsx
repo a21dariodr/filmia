@@ -15,9 +15,8 @@ const LanguageSelect = () => {
     return (
         <div id='languageSelect'>
             <Select
-                label={t('languages.select')}
+				className='bg-white'
                 size="lg"
-                color="deep-purple"
                 selected={element =>
                     element &&
                     cloneElement(element, {
@@ -28,15 +27,15 @@ const LanguageSelect = () => {
                 value={selectedLanguage}
                 onChange={languageChangeHandler}>
                 <Option className="flex items-center gap-2" value={'es'}>
-                    <img className="h-5 w-5 rounded-full object-cover" src="flags/es.svg" alt="Español" />
+                    <img className="h-5 w-5 rounded-full object-cover" src="/flags/es.svg" alt="Español" />
                     {t('languages.spanish')}
                 </Option>
                 <Option className="flex items-center gap-2" value={'gl'}>
-                    <img className="h-5 w-5 rounded-full object-cover" src="flags/es-ga.svg" alt="Español" />
+                    <img className="h-5 w-5 rounded-full object-cover" src="/flags/es-ga.svg" alt="Español" />
                     {t('languages.galician')}
                 </Option>
                 <Option className="flex items-center gap-2" value={'en'}>
-                    <img className="h-5 w-5 rounded-full object-cover" src="flags/gb.svg" alt="Español" />
+                    <img className="h-5 w-5 rounded-full object-cover" src="/flags/gb.svg" alt="Español" />
                     {t('languages.english')}
                 </Option>
             </Select>

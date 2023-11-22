@@ -4,3 +4,7 @@
         min-width: 120px;
     }
 }
+
+#languageSelect label {
+	display: none;
+}

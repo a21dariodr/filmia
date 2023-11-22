@@ -10,7 +10,7 @@ import SignUp from "./routes/SignUp.tsx"
 import ResetPassword from "./routes/ResetPassword.tsx"
 import ErrorPage from "./routes/ErrorPage.tsx"
 import Gallery from "./routes/Gallery.tsx"
-import Film from "./routes/Film.tsx"
+import Film, { loader as filmLoader } from "./routes/Film.tsx"
 import NewFilmForm from "./routes/NewFilmForm.tsx"
 import "./styles/index.css"
 import 'atropos/css'
@@ -37,7 +37,8 @@ const router = createBrowserRouter([
                     },
 					{
                         path: '/films/:filmId',
-                        element: <Film />
+                        element: <Film />,
+						loader: filmLoader
                     },
                     {
                         path: '/newFilm',
