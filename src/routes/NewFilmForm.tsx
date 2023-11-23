@@ -197,7 +197,7 @@ const NewFilmForm = () => {
                                     <label className="flex mr-3 cursor-pointer select-none">
                                         <input type="checkbox" checked={watched} onChange={toggleWatched} className="sr-only peer" />
                                         <div className="w-5 h-5 bg-white border-2 rounded-sm border-gray-500 peer peer-checked:border-0 peer-checked:bg-violet-700">
-                                            <img className="" src="check-icon.png" alt="tick" />
+                                            <img className="" src="/check-icon.png" alt="tick" />
                                         </div>
                                         <span className="ml-3 text-sm font-medium text-gray-900">{t('film.film_watched')}</span>
                                     </label>

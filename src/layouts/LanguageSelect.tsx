@@ -16,6 +16,7 @@ const LanguageSelect = () => {
         <div id='languageSelect'>
             <Select
 				className='bg-white'
+				color='deep-purple'
                 size="lg"
                 selected={element =>
                     element &&

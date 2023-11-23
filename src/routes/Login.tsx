@@ -50,7 +50,7 @@ const Login = () => {
                                     type="button"
                                     onClick={signUpGoogleHandler}
                                     className="flex items-center justify-center w-full py-4 mb-6 text font-medium rounded-2xl text-gray-800 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300">
-                                    <img className="h-5 mr-2" src="google-logo.png" alt="Google logo" />
+                                    <img className="h-5 mr-2" src="/google-logo.png" alt="Google logo" />
                                     {t('login.google')}
                                 </button>
                                 <div className="flex items-center mb-3">
@@ -83,7 +83,7 @@ const Login = () => {
                                     <label className="relative inline-flex items-center mr-3 cursor-pointer select-none">
                                         <input type="checkbox" checked={keepLogin} onChange={toggleKeepLogin} className="sr-only peer" />
                                         <div className="w-5 h-5 bg-white border-2 rounded-sm border-gray-500 peer peer-checked:border-0 peer-checked:bg-violet-700">
-                                            <img className="" src="check-icon.png" alt="tick" />
+                                            <img className="" src="/check-icon.png" alt="tick" />
                                         </div>
                                         <span className="ml-3 text-sm font-normal text-gray-900">{t('login.keep_login')}</span>
                                     </label>

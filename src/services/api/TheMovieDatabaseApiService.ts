@@ -60,7 +60,7 @@ export default class TheMovieDatabaseApiService {
 
     private movieGetByIdMapper(filmInfo: any): Film {
         const posterUrl: string = filmInfo.poster_path ? this.imageBaseUrl + this.imageSizes[4] + filmInfo.poster_path : ''
-		const releaseYear = Number(filmInfo.release_date.substring(0, 4))
+        const releaseYear = Number(filmInfo.release_date.substring(0, 4))
 
         const film: Film = new Film(filmInfo.id, filmInfo.title, filmInfo.original_title, releaseYear, posterUrl, filmInfo.vote_average)
 
@@ -76,7 +76,6 @@ export default class TheMovieDatabaseApiService {
         film.cast = this.filmCastMapper(filmInfo.credits.cast)
         film.crew = this.filmCrewMapper(filmInfo.credits.crew)
         if (filmInfo['watch/providers']) film.watchProviders = this.filmWatchProvidersMapper(filmInfo['watch/providers'])
-		
 
         return film
     }
@@ -87,7 +86,7 @@ export default class TheMovieDatabaseApiService {
         if (searchResult) {
             searchResult.forEach((filmResult: any) => {
                 const posterUrl: string = filmResult.poster_path ? this.imageBaseUrl + this.imageSizes[2] + filmResult.poster_path : ''
-				const releaseYear = Number(filmResult.release_date.substring(0, 4))
+                const releaseYear = Number(filmResult.release_date.substring(0, 4))
 
                 const film = new Film(filmResult.id, filmResult.title, filmResult.original_title, releaseYear, posterUrl, filmResult.vote_average)
                 filmsFound.push(film)
@@ -110,7 +109,9 @@ export default class TheMovieDatabaseApiService {
 
     private filmProductionCompaniesMapper(productionCompaniesResult: any): ProductionCompany[] {
         const productionCompanies: ProductionCompany[] = productionCompaniesResult.map((productionCompany: any): ProductionCompany => {
-            return { name: productionCompany.name, originCountry: productionCompany.origin_country, logoUrl: this.baseUrl + this.imageSizes[2] + productionCompany.logo_path }
+			const logoUrl: string = productionCompany.logo_path ? this.imageBaseUrl + this.imageSizes[2] + productionCompany.logo_path : ''
+
+            return { name: productionCompany.name, originCountry: productionCompany.origin_country, logoUrl }
         })
 
         return productionCompanies
@@ -136,17 +137,18 @@ export default class TheMovieDatabaseApiService {
         return crew
     }
 
-    private filmWatchProvidersMapper(watchProvidersResult: any): WatchProvider[] | null {	
-		const spainResults = watchProvidersResult.results['ES'] || null
-		
-		const spainWatchProviders = spainResults?.flatrate
-			? spainResults.flatrate.map( (result: any): WatchProvider => { 
-				return {
-                    name: result.provider_name,
-                    logoUrl: result.logo_path ? this.imageBaseUrl + this.imageSizes[2] + result.logo_path : ''
-                } })
-			: null
+    private filmWatchProvidersMapper(watchProvidersResult: any): WatchProvider[] | null {
+        const spainResults = watchProvidersResult.results['ES'] || null
 
-		return spainWatchProviders
-	}
+        const spainWatchProviders = spainResults?.flatrate
+            ? spainResults.flatrate.map((result: any): WatchProvider => {
+                  return {
+                      name: result.provider_name,
+                      logoUrl: result.logo_path ? this.imageBaseUrl + this.imageSizes[2] + result.logo_path : ''
+                  }
+              })
+            : null
+
+        return spainWatchProviders
+    }
 }
