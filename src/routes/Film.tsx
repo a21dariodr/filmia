@@ -146,7 +146,13 @@ const Film = () => {
                     return crewMember.job == 'Director' ? (
                         <div key={crewMember.name + '-' + crewMember.job}>
                             <span>{crewMember.name}</span>
-                            {crewMember.profilePath ? <img src={crewMember.profilePath} alt="Profile photo" className="w-[10vw] md:w-[4vw] rounded-md" /> : undefined}
+                            {crewMember.profilePath ? (
+                                <img src={crewMember.profilePath} alt="Profile photo" className="w-[10vw] md:w-[4vw] rounded-md" />
+                            ) : (
+                                <div className="flex flex-wrap place-content-center border bg-white w-[10vw] md:w-[4vw] h-[15.25vw] md:h-[6.1vw] rounded-md">
+                                    <span className="material-symbols-outlined text-indigo-600">image</span>
+                                </div>
+                            )}
                         </div>
                     ) : undefined
                 })}
@@ -161,7 +167,7 @@ const Film = () => {
                             {actor.profilePath ? (
                                 <img src={actor.profilePath} alt="Profile photo" className="w-[10vw] md:w-[4vw] rounded-md" />
                             ) : (
-                                <div className="flex flex-wrap h-full place-content-center border bg-white w-[10vw] md:w-[4vw] rounded-md">
+                                <div className="flex flex-wrap place-content-center border bg-white w-[10vw] md:w-[4vw] h-[15.25vw] md:h-[6.1vw] rounded-md">
                                     <span className="material-symbols-outlined text-indigo-600">image</span>
                                 </div>
                             )}
