@@ -78,6 +78,7 @@
         "film_score_placeholder": "Score e.g. 6.75",
         "film_duration_units": "minutes",
         "film_duration_units_abbreviation": "min",
+		"film_directors": "Directors",
         "image_error": "Image not available"
     },
 	"gallery": {

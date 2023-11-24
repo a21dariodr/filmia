@@ -78,6 +78,7 @@
         "film_score_placeholder": "Puntuación personal p.e. 6,75",
         "film_duration_units": "minutos",
         "film_duration_units_abbreviation": "min",
+        "film_directors": "Directores",
         "image_error": "Imagen no disponible"
     },
     "gallery": {

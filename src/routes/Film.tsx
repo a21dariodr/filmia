@@ -30,7 +30,7 @@ const Film = () => {
     const goBackHandler = () => navigate('/')
 
     return (
-        <div className="grid grid-flow-row-dense grid-cols-1 md:grid-cols-2 gap-2 p-3 md:p-6">
+        <div className="grid grid-cols-1 grid-flow-row-dense md:grid-cols-2 gap-2 p-3 md:p-6">
             <div className="col-span-full justify-self-center uppercase text-center text-xl md:text-3xl font-bold">
                 <h1>{filmDetails.title}</h1>
             </div>
@@ -40,7 +40,7 @@ const Film = () => {
                 {filmDetails.originalTitle}
             </div>
 
-            <div className="grid grid-cols-2 justify-items-center">
+            <div className="row-span-4 grid grid-cols-2 justify-items-center">
                 <Atropos rotateTouch={'scroll-y'} className="w-[35vw] md:w-[15vw]">
                     {filmDetails.posterPath ? (
                         <img src={filmDetails.posterPath} alt="Poster" className="rounded-md" />
@@ -139,16 +139,13 @@ const Film = () => {
                 ))}
             </div>
 
-            {/* Únicamente se mostrarán los directores y productores */}
+            {/* Únicamente se mostrarán los directores */}
             <div className="flex flex-wrap">
-                <span className="font-bold italic mr-2">{t('film.film_crew')}</span>
+                <span className="font-bold italic mr-2">{t('film.film_directors')}</span>
                 {filmDetails.crew?.map((crewMember: CrewMember) => {
-                    const jobsToFilter = ['Director', 'Producer']
-
-                    return jobsToFilter.includes(crewMember.job) ? (
+                    return crewMember.job == 'Director' ? (
                         <div key={crewMember.name + '-' + crewMember.job}>
                             <span>{crewMember.name}</span>
-                            <span>{crewMember.job}</span>
                             {crewMember.profilePath ? <img src={crewMember.profilePath} alt="Profile photo" className="w-[10vw] md:w-[4vw] rounded-md" /> : undefined}
                         </div>
                     ) : undefined
@@ -157,11 +154,17 @@ const Film = () => {
 
             <div className="flex flex-wrap">
                 <span className="font-bold italic mr-2">{t('film.film_cast')}</span>
-                <Flicking circular={true} moveType="freeScroll" bound={true}>
+                <Flicking circular={true}>
                     {cast.map((actor: Actor) => (
                         <div className="flicking-panel" key={actor.name}>
                             <span>{actor.name}</span>
-                            {actor.profilePath ? <img src={actor.profilePath} alt="Profile photo" className="w-[10vw] md:w-[4vw] rounded-md" /> : undefined}
+                            {actor.profilePath ? (
+                                <img src={actor.profilePath} alt="Profile photo" className="w-[10vw] md:w-[4vw] rounded-md" />
+                            ) : (
+                                <div className="flex flex-wrap h-full place-content-center border bg-white w-[10vw] md:w-[4vw] rounded-md">
+                                    <span className="material-symbols-outlined text-indigo-600">image</span>
+                                </div>
+                            )}
                         </div>
                     ))}
                 </Flicking>
