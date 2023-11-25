@@ -1,13 +1,11 @@
 import firebase from '../firebase/firebase'
-import { collection, doc, getDocs, setDoc, deleteDoc } from 'firebase/firestore/lite'
-import { useSelector } from 'react-redux'
-import { getId } from '../../state-slices/userSlice'
+import { collection, doc, getDocs, getDoc, setDoc, deleteDoc } from 'firebase/firestore/lite'
 import { Film } from '../../models/Film'
 
 // Servicio para obtener y guardar datos en la DB Firestore de Firebase
 export default class FirebaseFirestoreService {
     private readonly firestore = firebase.db
-    private userId = useSelector(getId)
+    private userId = localStorage.getItem('userId')!
 
     // Se accede a cada elemento devuelto con .foreach(doc => doc.id / doc.data)
     public async getUserFilms() {
@@ -15,6 +13,13 @@ export default class FirebaseFirestoreService {
         const filmsDocs = await getDocs(filmsRef)
         return this.filmsMapper(filmsDocs)
     }
+
+	// Devuelve la información de una única película
+	public async getUserFilmScoreAndWatched(filmId: string) {
+		const filmRef = doc(this.firestore, 'usuarios', this.userId, 'peliculas', filmId)
+		const filmDoc: any = await getDoc(filmRef)
+		return { watched: filmDoc.data().watched, score: filmDoc.data().score }
+	}
 
     public async addUserFilm(film: Film) {
         const filmDoc = doc(this.firestore, 'usuarios', this.userId, 'peliculas', film.id.toString())

@@ -45,6 +45,7 @@ export default class FirebaseAuthService {
     }
 
     public logOut() {
+		localStorage.clear()
         signOut(this.auth)
             .then(() => this.navigate('/'))
             .catch(error => error)
