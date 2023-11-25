@@ -11,6 +11,7 @@
     "deploy": "firebase deploy"
   },
   "dependencies": {
+    "@egjs/flicking-plugins": "^4.7.1",
     "@egjs/react-flicking": "^4.11.1",
     "@material-tailwind/react": "^2.1.4",
     "@reduxjs/toolkit": "^1.9.7",

@@ -1,0 +1,7 @@
+@media screen and (max-width: 768px) {
+	.chip {
+		font-size: 9px !important;
+		padding: 6px !important;
+		padding-block: 1px !important;
+	}
+}
