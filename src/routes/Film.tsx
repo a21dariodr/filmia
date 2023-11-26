@@ -39,9 +39,9 @@ const Film = () => {
 		getFilmScoreAndWatched()
 	}, [score, watched])
 
-	// Se guardan como máximo 20 actores del elenco de cada película
+	// Se muestran como máximo 30 actores del reparto de cada película
 	const cast = []
-	for (let i=0; i<20; i++) {
+	for (let i=0; i<30; i++) {
 		cast.push(filmDetails.cast![i])
 		if (i == filmDetails.cast!.length-1) break;
 	}
@@ -193,8 +193,8 @@ const Film = () => {
 
                 {filmDetails.productionCompanies?.length! > 0 ? (
                     <div className="flex flex-wrap">
-                        <div className="font-bold italic mr-2 md:mr-4">{t('film.film_production_companies')}</div>
-                        <div className="flex flex-wrap gap-1 md:gap-3">
+                        <div className="min-w-full font-bold italic mr-2 md:mr-4">{t('film.film_production_companies')}</div>
+                        <div className="flex flex-wrap gap-1 md:gap-3 md:text-sm">
                             {filmDetails.productionCompanies?.map((productionCompany: ProductionCompany) => (
                                 <div key={productionCompany.name} className="flex flex-col justify-between place-items-center w-[22vw] md:w-[8vw] p-1">
                                     <div className="text-center">{productionCompany.name}</div>
@@ -238,13 +238,13 @@ const Film = () => {
                 )}
 
                 {filmDetails.watchProviders?.length! > 0 ? (
-                    <div className="flex md:pl-16">
-                        <div className="flex flex-col place-items-center gap-y-3 font-bold italic mr-4">
+                    <div className="flex flex-wrap md:pl-16">
+                        <div className="md:min-w-full font-bold italic mb-4 md:mb-0">
                             {t('film.film_watch_providers')}
-                            <img src="/justwatch_logo.svg" alt="JustWatch logo" className="w-[17vw] md:w-[5vw]" />
+                            <img src="/justwatch_logo.svg" alt="JustWatch logo" className="inline w-[17vw] md:w-[5vw] ml-4" />
                         </div>
 
-                        <div className="flex flex-wrap gap-3">
+                        <div className="flex flex-wrap gap-3 ml-2 md:ml-4">
                             {filmDetails.watchProviders?.map((watchProvider: WatchProvider) => (
                                 <div key={watchProvider.name} className="flex flex-col place-items-center">
                                     <span>{watchProvider.name}</span>
