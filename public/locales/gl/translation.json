@@ -2,6 +2,7 @@
     "deploy_test": "Proba de despregamento automático",
     "common": {
         "add_film": "Engadir filme",
+        "delete_film": "Eliminar película",
         "cancel": "Cancelar",
         "come_back": "Volver"
     },
@@ -52,6 +53,9 @@
         "title": "Nova película",
         "save_film": "Gardar",
         "select_film": "Selecciona unha película"
+    },
+    "delete_film": {
+        "dialog_body": "Confirme se desexa eliminar a película"
     },
     "film": {
         "film_title": "Título",

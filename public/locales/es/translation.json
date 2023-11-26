@@ -2,6 +2,7 @@
     "deploy_test": "Prueba de despliegue automático",
     "common": {
         "add_film": "Añadir película",
+        "delete_film": "Eliminar película",
         "cancel": "Cancelar",
         "come_back": "Volver"
     },
@@ -52,6 +53,9 @@
         "title": "Nueva película",
         "save_film": "Guardar",
         "select_film": "Selecciona una película"
+    },
+    "delet_film": {
+        "dialog_body": "Confirme si desea eliminar la película"
     },
     "film": {
         "film_title": "Título",

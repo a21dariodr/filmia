@@ -4,7 +4,7 @@ import { useNavigate, useLoaderData } from 'react-router-dom'
 import FirebaseFirestoreService from '../services/db/FirebaseFirestoreService';
 import TheMovieDatabaseApiService from '../services/api/TheMovieDatabaseApiService'
 import { Film as FilmModel, WatchProvider, ProductionCompany, ProductionCountry, CrewMember, Actor } from '../models/Film';
-import { Button, Chip } from '@material-tailwind/react'
+import { Button, Chip, Dialog, DialogBody, DialogFooter } from '@material-tailwind/react'
 import Atropos from 'atropos/react';
 import Flicking, { ViewportSlot } from '@egjs/react-flicking'
 import { Arrow } from '@egjs/flicking-plugins'
@@ -28,6 +28,7 @@ const Film = () => {
 	const plugins = [new Arrow()]
 	const [score, setScore] = useState<number>()
 	const [watched, setWatched] = useState<boolean>()
+	const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false)
 
 	useEffect( () => {
 		const getFilmScoreAndWatched =  async () => {
@@ -37,7 +38,7 @@ const Film = () => {
             console.debug('Film details: ', filmDetails)
 		}
 		getFilmScoreAndWatched()
-	}, [score, watched])
+	}, [])
 
 	// Se muestran como máximo 30 actores del reparto de cada película
 	const cast = []
@@ -47,6 +48,13 @@ const Film = () => {
 	}
 
     const goBackHandler = () => navigate('/')
+
+	const handleOpenDeleteDialog = () => setOpenDeleteDialog(!openDeleteDialog)
+
+	const handleDeleteFilm = async () => {
+		await firestore.deleteUserFilm(filmDetails)
+		navigate('/')
+	}
 
     return (
         <>
@@ -258,8 +266,26 @@ const Film = () => {
                 )}
             </div>
 
-            <div className="flex justify-center my-2 md:my-4 ">
-                <Button id="goBack" onClick={goBackHandler} size="lg" className="text-xs bg-violet-700 hover:bg-violet-600 ml-1">
+            <div className="flex justify-center gap-4 my-2 md:my-4 ">
+                <Button id="delete" onClick={handleOpenDeleteDialog} size="sm" className="text-xs bg-red-700 hover:bg-red-600 ml-1">
+                    {t('common.delete_film')}
+                </Button>
+                <Dialog open={openDeleteDialog} handler={handleOpenDeleteDialog}>
+                    <DialogBody className="text-center font-extrabold mt-3">
+                        <span className="material-symbols-outlined text-4xl mb-2">error</span>
+                        <p>{t('delete_film.dialog_body')}</p>
+                    </DialogBody>
+                    <DialogFooter>
+                        <Button onClick={handleOpenDeleteDialog} className="text-xs text-white bg-red-700 hover:bg-red-600 mr-3">
+                            <span>{t('common.cancel')}</span>
+                        </Button>
+                        <Button onClick={handleDeleteFilm} className="text-xs bg-green-700 hover:bg-green-600 ">
+                            <span>{t('common.delete_film')}</span>
+                        </Button>
+                    </DialogFooter>
+                </Dialog>
+
+                <Button id="goBack" onClick={goBackHandler} size="sm" className="text-xs bg-violet-700 hover:bg-violet-600 ml-1">
                     {t('common.come_back')}
                 </Button>
             </div>

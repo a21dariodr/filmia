@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { setFilms, getFilms } from '../state-slices/filmsSlice'
+import { useDispatch } from 'react-redux'
+import { setFilms } from '../state-slices/filmsSlice'
 import { useTranslation } from 'react-i18next'
 import FirebaseFirestoreService from '../services/db/FirebaseFirestoreService'
 import { Film } from '../models/Film'
@@ -15,7 +15,6 @@ const Gallery = () => {
     const dispatch = useDispatch()
     const firestore = new FirebaseFirestoreService()
     const [userFilms, setUserFilms] = useState<Film[]>([])
-    const filmsList = useSelector(getFilms)
     const userId = localStorage.getItem('userId')!
     const [atropos, setAtropos] = useState(true)
     const [smallCards, setSmallCards] = useState(false)
@@ -23,7 +22,6 @@ const Gallery = () => {
     const newFilmHandler = () => navigate('/newFilm')
 
     console.debug('User films: ', userFilms)
-    console.debug('Redux filmList', filmsList)
     console.debug('Small cards: ', smallCards)
 
 	const filmClickHandler = (film: Film) => navigate('/films/' + film.id)

@@ -2,6 +2,7 @@
     "deploy_test": "Automatic deploy test",
     "common": {
         "add_film": "Add film",
+		"delete_film": "Delete film",
 		"cancel": "Cancel",
         "come_back": "Back"
     },
@@ -53,6 +54,9 @@
         "save_film": "Save",
         "select_film": "Select a film"
     },
+	"delet_film": {
+		"dialog_body": "Confirm that you want to delete the current film"
+	},
 	"film": {
         "film_title": "Title",
         "film_original_title": "Original title",
