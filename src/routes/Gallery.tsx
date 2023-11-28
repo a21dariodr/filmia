@@ -118,12 +118,12 @@ const Gallery = () => {
                                                 film.watched ? (
                                                     <span>
                                                         <span className="material-symbols-outlined align-sub text-sm">star</span>
-                                                        {' ' + film.score}
+                                                        {' ' + (film.score ? film.score : '0.0')}
                                                     </span>
                                                 ) : (
                                                     <span>
                                                         <span className="material-symbols-outlined align-middle text-sm">close</span>
-                                                        {' 0.0'}
+                                                        {' ' + (film.score ? film.score : '0.0')}
                                                     </span>
                                                 )
                                             }
@@ -165,12 +165,12 @@ const Gallery = () => {
                                                 film.watched ? (
                                                     <span>
                                                         <span className="material-symbols-outlined align-sub text-sm">star</span>
-                                                        {' ' + film.score}
+                                                        {' ' + (film.score ? film.score : '0.0')}
                                                     </span>
                                                 ) : (
                                                     <span>
                                                         <span className="material-symbols-outlined align-middle text-sm">close</span>
-                                                        {' 0.0'}
+                                                        {' ' + (film.score ? film.score : '0.0')}
                                                     </span>
                                                 )
                                             }

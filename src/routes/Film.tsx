@@ -26,13 +26,15 @@ const Film = () => {
 	const firestore = new FirebaseFirestoreService()
     const filmDetails = useLoaderData() as FilmModel
 	const plugins = [new Arrow()]
-	const [score, setScore] = useState<number>()
-	const [watched, setWatched] = useState<boolean>()
-	const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false)
+	const [ score, setScore ] = useState<number>(0)
+	const [ watched, setWatched ] = useState<boolean>(false)
+	const [ openDeleteDialog, setOpenDeleteDialog ] = useState<boolean>(false)
 
 	useEffect( () => {
 		const getFilmScoreAndWatched =  async () => {
 			const scoreAndWatched = await firestore.getUserFilmScoreAndWatched(filmDetails.id.toString())
+			filmDetails.score = scoreAndWatched.score
+			filmDetails.watched = scoreAndWatched.watched
             setScore(scoreAndWatched.score)
             setWatched(scoreAndWatched.watched)
             console.debug('Film details: ', filmDetails)
@@ -46,6 +48,21 @@ const Film = () => {
 		cast.push(filmDetails.cast![i])
 		if (i == filmDetails.cast!.length-1) break;
 	}
+
+	const toggleWatched = async () => {
+		setWatched(!watched)
+		filmDetails.watched = !filmDetails.watched
+		await firestore.updateUserFilmWatched(filmDetails)
+	}
+
+	const scoreChangeHandler = (e: any) => {
+        const scoreInput = document.querySelector('#score') as HTMLInputElement
+		setScore(e.target.value)
+        if (scoreInput.validity.valid) {
+            filmDetails.score = Number(e.target.value)
+            firestore.updateUserFilmScore(filmDetails)
+        }
+    }
 
     const goBackHandler = () => navigate('/')
 
@@ -124,14 +141,31 @@ const Film = () => {
                         <div className="w-full">
                             <span className="material-symbols-outlined align-text-bottom text-xs md:text-sm text-violet-700 mr-1">visibility</span>
                             <span className="font-bold italic mr-2">{t('film.film_watched')}</span>
-                            {/* TODO cambiar por checkbox para cambiar valor a tiempo real */}
-                            {watched ? 'Vista' : 'Pendente'}
+                            <div className="inline-flex ml-1 md:ml-3 p-2 md:p-3 hover:bg-indigo-200 placeholder:text-gray-700 bg-indigo-100 text-dark-gray-900 rounded-lg md:rounded-xl">
+                                <label className="inline-flex cursor-pointer select-none">
+                                    <input type="checkbox" checked={watched} onChange={toggleWatched} className="sr-only peer" />
+                                    <div className="w-3 md:w-4 h-3 md:h-4 bg-white border-2 rounded-sm border-gray-500 peer peer-checked:border-0 peer-checked:bg-violet-700">
+                                        <img src="/check-icon.png" alt="tick" />
+                                    </div>
+                                </label>
+                            </div>
                         </div>
 
                         <div className="w-full">
                             <span className="material-symbols-outlined align-text-bottom text-xs md:text-sm text-violet-700 mr-1">star</span>
                             <span className="font-bold italic mr-2">{t('film.film_score')}</span>
-                            {score}
+                            <input
+                                id="score"
+                                type="number"
+                                min="0"
+                                max="10"
+                                step="0.01"
+                                placeholder={t('film.film_score_placeholder')}
+                                value={score}
+                                onChange={scoreChangeHandler}
+                                className="w-11 md:w-[4.5rem] ml-1 md:ml-3 p-2 md:pl-4 text-xs md:text-sm font-bold outline-none hover:bg-indigo-200 placeholder:text-gray-700 bg-indigo-100 text-dark-gray-900
+										invalid:text-red-800 invalid:bg-red-200 invalid:hover:bg-red-200 invalid:font-bold rounded-lg md:rounded-xl"
+                            />
                         </div>
                     </div>
                 </div>
