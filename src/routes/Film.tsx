@@ -281,7 +281,7 @@ const Film = () => {
 
                 {filmDetails.watchProviders?.length! > 0 ? (
                     <div className="flex flex-wrap md:pl-16">
-                        <div className="md:min-w-full font-bold italic mb-4 md:mb-0">
+                        <div className="min-w-full font-bold italic mb-4 md:mb-0">
                             {t('film.film_watch_providers')}
                             <img src="/justwatch_logo.svg" alt="JustWatch logo" className="inline w-[17vw] md:w-[5vw] ml-4" />
                         </div>
