@@ -4,7 +4,10 @@
         "add_film": "Add film",
 		"delete_film": "Delete film",
 		"cancel": "Cancel",
-        "come_back": "Back"
+        "come_back": "Back",
+		"search": "Search title",
+		"sort": "Sort",
+		"filter": "Filter"
     },
     "error": {
         "generic_message": "Oh no! The resource you're looking for could not be found!",

@@ -4,7 +4,10 @@
         "add_film": "Engadir filme",
         "delete_film": "Eliminar película",
         "cancel": "Cancelar",
-        "come_back": "Volver"
+        "come_back": "Volver",
+        "search": "Buscar título",
+        "sort": "Ordenar",
+        "filter": "Filtrar"
     },
     "error": {
         "generic_message": "Vaites! Aconteceu un erro ao obter o recurso solicitado!",

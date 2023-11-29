@@ -18,6 +18,7 @@ const Gallery = () => {
     const userId = localStorage.getItem('userId')!
     const [atropos, setAtropos] = useState(true)
     const [smallCards, setSmallCards] = useState(false)
+	const [ titleSearch, setTitleSearch ] = useState<string>('')
 
     const newFilmHandler = () => navigate('/newFilm')
 
@@ -50,6 +51,10 @@ const Gallery = () => {
         }
     }
 
+	const onTitleSearchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setTitleSearch(event.target.value)
+	}
+
     useEffect(() => {
         firestore.getUserFilms().then((films: Film[]) => {
             if (films) dispatch(setFilms(films))
@@ -59,7 +64,7 @@ const Gallery = () => {
 
     return (
         <main className="w-full px-3 md:px-5">
-            <div className="flex gap-x-2 md:gap-x-5 justify-center align-middle">
+            <div className="inline-flex w-full md:w-1/2 gap-x-2 md:gap-x-5 justify-center align-middle mb-1 md:mb-0">
                 <Switch label={t('gallery.3d_effect')} checked={atropos} onChange={atroposHandler} className="checked:bg-violet-700" crossOrigin="anonymous" />
 
                 <Button onClick={newFilmHandler} size="sm" className="text-xs bg-violet-700 hover:bg-violet-600">
@@ -74,6 +79,15 @@ const Gallery = () => {
                         <span className="material-symbols-outlined">zoom_out</span>
                     </Button>
                 </ButtonGroup>
+            </div>
+
+            <div className='inline-flex w-full md:w-1/2 gap-x-2 md:gap-x-5 justify-center align-middle my-2 md:mt-0"'>
+                <div
+                    className="w-30 md:w-34 p-2 md:px-3 text-xs md:text-sm font-bold outline-none hover:bg-indigo-200 bg-indigo-100  rounded-lg md:rounded-xl">
+                    <span className="material-symbols-outlined align-middle font-bold text-sm md:text-base">search</span>
+                    <input id="search" type="text" placeholder={t('common.search')} value={titleSearch} onChange={onTitleSearchHandler} className="hover:bg-indigo-200
+						placeholder:text-gray-700 bg-indigo-100 text-dark-gray-900 ml-2 align-middle" />
+                </div>
             </div>
 
             <div id="films" className="flex flex-wrap justify-center gap-3 md:gap-5 w-full my-2 md:my-4">
