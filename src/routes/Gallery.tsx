@@ -18,12 +18,13 @@ const Gallery = () => {
     const userId = localStorage.getItem('userId')!
     const [atropos, setAtropos] = useState(true)
     const [smallCards, setSmallCards] = useState(false)
-	const [ titleSearch, setTitleSearch ] = useState<string>('')
+	const [titleSearch, setTitleSearch] = useState<string>('')
+	const [processedUserFilms, setProcessedUserFilms] = useState<Film[]>([])
+
+	console.debug('User films: ', userFilms)
+    console.debug('Small cards: ', smallCards)
 
     const newFilmHandler = () => navigate('/newFilm')
-
-    console.debug('User films: ', userFilms)
-    console.debug('Small cards: ', smallCards)
 
 	const filmClickHandler = (film: Film) => navigate('/films/' + film.id)
 
@@ -53,12 +54,23 @@ const Gallery = () => {
 
 	const onTitleSearchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setTitleSearch(event.target.value)
+
+		if (event.target.value !== '') {
+			const searchText = event.target.value.toLowerCase()
+            const searchRegexp = new RegExp(`.*${searchText}.*`)
+            const filteredResults = userFilms.filter(film => film.title.toLowerCase().match(searchRegexp) || film.originalTitle.toLowerCase().match(searchRegexp))
+            setProcessedUserFilms(filteredResults)
+			console.log('Filtered search results', filteredResults)
+		} else {
+			setProcessedUserFilms(userFilms)
+		}
 	}
 
     useEffect(() => {
         firestore.getUserFilms().then((films: Film[]) => {
             if (films) dispatch(setFilms(films))
             setUserFilms(films)
+			setProcessedUserFilms(films)
         })
     }, [userId])
 
@@ -82,16 +94,15 @@ const Gallery = () => {
             </div>
 
             <div className='inline-flex w-full md:w-1/2 gap-x-2 md:gap-x-5 justify-center align-middle my-2 md:mt-0"'>
-                <div
-                    className="w-30 md:w-34 p-2 md:px-3 text-xs md:text-sm font-bold outline-none hover:bg-indigo-200 bg-indigo-100  rounded-lg md:rounded-xl">
+                <div className="search w-30 md:w-34 p-2 md:px-3 text-xs md:text-sm font-bold outline-none hover:bg-indigo-200 bg-indigo-100  rounded-lg md:rounded-xl">
                     <span className="material-symbols-outlined align-middle font-bold text-sm md:text-base">search</span>
-                    <input id="search" type="text" placeholder={t('common.search')} value={titleSearch} onChange={onTitleSearchHandler} className="hover:bg-indigo-200
-						placeholder:text-gray-700 bg-indigo-100 text-dark-gray-900 ml-2 align-middle" />
+                    <input id="search" type="text" placeholder={t('common.search')} value={titleSearch} onChange={onTitleSearchHandler} className="placeholder:text-gray-700
+						bg-indigo-100 text-dark-gray-900 ml-2 align-middle" />
                 </div>
             </div>
 
             <div id="films" className="flex flex-wrap justify-center gap-3 md:gap-5 w-full my-2 md:my-4">
-                {userFilms.map(film => (
+                {processedUserFilms.map(film => (
                     <div
                         onClick={() => filmClickHandler(film)}
                         onKeyDown={() => filmClickHandler(film)}

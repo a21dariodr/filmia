@@ -24,3 +24,12 @@
 .smallCards .chipDuration {
 	display: none;
 }
+
+div.search:hover input {
+	background-color: #c7d2fe;
+}
+
+div.search input:focus-visible {
+	border-style: none;
+	outline-style: none;
+}
