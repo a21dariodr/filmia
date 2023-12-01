@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import FirebaseFirestoreService from '../services/db/FirebaseFirestoreService'
 import { Film } from '../models/Film'
 import Atropos from 'atropos/react'
-import { Button, ButtonGroup, Chip, Switch } from '@material-tailwind/react'
+import { Button, ButtonGroup, Chip, List, ListItem, Menu, MenuHandler, MenuList, Switch } from '@material-tailwind/react'
 import '../styles/Gallery.css'
 
 const Gallery = () => {
@@ -14,12 +14,15 @@ const Gallery = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const firestore = new FirebaseFirestoreService()
-    const [userFilms, setUserFilms] = useState<Film[]>([])
     const userId = localStorage.getItem('userId')!
+
+	const [userFilms, setUserFilms] = useState<Film[]>([])
+	const [processedUserFilms, setProcessedUserFilms] = useState<Film[]>([])
     const [atropos, setAtropos] = useState(true)
     const [smallCards, setSmallCards] = useState(false)
 	const [titleSearch, setTitleSearch] = useState<string>('')
-	const [processedUserFilms, setProcessedUserFilms] = useState<Film[]>([])
+	const [sortOrder, setSortOrder] = useState<string>('asc')
+	
 
 	console.debug('User films: ', userFilms)
     console.debug('Small cards: ', smallCards)
@@ -66,6 +69,73 @@ const Gallery = () => {
 		}
 	}
 
+	const onSortHandler = (field: string) => {
+		const sortedFilms = [...userFilms]
+		sortedFilms.sort((a: Film, b: Film): number => {
+			switch (field) {
+                case 'title':
+                    if (sortOrder === 'asc') return a.title.localeCompare(b.title)
+                    else return b.title.localeCompare(a.title)
+                case 'originalTitle':
+                    if (sortOrder === 'asc') return a.originalTitle.localeCompare(b.originalTitle)
+                    else return b.originalTitle.localeCompare(a.originalTitle)
+                case 'duration':
+					if (sortOrder === 'asc') {
+						if (!a.duration) return -1
+						else if (!b.duration) return 1
+						else return a.duration - b.duration
+					} else {
+						if (!a.duration) return 1
+                        else if (!b.duration) return -1
+                        else return b.duration - a.duration
+					}
+				case 'releaseYear':
+					if (sortOrder === 'asc') {
+						if (!a.releaseYear) return -1
+						else if (!b.releaseYear) return 1
+                        else return a.releaseYear - b.releaseYear
+					} else {
+						if (!a.releaseYear) return 1
+                        else if (!b.releaseYear) return -1
+                        else return b.releaseYear - a.releaseYear
+					}
+				case 'voteAverage':
+					if (sortOrder === 'asc') {
+						if (!a.voteAverage) return -1
+						else if (!b.voteAverage) return 1
+                        else return a.voteAverage - b.voteAverage
+					} else {
+						if (!a.voteAverage) return 1
+                        else if (!b.voteAverage) return -1
+                        else return b.voteAverage - a.voteAverage
+					}
+				default:
+					if (sortOrder === 'asc') {
+						if (!a.score) return -1
+						else if (!b.score) return 1
+                        else return a.score - b.score
+					} else {
+						if (!a.score) return 1
+                        else if (!b.score) return -1
+                        else return b.score - a.score
+					}
+            }
+		})
+
+		setProcessedUserFilms(sortedFilms)
+	}
+
+	const onChangeSortOrderHandler = (field: string) => {
+        if (sortOrder === 'asc') {
+			setSortOrder('desc')
+			onSortHandler(field)
+		} 
+        else {
+			setSortOrder('asc')
+			onSortHandler(field)
+		}
+    }
+
     useEffect(() => {
         firestore.getUserFilms().then((films: Film[]) => {
             if (films) dispatch(setFilms(films))
@@ -96,9 +166,74 @@ const Gallery = () => {
             <div className='inline-flex w-full md:w-1/2 gap-x-2 md:gap-x-5 justify-center align-middle my-2 md:mt-0"'>
                 <div className="search w-30 md:w-34 p-2 md:px-3 text-xs md:text-sm font-bold outline-none hover:bg-indigo-200 bg-indigo-100  rounded-lg md:rounded-xl">
                     <span className="material-symbols-outlined align-middle font-bold text-sm md:text-base">search</span>
-                    <input id="search" type="text" placeholder={t('common.search')} value={titleSearch} onChange={onTitleSearchHandler} className="placeholder:text-gray-700
-						bg-indigo-100 text-dark-gray-900 ml-2 align-middle" />
+                    <input
+                        id="search"
+                        type="text"
+                        placeholder={t('common.search')}
+                        value={titleSearch}
+                        onChange={onTitleSearchHandler}
+                        className="placeholder:text-gray-700
+						bg-indigo-100 text-dark-gray-900 ml-2 align-middle"
+                    />
                 </div>
+
+                <Menu>
+                    <MenuHandler>
+                        <Button className="px-2 md:px-3 capitalize text-xs md:text-sm bg-yellow-800">{t('common.sort')}</Button>
+                    </MenuHandler>
+                    <MenuList className=" border-2">
+                        <List>
+                            <ListItem>
+                                <span onClick={() => onSortHandler('title')} onKeyDown={() => onSortHandler('title')} className="hover:font-extrabold hover:text-red-900">
+                                    {t('film.film_title')}
+                                </span>
+                                <span onClick={() => onChangeSortOrderHandler('title')} onKeyDown={() => onChangeSortOrderHandler('title')} className="material-symbols-outlined hover:font-extrabold hover:text-red-900 text-base ml-4">
+                                    swap_vert
+                                </span>
+                            </ListItem>
+                            <ListItem>
+                                <span onClick={() => onSortHandler('originalTitle')} onKeyDown={() => onSortHandler('originalTitle')} className="hover:font-extrabold hover:text-red-900">
+                                    {t('film.film_original_title')}
+                                </span>
+                                <span onClick={() => onChangeSortOrderHandler('originalTitle')} onKeyDown={() => onChangeSortOrderHandler('originalTitle')} className="material-symbols-outlined hover:font-extrabold hover:text-red-900 text-base ml-4">
+                                    swap_vert
+                                </span>
+                            </ListItem>
+                            <ListItem>
+                                <span onClick={() => onSortHandler('duration')} onKeyDown={() => onSortHandler('duration')} className="hover:font-extrabold hover:text-red-900">
+                                    {t('film.film_duration')}
+                                </span>
+                                <span onClick={() => onChangeSortOrderHandler('duration')} onKeyDown={() => onChangeSortOrderHandler('duration')} className="material-symbols-outlined hover:font-extrabold hover:text-red-900 text-base ml-4">
+                                    swap_vert
+                                </span>
+                            </ListItem>
+                            <ListItem>
+                                <span onClick={() => onSortHandler('releaseYear')} onKeyDown={() => onSortHandler('releaseYear')} className="hover:font-extrabold hover:text-red-900">
+                                    {t('film.film_release_year')}
+                                </span>
+                                <span onClick={() => onChangeSortOrderHandler('releaseYear')} onKeyDown={() => onChangeSortOrderHandler('releaseYear')} className="material-symbols-outlined hover:font-extrabold hover:text-red-900 text-base ml-4">
+                                    swap_vert
+                                </span>
+                            </ListItem>
+                            <ListItem>
+                                <span onClick={() => onSortHandler('voteAverage')} onKeyDown={() => onSortHandler('voteAverage')} className="hover:font-extrabold hover:text-red-900">
+                                    {t('film.film_vote_average')}
+                                </span>
+                                <span onClick={() => onChangeSortOrderHandler('voteAverage')} onKeyDown={() => onChangeSortOrderHandler('voteAverage')} className="material-symbols-outlined hover:font-extrabold hover:text-red-900 text-base ml-4">
+                                    swap_vert
+                                </span>
+                            </ListItem>
+                            <ListItem>
+                                <span onClick={() => onSortHandler('score')} onKeyDown={() => onSortHandler('score')} className="hover:font-extrabold hover:text-red-900">
+                                    {t('film.film_score')}
+                                </span>
+                                <span onClick={() => onChangeSortOrderHandler('score')} onKeyDown={() => onChangeSortOrderHandler('score')} className="material-symbols-outlined hover:font-extrabold hover:text-red-900 text-base ml-4">
+                                    swap_vert
+                                </span>
+                            </ListItem>
+                        </List>
+                    </MenuList>
+                </Menu>
             </div>
 
             <div id="films" className="flex flex-wrap justify-center gap-3 md:gap-5 w-full my-2 md:my-4">
