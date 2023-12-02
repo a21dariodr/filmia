@@ -280,7 +280,7 @@ const Gallery = () => {
                             <Atropos rotateTouch={'scroll-y'} className="w-full h-full">
                                 <figure className="relative w-full h-full">
                                     {film.posterPath ? (
-                                        <img src={film.posterPath} className="rounded-md" alt="Poster" />
+                                        <img src={film.posterPath} className="h-full rounded-md" alt="Poster" />
                                     ) : (
                                         <div className="flex flex-wrap h-full place-content-center border bg-white">
                                             <span className="material-symbols-outlined text-indigo-600 text-8xl">image</span>
@@ -328,7 +328,7 @@ const Gallery = () => {
                         ) : (
                             <figure className="relative">
                                 {film.posterPath ? (
-                                    <img src={film.posterPath} className="rounded-md" alt="Poster" />
+                                    <img src={film.posterPath} className="h-full rounded-md" alt="Poster" />
                                 ) : (
                                     <div className="flex flex-wrap h-full place-content-center border bg-white">
                                         <span className="material-symbols-outlined text-indigo-600 text-8xl">image</span>
