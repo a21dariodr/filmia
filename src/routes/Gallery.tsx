@@ -168,9 +168,10 @@ const Gallery = () => {
     return (
         <main className="w-full px-3 md:px-5">
             <div className="inline-flex w-full md:w-1/2 gap-x-2 md:gap-x-5 justify-center align-middle mb-1 md:mb-0">
-                <Switch label={t('gallery.3d_effect')} checked={atropos} onChange={atroposHandler} className="checked:bg-violet-700" crossOrigin="anonymous" />
+                <Switch checked={atropos} onChange={atroposHandler} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
+                <p className='flex place-items-center text-sm md:text-base ml-1 md:ml-[-8px]'>{t('gallery.3d_effect')}</p>
 
-                <Button onClick={newFilmHandler} size="sm" className="text-xs bg-violet-700 hover:bg-violet-600">
+                <Button onClick={newFilmHandler} size="sm" className="bg-violet-700 hover:bg-violet-600">
                     {t('common.add_film')}
                 </Button>
 
@@ -185,8 +186,8 @@ const Gallery = () => {
             </div>
 
             <div className='inline-flex w-full md:w-1/2 gap-x-2 md:gap-x-5 justify-center align-middle my-2 md:mt-0"'>
-                <div className="search w-30 md:w-34 p-2 md:px-3 text-xs md:text-sm font-bold outline-none hover:bg-indigo-200 bg-indigo-100  rounded-lg md:rounded-xl">
-                    <span className="material-symbols-outlined align-middle font-bold text-sm md:text-base">search</span>
+                <div className="search flex items-center w-30 md:w-34 p-2 md:px-3 text-xs md:text-sm font-bold outline-none hover:bg-indigo-200 bg-indigo-100 rounded-lg md:rounded-xl">
+                    <span className="material-symbols-outlined font-bold text-sm md:text-base">search</span>
                     <input
                         id="search"
                         type="text"
@@ -200,11 +201,11 @@ const Gallery = () => {
 
                 <Menu>
                     <MenuHandler>
-                        <Button className="px-2 md:px-3 capitalize text-xs md:text-sm bg-yellow-800">{t('common.sort')}</Button>
+                        <Button className="px-2 md:px-3 capitalize !font-black text-sm md:text-base text-black bg-white hover:bg-slate-100 shadow-none">{t('common.sort')}</Button>
                     </MenuHandler>
-                    <MenuList className=" border-2">
+                    <MenuList className="p-0 md:p-2 border-2">
                         <List>
-                            <ListItem>
+                            <ListItem className="text-sm md:text-base">
                                 <span onClick={() => onSortHandler('title')} onKeyDown={() => onSortHandler('title')} className="hover:font-extrabold hover:text-red-900">
                                     {t('film.film_title')}
                                 </span>
@@ -212,7 +213,7 @@ const Gallery = () => {
                                     swap_vert
                                 </span>
                             </ListItem>
-                            <ListItem>
+                            <ListItem className="text-sm md:text-base">
                                 <span onClick={() => onSortHandler('originalTitle')} onKeyDown={() => onSortHandler('originalTitle')} className="hover:font-extrabold hover:text-red-900">
                                     {t('film.film_original_title')}
                                 </span>
@@ -220,7 +221,7 @@ const Gallery = () => {
                                     swap_vert
                                 </span>
                             </ListItem>
-                            <ListItem>
+                            <ListItem className="text-sm md:text-base">
                                 <span onClick={() => onSortHandler('duration')} onKeyDown={() => onSortHandler('duration')} className="hover:font-extrabold hover:text-red-900">
                                     {t('film.film_duration')}
                                 </span>
@@ -228,7 +229,7 @@ const Gallery = () => {
                                     swap_vert
                                 </span>
                             </ListItem>
-                            <ListItem>
+                            <ListItem className="text-sm md:text-base">
                                 <span onClick={() => onSortHandler('releaseYear')} onKeyDown={() => onSortHandler('releaseYear')} className="hover:font-extrabold hover:text-red-900">
                                     {t('film.film_release_year')}
                                 </span>
@@ -236,7 +237,7 @@ const Gallery = () => {
                                     swap_vert
                                 </span>
                             </ListItem>
-                            <ListItem>
+                            <ListItem className="text-sm md:text-base">
                                 <span onClick={() => onSortHandler('voteAverage')} onKeyDown={() => onSortHandler('voteAverage')} className="hover:font-extrabold hover:text-red-900">
                                     {t('film.film_vote_average')}
                                 </span>
@@ -244,7 +245,7 @@ const Gallery = () => {
                                     swap_vert
                                 </span>
                             </ListItem>
-                            <ListItem>
+                            <ListItem className="text-sm md:text-base">
                                 <span onClick={() => onSortHandler('score')} onKeyDown={() => onSortHandler('score')} className="hover:font-extrabold hover:text-red-900">
                                     {t('film.film_score')}
                                 </span>
@@ -254,6 +255,12 @@ const Gallery = () => {
                             </ListItem>
                         </List>
                     </MenuList>
+                </Menu>
+
+                <Menu>
+                    <MenuHandler>
+                        <Button className="px-2 md:px-3 capitalize !font-black text-sm md:text-base text-black bg-white hover:bg-slate-100 shadow-none">{t('common.filter')}</Button>
+                    </MenuHandler>
                 </Menu>
             </div>
 
