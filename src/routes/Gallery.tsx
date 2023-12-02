@@ -22,7 +22,7 @@ const Gallery = () => {
     const [smallCards, setSmallCards] = useState(false)
 	const [titleSearch, setTitleSearch] = useState<string>('')
 	const [sortOrder, setSortOrder] = useState<string>('asc')
-	const [sortField, setSortField] = useState<string>('')
+	const [sortField, setSortField] = useState<string>('title')
 	
 
 	console.debug('User films: ', userFilms)
@@ -76,7 +76,7 @@ const Gallery = () => {
 			setSortField(field)
 		}
 
-		const sortedFilms = [...userFilms]
+		const sortedFilms = (processedUserFilms.length > 0) ? [...processedUserFilms] : [...userFilms]
 		sortedFilms.sort((a: Film, b: Film): number => {
 			switch (field) {
                 case 'title':
@@ -155,7 +155,7 @@ const Gallery = () => {
 
 	useEffect(() => {
 		onSortHandler(sortField)
-	}, [sortOrder])
+	}, [sortOrder, titleSearch, userFilms])
 
     useEffect(() => {
         firestore.getUserFilms().then((films: Film[]) => {
@@ -169,7 +169,7 @@ const Gallery = () => {
         <main className="w-full px-3 md:px-5">
             <div className="inline-flex w-full md:w-1/2 gap-x-2 md:gap-x-5 justify-center align-middle mb-1 md:mb-0">
                 <Switch checked={atropos} onChange={atroposHandler} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
-                <p className='flex place-items-center text-sm md:text-base ml-1 md:ml-[-8px]'>{t('gallery.3d_effect')}</p>
+                <p className="flex place-items-center text-sm md:text-base ml-1 md:ml-[-8px]">{t('gallery.3d_effect')}</p>
 
                 <Button onClick={newFilmHandler} size="sm" className="bg-violet-700 hover:bg-violet-600">
                     {t('common.add_film')}
@@ -186,7 +186,7 @@ const Gallery = () => {
             </div>
 
             <div className='inline-flex w-full md:w-1/2 gap-x-2 md:gap-x-5 justify-center align-middle my-2 md:mt-0"'>
-                <div className="search flex items-center w-30 md:w-34 p-2 md:px-3 text-xs md:text-sm font-bold outline-none hover:bg-indigo-200 bg-indigo-100 rounded-lg md:rounded-xl">
+                <div className="search flex items-center w-30 md:w-34 p-3 md:px-4 text-xs md:text-sm font-bold outline-none hover:bg-indigo-200 bg-indigo-100 rounded-lg md:rounded-xl">
                     <span className="material-symbols-outlined font-bold text-sm md:text-base">search</span>
                     <input
                         id="search"
@@ -261,6 +261,11 @@ const Gallery = () => {
                     <MenuHandler>
                         <Button className="px-2 md:px-3 capitalize !font-black text-sm md:text-base text-black bg-white hover:bg-slate-100 shadow-none">{t('common.filter')}</Button>
                     </MenuHandler>
+                    <MenuList className="p-0 md:p-2 border-2">
+                        <List>
+                            <ListItem className="text-sm md:text-base">Ey</ListItem>
+                        </List>
+                    </MenuList>
                 </Menu>
             </div>
 
