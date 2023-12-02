@@ -22,6 +22,7 @@ const Gallery = () => {
     const [smallCards, setSmallCards] = useState(false)
 	const [titleSearch, setTitleSearch] = useState<string>('')
 	const [sortOrder, setSortOrder] = useState<string>('asc')
+	const [sortField, setSortField] = useState<string>('')
 	
 
 	console.debug('User films: ', userFilms)
@@ -70,6 +71,11 @@ const Gallery = () => {
 	}
 
 	const onSortHandler = (field: string) => {
+		if (sortField !== field) {
+			console.debug('Changing sort field to: ', field)
+			setSortField(field)
+		}
+
 		const sortedFilms = [...userFilms]
 		sortedFilms.sort((a: Film, b: Film): number => {
 			switch (field) {
@@ -122,19 +128,34 @@ const Gallery = () => {
             }
 		})
 
+		console.debug('Sorting by ', field, ' ', sortOrder)
 		setProcessedUserFilms(sortedFilms)
 	}
 
 	const onChangeSortOrderHandler = (field: string) => {
         if (sortOrder === 'asc') {
+			console.debug('Changing sort order to DESC')
 			setSortOrder('desc')
-			onSortHandler(field)
+
+			if (sortField !== field) {
+                console.debug('Changing sort field to: ', field)
+                setSortField(field)
+            }
 		} 
         else {
+			console.debug('Changing sort order to ASC')
 			setSortOrder('asc')
-			onSortHandler(field)
+			
+			if (sortField !== field) {
+                console.debug('Changing sort field to: ', field)
+                setSortField(field)
+            }
 		}
     }
+
+	useEffect(() => {
+		onSortHandler(sortField)
+	}, [sortOrder])
 
     useEffect(() => {
         firestore.getUserFilms().then((films: Film[]) => {
