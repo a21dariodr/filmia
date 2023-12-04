@@ -23,8 +23,9 @@ const Gallery = () => {
 	const [titleSearch, setTitleSearch] = useState<string>('')
 	const [sortOrder, setSortOrder] = useState<string>('asc')
 	const [sortField, setSortField] = useState<string>('title')
+	const [filterGenres, setFilterGenres] = useState<boolean>(false)
+	const [filterWatched, setFilterWatched] = useState<boolean>(false)
 	
-
 	console.debug('User films: ', userFilms)
     console.debug('Small cards: ', smallCards)
 
@@ -153,9 +154,22 @@ const Gallery = () => {
 		}
     }
 
+	const onFilterHandler = (field: string) => {
+		switch (field) {
+			case 'genre':
+				setFilterGenres(!filterGenres)
+				break;
+			case 'watched':
+				setFilterWatched(!filterWatched)
+				break;
+			default:
+
+		}
+	}
+
 	useEffect(() => {
-		onSortHandler(sortField)
-	}, [sortOrder, titleSearch, userFilms])
+        onSortHandler(sortField)
+    }, [userFilms, titleSearch, sortOrder, filterGenres, filterWatched])
 
     useEffect(() => {
         firestore.getUserFilms().then((films: Film[]) => {
@@ -257,13 +271,20 @@ const Gallery = () => {
                     </MenuList>
                 </Menu>
 
-                <Menu>
+                <Menu dismiss={{ itemPress: false }}>
                     <MenuHandler>
                         <Button className="px-2 md:px-3 capitalize !font-black text-sm md:text-base text-black bg-white hover:bg-slate-100 shadow-none">{t('common.filter')}</Button>
                     </MenuHandler>
                     <MenuList className="p-0 md:p-2 border-2">
                         <List>
-                            <ListItem className="text-sm md:text-base">Ey</ListItem>
+                            <ListItem>
+                                <Switch checked={filterGenres} onChange={() => onFilterHandler('genre')} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
+                                <p className="flex place-items-center text-sm md:text-base ml-1 md:ml-2">{t('gallery.3d_effect')}</p>
+                            </ListItem>
+                            <ListItem>
+                                <Switch checked={filterWatched} onChange={() => onFilterHandler('watched')} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
+                                <p className="flex place-items-center text-sm md:text-base ml-1 md:ml-2">{t('gallery.3d_effect')}</p>
+                            </ListItem>
                         </List>
                     </MenuList>
                 </Menu>
