@@ -11,6 +11,7 @@ cache:
 before_script:
   - npm install
   - npm install -g firebase-tools
+  - \cp fixes/menu.d.ts node_modules/@material-tailwind/react/types/components/menu.d.ts
 
 build:
   stage: build
