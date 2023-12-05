@@ -21,12 +21,16 @@ const Gallery = () => {
 	const [processedUserFilms, setProcessedUserFilms] = useState<Film[]>([])
     const [atropos, setAtropos] = useState(true)
     const [smallCards, setSmallCards] = useState(false)
+
 	const [titleSearch, setTitleSearch] = useState<string>('')
 	const [sortOrder, setSortOrder] = useState<string>('asc')
 	const [sortField, setSortField] = useState<string>('title')
-	const [filterGenres, setFilterGenres] = useState<boolean>(false)
+
+	const [filterChanges, setFilterChanges] = useState<number>(0)
+	const [filterGenre, setFilterGenre] = useState<boolean>(false)
+	const [filterGenreValue, setFilterGenreValue] = useState<string>('Acción')
 	const [filterWatched, setFilterWatched] = useState<boolean>(false)
-	const [filterWatchedValue, setFilterWatchedValue] = useState<string>('pending')
+	const [filterWatchedValue, setFilterWatchedValue] = useState<boolean>(false)
 	const [openFilterWatchedMenu, setOpenFilterWatchedMenu] = useState<boolean>(false)
 	
 	console.debug('User films: ', userFilms)
@@ -157,22 +161,41 @@ const Gallery = () => {
 		}
     }
 
-	const onFilterHandler = (field: string) => {
-		switch (field) {
-			case 'genre':
-				setFilterGenres(!filterGenres)
-				break;
-			case 'watched':
-				setFilterWatched(!filterWatched)
-				break;
-			default:
+	const onFilterHandler = () => {
+		let filteredFilms: Film[] = []
 
+		if (filterGenre) {
+			console.debug('Filtering by genre')
+            const filteredFilmsByGenre = userFilms.filter((film: Film): boolean => {
+                if (!film.genres || film.genres.length === 0) return false
+                else return film.genres.includes(filterGenreValue)
+            })
+            filteredFilms.push(...filteredFilmsByGenre)
+        }
+
+		if (filterWatched) {
+			console.debug('Filtering by watched')
+			const filmsToFilter = (filteredFilms.length > 0) ? filteredFilms : userFilms
+            const filteredFilmsByWatched = filmsToFilter.filter((film: Film): boolean => film.watched === filterWatchedValue)
+			filteredFilms = filteredFilmsByWatched
+        }
+
+		if (filteredFilms.length > 0) {
+			setProcessedUserFilms(filteredFilms)
+		} else {
+			setProcessedUserFilms(userFilms)
 		}
+
+		setFilterChanges(filterChanges + 1)
 	}
 
 	useEffect(() => {
-        onSortHandler(sortField)
-    }, [userFilms, titleSearch, sortOrder, filterGenres, filterWatched])
+		onFilterHandler()
+	}, [filterGenre, filterGenreValue, filterWatched, filterWatchedValue])
+
+	useEffect(() => {
+		onSortHandler(sortField)
+    }, [userFilms, titleSearch, sortOrder, filterChanges])
 
     useEffect(() => {
         firestore.getUserFilms().then((films: Film[]) => {
@@ -281,11 +304,11 @@ const Gallery = () => {
                     <MenuList id="filters" className="p-0 md:p-2 border-2 max-h-200">
                         <List className="outline-none">
                             <ListItem>
-                                <Switch checked={filterGenres} onChange={() => onFilterHandler('genre')} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
+                                <Switch checked={filterGenre} onChange={() => setFilterGenre(!filterGenre)} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
                                 <p className="flex place-items-center text-sm md:text-base ml-1 md:ml-2">{t('film.film_genres')}</p>
                             </ListItem>
                             <ListItem>
-                                <Switch checked={filterWatched} onChange={() => onFilterHandler('watched')} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
+                                <Switch checked={filterWatched} onChange={() => setFilterWatched(!filterWatched)} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
                                 <Menu placement="bottom" open={openFilterWatchedMenu} handler={setOpenFilterWatchedMenu} allowHover offset={15}>
                                     <MenuHandler className="flex items-center justify-between">
                                         <MenuItem>
@@ -295,10 +318,10 @@ const Gallery = () => {
                                     </MenuHandler>
                                     <MenuList className="max-h-72">
                                         <List className="outline-none">
-                                            <ListItem selected={filterWatchedValue === 'pending'} onClick={() => setFilterWatchedValue('pending')} >
+                                            <ListItem selected={filterWatchedValue === false} onClick={() => setFilterWatchedValue(false)} >
                                                 {t('gallery.select.watched.pending')}
                                             </ListItem>
-                                            <ListItem selected={filterWatchedValue === 'watched'} onClick={() => setFilterWatchedValue('watched')} >
+                                            <ListItem selected={filterWatchedValue === true} onClick={() => setFilterWatchedValue(true)} >
                                                 {t('gallery.select.watched.watched')}
                                             </ListItem>
                                         </List>
