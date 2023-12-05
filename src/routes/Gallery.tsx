@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next'
 import FirebaseFirestoreService from '../services/db/FirebaseFirestoreService'
 import { Film } from '../models/Film'
 import Atropos from 'atropos/react'
-import { Button, ButtonGroup, Chip, List, ListItem, Menu, MenuHandler, MenuList, Switch } from '@material-tailwind/react'
+import { Button, ButtonGroup, Chip, List, ListItem, Menu, MenuHandler, MenuItem, MenuList, Switch } from '@material-tailwind/react'
+import { ChevronUpIcon } from '@heroicons/react/24/solid'
 import '../styles/Gallery.css'
 
 const Gallery = () => {
@@ -25,6 +26,8 @@ const Gallery = () => {
 	const [sortField, setSortField] = useState<string>('title')
 	const [filterGenres, setFilterGenres] = useState<boolean>(false)
 	const [filterWatched, setFilterWatched] = useState<boolean>(false)
+	const [filterWatchedValue, setFilterWatchedValue] = useState<string>('pending')
+	const [openFilterWatchedMenu, setOpenFilterWatchedMenu] = useState<boolean>(false)
 	
 	console.debug('User films: ', userFilms)
     console.debug('Small cards: ', smallCards)
@@ -212,13 +215,12 @@ const Gallery = () => {
 						bg-indigo-100 text-dark-gray-900 ml-2 align-middle"
                     />
                 </div>
-
                 <Menu>
                     <MenuHandler>
                         <Button className="px-2 md:px-3 capitalize !font-black text-sm md:text-base text-black bg-white hover:bg-slate-100 shadow-none">{t('common.sort')}</Button>
                     </MenuHandler>
                     <MenuList className="p-0 md:p-2 border-2">
-                        <List>
+                        <List className="outline-none">
                             <ListItem className="text-sm md:text-base">
                                 <span onClick={() => onSortHandler('title')} onKeyDown={() => onSortHandler('title')} className="hover:font-extrabold hover:text-red-900">
                                     {t('film.film_title')}
@@ -271,19 +273,37 @@ const Gallery = () => {
                     </MenuList>
                 </Menu>
 
-                <Menu dismiss={{ itemPress: false }}>
+                {/* isRequired doesn't add any functionality, it's only purpose is to solve an error in the Material Tailwind library */}
+                <Menu dismiss={{ itemPress: false, isRequired: { isRequired: false } }}>
                     <MenuHandler>
                         <Button className="px-2 md:px-3 capitalize !font-black text-sm md:text-base text-black bg-white hover:bg-slate-100 shadow-none">{t('common.filter')}</Button>
                     </MenuHandler>
-                    <MenuList className="p-0 md:p-2 border-2">
-                        <List>
+                    <MenuList id="filters" className="p-0 md:p-2 border-2 max-h-200">
+                        <List className="outline-none">
                             <ListItem>
                                 <Switch checked={filterGenres} onChange={() => onFilterHandler('genre')} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
-                                <p className="flex place-items-center text-sm md:text-base ml-1 md:ml-2">{t('gallery.3d_effect')}</p>
+                                <p className="flex place-items-center text-sm md:text-base ml-1 md:ml-2">{t('film.film_genres')}</p>
                             </ListItem>
                             <ListItem>
                                 <Switch checked={filterWatched} onChange={() => onFilterHandler('watched')} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
-                                <p className="flex place-items-center text-sm md:text-base ml-1 md:ml-2">{t('gallery.3d_effect')}</p>
+                                <Menu placement="bottom" open={openFilterWatchedMenu} handler={setOpenFilterWatchedMenu} allowHover offset={15}>
+                                    <MenuHandler className="flex items-center justify-between">
+                                        <MenuItem>
+                                            {t('gallery.select.watched.label')}
+                                            <ChevronUpIcon strokeWidth={2.5} className={`h-3.5 w-3.5 transition-transform ${openFilterWatchedMenu ? 'rotate-90' : ''}`} />
+                                        </MenuItem>
+                                    </MenuHandler>
+                                    <MenuList className="max-h-72">
+                                        <List className="outline-none">
+                                            <ListItem selected={filterWatchedValue === 'pending'} onClick={() => setFilterWatchedValue('pending')} >
+                                                {t('gallery.select.watched.pending')}
+                                            </ListItem>
+                                            <ListItem selected={filterWatchedValue === 'watched'} onClick={() => setFilterWatchedValue('watched')} >
+                                                {t('gallery.select.watched.watched')}
+                                            </ListItem>
+                                        </List>
+                                    </MenuList>
+                                </Menu>
                             </ListItem>
                         </List>
                     </MenuList>

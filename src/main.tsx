@@ -17,12 +17,26 @@ import 'atropos/css'
 import '/node_modules/flag-icons/css/flag-icons.min.css'
 import { ThemeProvider } from "@material-tailwind/react"
 
+const customTheme = {
+    list: {
+        styles: {
+            base: {
+                item: {
+                    selected: {
+                        bg: 'bg-indigo-200'
+                    }
+                }
+            }
+        }
+    }
+}
+
 const router = createBrowserRouter([
     {
         path: '/',
         element: (
             <Suspense fallback="Cargando...">
-                <ThemeProvider>
+                <ThemeProvider value={customTheme}>
                     <Home />
                 </ThemeProvider>
             </Suspense>
@@ -36,10 +50,10 @@ const router = createBrowserRouter([
                         index: true,
                         element: <Gallery />
                     },
-					{
+                    {
                         path: '/films/:filmId',
                         element: <Film />,
-						loader: filmLoader
+                        loader: filmLoader
                     },
                     {
                         path: '/newFilm',

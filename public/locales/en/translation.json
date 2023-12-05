@@ -89,6 +89,16 @@
         "image_error": "Image not available"
     },
 	"gallery": {
-		"3d_effect": "3D effect"
+		"3d_effect": "3D effect",
+		"select": {
+			"genre": {
+				"label": "Genre"
+			},
+			"watched": {
+				"label": "Viewing",
+				"pending": "Pending",
+				"watched": "Watched"
+			}
+		}
 	}
 }
