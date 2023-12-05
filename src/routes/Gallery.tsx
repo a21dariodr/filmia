@@ -23,6 +23,7 @@ const Gallery = () => {
     const [smallCards, setSmallCards] = useState(false)
 
 	const [titleSearch, setTitleSearch] = useState<string>('')
+	const [searchedFilms, setSearchedFilms] = useState<Film[]>([])
 	const [sortOrder, setSortOrder] = useState<string>('asc')
 	const [sortField, setSortField] = useState<string>('title')
 
@@ -72,10 +73,12 @@ const Gallery = () => {
 			const searchText = event.target.value.toLowerCase()
             const searchRegexp = new RegExp(`.*${searchText}.*`)
             const filteredResults = userFilms.filter(film => film.title.toLowerCase().match(searchRegexp) || film.originalTitle.toLowerCase().match(searchRegexp))
-            setProcessedUserFilms(filteredResults)
 			console.log('Filtered search results', filteredResults)
+            setProcessedUserFilms(filteredResults)
+			setSearchedFilms(filteredResults)
 		} else {
 			setProcessedUserFilms(userFilms)
+			setSearchedFilms([])
 		}
 	}
 
@@ -85,7 +88,7 @@ const Gallery = () => {
 			setSortField(field)
 		}
 
-		const sortedFilms = (processedUserFilms.length > 0 || filterGenre || filterWatched) ? [...processedUserFilms] : [...userFilms]
+		const sortedFilms = (titleSearch || filterGenre || filterWatched) ? [...processedUserFilms] : [...userFilms]
 		sortedFilms.sort((a: Film, b: Film): number => {
 			switch (field) {
                 case 'title':
@@ -167,7 +170,8 @@ const Gallery = () => {
 
 		if (filterGenre) {
 			console.debug('Filtering by genre')
-            const filteredFilmsByGenre = userFilms.filter((film: Film): boolean => {
+			const filmsToFilter = titleSearch ? searchedFilms : userFilms
+            const filteredFilmsByGenre = filmsToFilter.filter((film: Film): boolean => {
                 if (!film.genres || film.genres.length === 0) return false
                 else return film.genres.includes(filterGenreValue)
             })
@@ -176,13 +180,15 @@ const Gallery = () => {
 
 		if (filterWatched) {
 			console.debug('Filtering by watched')
-			const filmsToFilter = filterGenre ? filteredFilms : userFilms
+			const filmsToFilter = filterGenre ? filteredFilms : (titleSearch ? searchedFilms : userFilms)
             const filteredFilmsByWatched = filmsToFilter.filter((film: Film): boolean => film.watched === filterWatchedValue)
 			filteredFilms = filteredFilmsByWatched
         }
 
 		if (filterGenre || filterWatched) {
 			setProcessedUserFilms(filteredFilms)
+		} else if (titleSearch) {
+			setProcessedUserFilms(searchedFilms)
 		} else {
 			setProcessedUserFilms(userFilms)
 		}
@@ -191,12 +197,12 @@ const Gallery = () => {
 	}
 
 	useEffect(() => {
-		onFilterHandler()
-	}, [filterGenre, filterGenreValue, filterWatched, filterWatchedValue])
+        onFilterHandler()
+    }, [titleSearch, filterGenre, filterGenreValue, filterWatched, filterWatchedValue])
 
 	useEffect(() => {
 		onSortHandler(sortField)
-    }, [userFilms, titleSearch, sortOrder, filterChanges])
+    }, [userFilms, sortOrder, filterChanges])
 
     useEffect(() => {
         firestore.getUserFilms().then((films: Film[]) => {
