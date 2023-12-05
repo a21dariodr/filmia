@@ -92,7 +92,26 @@
         "3d_effect": "Efecto 3D",
         "select": {
             "genre": {
-                "label": "Xénero"
+                "label": "Xénero",
+                "action": "Acción",
+                "adventure": "Aventura",
+                "animation": "Animación",
+                "comedy": "Comedia",
+                "crime": "Crime",
+                "documentary": "Documental",
+                "drama": "Drama",
+                "family": "Familia",
+                "fantasy": "Fantasía",
+                "history": "Historia",
+                "horror": "Terror",
+                "music": "Música",
+                "mystery": "Misterio",
+                "romance": "Romance",
+                "science_fiction": "Ciencia ficción",
+                "tv_movie": "Película de TV",
+                "thriller": "Suspense",
+                "war": "Bélica",
+                "western": "Western"
             },
             "watched": {
                 "label": "Visionado",

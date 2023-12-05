@@ -32,6 +32,7 @@ const Gallery = () => {
 	const [filterWatched, setFilterWatched] = useState<boolean>(false)
 	const [filterWatchedValue, setFilterWatchedValue] = useState<boolean>(false)
 	const [openFilterWatchedMenu, setOpenFilterWatchedMenu] = useState<boolean>(false)
+	const [openFilterGenreMenu, setOpenFilterGenreMenu] = useState<boolean>(false)
 	
 	console.debug('User films: ', userFilms)
     console.debug('Small cards: ', smallCards)
@@ -84,7 +85,7 @@ const Gallery = () => {
 			setSortField(field)
 		}
 
-		const sortedFilms = (processedUserFilms.length > 0) ? [...processedUserFilms] : [...userFilms]
+		const sortedFilms = (processedUserFilms.length > 0 || filterGenre || filterWatched) ? [...processedUserFilms] : [...userFilms]
 		sortedFilms.sort((a: Film, b: Film): number => {
 			switch (field) {
                 case 'title':
@@ -175,12 +176,12 @@ const Gallery = () => {
 
 		if (filterWatched) {
 			console.debug('Filtering by watched')
-			const filmsToFilter = (filteredFilms.length > 0) ? filteredFilms : userFilms
+			const filmsToFilter = filterGenre ? filteredFilms : userFilms
             const filteredFilmsByWatched = filmsToFilter.filter((film: Film): boolean => film.watched === filterWatchedValue)
 			filteredFilms = filteredFilmsByWatched
         }
 
-		if (filteredFilms.length > 0) {
+		if (filterGenre || filterWatched) {
 			setProcessedUserFilms(filteredFilms)
 		} else {
 			setProcessedUserFilms(userFilms)
@@ -305,7 +306,75 @@ const Gallery = () => {
                         <List className="outline-none">
                             <ListItem>
                                 <Switch checked={filterGenre} onChange={() => setFilterGenre(!filterGenre)} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
-                                <p className="flex place-items-center text-sm md:text-base ml-1 md:ml-2">{t('film.film_genres')}</p>
+                                <Menu placement="bottom" open={openFilterGenreMenu} handler={setOpenFilterGenreMenu} allowHover offset={15}>
+                                    <MenuHandler className="flex items-center justify-between">
+                                        <MenuItem>
+                                            {t('film.film_genres')}
+                                            <ChevronUpIcon strokeWidth={2.5} className={`h-3.5 w-3.5 transition-transform ${openFilterWatchedMenu ? 'rotate-90' : ''}`} />
+                                        </MenuItem>
+                                    </MenuHandler>
+                                    <MenuList className="max-h-72">
+                                        <List className="outline-none">
+                                            <ListItem selected={filterGenreValue === 'Acción'} onClick={() => setFilterGenreValue('Acción')}>
+                                                {t('gallery.select.genre.action')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Animación'} onClick={() => setFilterGenreValue('Animación')}>
+                                                {t('gallery.select.genre.animation')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Aventura'} onClick={() => setFilterGenreValue('Aventura')}>
+                                                {t('gallery.select.genre.adventure')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Bélica'} onClick={() => setFilterGenreValue('Bélica')}>
+                                                {t('gallery.select.genre.war')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Ciencia ficción'} onClick={() => setFilterGenreValue('Ciencia ficción')}>
+                                                {t('gallery.select.genre.science_fiction')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Comedia'} onClick={() => setFilterGenreValue('AventComediaura')}>
+                                                {t('gallery.select.genre.comedy')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Crimen'} onClick={() => setFilterGenreValue('Crimen')}>
+                                                {t('gallery.select.genre.crime')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Documental'} onClick={() => setFilterGenreValue('Documental')}>
+                                                {t('gallery.select.genre.documentary')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Drama'} onClick={() => setFilterGenreValue('Drama')}>
+                                                {t('gallery.select.genre.drama')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Familia'} onClick={() => setFilterGenreValue('Familia')}>
+                                                {t('gallery.select.genre.family')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Fantasía'} onClick={() => setFilterGenreValue('Fantasía')}>
+                                                {t('gallery.select.genre.fantasy')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Historia'} onClick={() => setFilterGenreValue('Historia')}>
+                                                {t('gallery.select.genre.history')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Misterio'} onClick={() => setFilterGenreValue('Misterio')}>
+                                                {t('gallery.select.genre.mystery')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Música'} onClick={() => setFilterGenreValue('Música')}>
+                                                {t('gallery.select.genre.music')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Película de TV'} onClick={() => setFilterGenreValue('Película de TV')}>
+                                                {t('gallery.select.genre.tv_movie')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Romance'} onClick={() => setFilterGenreValue('Romance')}>
+                                                {t('gallery.select.genre.romance')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Suspense'} onClick={() => setFilterGenreValue('Suspense')}>
+                                                {t('gallery.select.genre.thriller')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Terror'} onClick={() => setFilterGenreValue('Terror')}>
+                                                {t('gallery.select.genre.horror')}
+                                            </ListItem>
+                                            <ListItem selected={filterGenreValue === 'Western'} onClick={() => setFilterGenreValue('Western')}>
+                                                {t('gallery.select.genre.western')}
+                                            </ListItem>
+                                        </List>
+                                    </MenuList>
+                                </Menu>
                             </ListItem>
                             <ListItem>
                                 <Switch checked={filterWatched} onChange={() => setFilterWatched(!filterWatched)} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
@@ -318,10 +387,10 @@ const Gallery = () => {
                                     </MenuHandler>
                                     <MenuList className="max-h-72">
                                         <List className="outline-none">
-                                            <ListItem selected={filterWatchedValue === false} onClick={() => setFilterWatchedValue(false)} >
+                                            <ListItem selected={filterWatchedValue === false} onClick={() => setFilterWatchedValue(false)}>
                                                 {t('gallery.select.watched.pending')}
                                             </ListItem>
-                                            <ListItem selected={filterWatchedValue === true} onClick={() => setFilterWatchedValue(true)} >
+                                            <ListItem selected={filterWatchedValue === true} onClick={() => setFilterWatchedValue(true)}>
                                                 {t('gallery.select.watched.watched')}
                                             </ListItem>
                                         </List>
