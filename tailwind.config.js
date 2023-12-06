@@ -1,3 +1,5 @@
+// TailwindCSS configuration that extends basic colors
+
 const withMT = require("@material-tailwind/react/utils/withMT")
 let colors = require("tailwindcss/colors")
 

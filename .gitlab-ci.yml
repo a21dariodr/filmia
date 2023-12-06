@@ -1,3 +1,4 @@
+# Pipeline for build and deploy the project automatically when pushed to Gitlab
 stages:
   - build
   - deploy
@@ -8,6 +9,7 @@ cache:
   paths:
     - node_modules/
 
+# Install dependencies and replaces a file that solves an error in third-party Material Tailwind library
 before_script:
   - npm install
   - npm install -g firebase-tools
@@ -21,6 +23,7 @@ build:
     paths:
       - "dist"
 
+# Deploy to Firebase hosting service
 deploy:
   stage: deploy
   script:

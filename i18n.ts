@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import Backend from 'i18next-http-backend'
 
-// Internacionalización con i18next utilizando detección del idioma del navegador
+// Internacionalization with i18next using browser language detection feature
 i18n.use(Backend)
 	.use(LanguageDetector)
     .use(initReactI18next)
@@ -11,7 +11,7 @@ i18n.use(Backend)
         debug: true,
         fallbackLng: 'es',
         interpolation: {
-            escapeValue: false // No necesario en react que escapa por defecto
+            escapeValue: false // Not necessary in React as it escapes by default
         }
     })
 
