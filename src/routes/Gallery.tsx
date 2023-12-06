@@ -10,6 +10,7 @@ import { Button, ButtonGroup, Chip, List, ListItem, Menu, MenuHandler, MenuItem,
 import { ChevronUpIcon } from '@heroicons/react/24/solid'
 import '../styles/Gallery.css'
 
+// Component that shows a gallery with the current user's film collection
 const Gallery = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
@@ -17,33 +18,37 @@ const Gallery = () => {
     const firestore = new FirebaseFirestoreService()
     const userId = localStorage.getItem('userId')!
 
-	const [userFilms, setUserFilms] = useState<Film[]>([])
-	const [processedUserFilms, setProcessedUserFilms] = useState<Film[]>([])
+    const [userFilms, setUserFilms] = useState<Film[]>([])
+    const [processedUserFilms, setProcessedUserFilms] = useState<Film[]>([])
     const [atropos, setAtropos] = useState(true)
     const [smallCards, setSmallCards] = useState(false)
 
-	const [titleSearch, setTitleSearch] = useState<string>('')
-	const [searchedFilms, setSearchedFilms] = useState<Film[]>([])
-	const [sortOrder, setSortOrder] = useState<string>('asc')
-	const [sortField, setSortField] = useState<string>('title')
+    const [titleSearch, setTitleSearch] = useState<string>('')
+    const [searchedFilms, setSearchedFilms] = useState<Film[]>([])
+    const [sortOrder, setSortOrder] = useState<string>('asc')
+    const [sortField, setSortField] = useState<string>('title')
 
-	const [filterChanges, setFilterChanges] = useState<number>(0)
-	const [filterGenre, setFilterGenre] = useState<boolean>(false)
-	const [filterGenreValue, setFilterGenreValue] = useState<string>('Acción')
-	const [filterWatched, setFilterWatched] = useState<boolean>(false)
-	const [filterWatchedValue, setFilterWatchedValue] = useState<boolean>(false)
-	const [openFilterWatchedMenu, setOpenFilterWatchedMenu] = useState<boolean>(false)
-	const [openFilterGenreMenu, setOpenFilterGenreMenu] = useState<boolean>(false)
-	
-	console.debug('User films: ', userFilms)
+    const [filterChanges, setFilterChanges] = useState<number>(0)
+    const [filterGenre, setFilterGenre] = useState<boolean>(false)
+    const [filterGenreValue, setFilterGenreValue] = useState<string>('Acción')
+    const [filterWatched, setFilterWatched] = useState<boolean>(false)
+    const [filterWatchedValue, setFilterWatchedValue] = useState<boolean>(false)
+    const [openFilterWatchedMenu, setOpenFilterWatchedMenu] = useState<boolean>(false)
+    const [openFilterGenreMenu, setOpenFilterGenreMenu] = useState<boolean>(false)
+
+    console.debug('User films: ', userFilms)
     console.debug('Small cards: ', smallCards)
 
+    // Redirects to the route that allows to add new films to the collection
     const newFilmHandler = () => navigate('/newFilm')
 
-	const filmClickHandler = (film: Film) => navigate('/films/' + film.id)
+    // Redirects to a film details route
+    const filmClickHandler = (film: Film) => navigate('/films/' + film.id)
 
+    // Allows to turn on/off 3D parrallax effect when hover over a film poster
     const atroposHandler = () => setAtropos(!atropos)
 
+    // Change the film cards size to big if they are now small
     const bigCardsHandler = () => {
         const bigCardsButton = document.querySelector('#bigCards')
         const smallCardsButton = document.querySelector('#smallCards')
@@ -55,6 +60,7 @@ const Gallery = () => {
         }
     }
 
+    // Change the film cards size to small if they are now big
     const smallCardsHandler = () => {
         const bigCardsButton = document.querySelector('#bigCards')
         const smallCardsButton = document.querySelector('#smallCards')
@@ -66,31 +72,37 @@ const Gallery = () => {
         }
     }
 
-	const onTitleSearchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setTitleSearch(event.target.value)
+	// Manages case insensitive search by title in the film collection
+    const onTitleSearchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setTitleSearch(event.target.value)
 
-		if (event.target.value !== '') {
-			const searchText = event.target.value.toLowerCase()
+        if (event.target.value !== '') {
+            const searchText = event.target.value.toLowerCase()
             const searchRegexp = new RegExp(`.*${searchText}.*`)
             const filteredResults = userFilms.filter(film => film.title.toLowerCase().match(searchRegexp) || film.originalTitle.toLowerCase().match(searchRegexp))
-			console.debug('Filtered search results', filteredResults)
+            console.debug('Filtered search results', filteredResults)
             setProcessedUserFilms(filteredResults)
-			setSearchedFilms(filteredResults)
-		} else {
-			setProcessedUserFilms(userFilms)
-			setSearchedFilms([])
-		}
-	}
+            setSearchedFilms(filteredResults)
+        } else { // If there is no search the entire movie collection is loaded
+            setProcessedUserFilms(userFilms)
+            setSearchedFilms([])
+        }
+    }
 
-	const onSortHandler = (field: string) => {
-		if (sortField !== field) {
-			console.debug('Changing sort field to: ', field)
-			setSortField(field)
-		}
+	// Manages film collection sorting
+    const onSortHandler = (field: string) => {
+        if (sortField !== field) {
+            console.debug('Changing sort field to: ', field)
+            setSortField(field)
+        }
 
-		const sortedFilms = (titleSearch || filterGenre || filterWatched) ? [...processedUserFilms] : [...userFilms]
-		sortedFilms.sort((a: Film, b: Film): number => {
-			switch (field) {
+		/* If searching or filtering are now active the processed film collection is sorted
+		 * Otherwise, the entire film collection is sorted
+		 */
+        const sortedFilms = titleSearch || filterGenre || filterWatched ? [...processedUserFilms] : [...userFilms]
+		// As the fields have different types and some are optional, a customized sorting function is needed
+        sortedFilms.sort((a: Film, b: Film): number => {
+            switch (field) {
                 case 'title':
                     if (sortOrder === 'asc') return a.title.localeCompare(b.title)
                     else return b.title.localeCompare(a.title)
@@ -98,79 +110,82 @@ const Gallery = () => {
                     if (sortOrder === 'asc') return a.originalTitle.localeCompare(b.originalTitle)
                     else return b.originalTitle.localeCompare(a.originalTitle)
                 case 'duration':
-					if (sortOrder === 'asc') {
-						if (!a.duration) return -1
-						else if (!b.duration) return 1
-						else return a.duration - b.duration
-					} else {
-						if (!a.duration) return 1
+                    if (sortOrder === 'asc') {
+                        if (!a.duration) return -1
+                        else if (!b.duration) return 1
+                        else return a.duration - b.duration
+                    } else {
+                        if (!a.duration) return 1
                         else if (!b.duration) return -1
                         else return b.duration - a.duration
-					}
-				case 'releaseYear':
-					if (sortOrder === 'asc') {
-						if (!a.releaseYear) return -1
-						else if (!b.releaseYear) return 1
+                    }
+                case 'releaseYear':
+                    if (sortOrder === 'asc') {
+                        if (!a.releaseYear) return -1
+                        else if (!b.releaseYear) return 1
                         else return a.releaseYear - b.releaseYear
-					} else {
-						if (!a.releaseYear) return 1
+                    } else {
+                        if (!a.releaseYear) return 1
                         else if (!b.releaseYear) return -1
                         else return b.releaseYear - a.releaseYear
-					}
-				case 'voteAverage':
-					if (sortOrder === 'asc') {
-						if (!a.voteAverage) return -1
-						else if (!b.voteAverage) return 1
+                    }
+                case 'voteAverage':
+                    if (sortOrder === 'asc') {
+                        if (!a.voteAverage) return -1
+                        else if (!b.voteAverage) return 1
                         else return a.voteAverage - b.voteAverage
-					} else {
-						if (!a.voteAverage) return 1
+                    } else {
+                        if (!a.voteAverage) return 1
                         else if (!b.voteAverage) return -1
                         else return b.voteAverage - a.voteAverage
-					}
-				default:
-					if (sortOrder === 'asc') {
-						if (!a.score) return -1
-						else if (!b.score) return 1
+                    }
+                default:
+                    if (sortOrder === 'asc') {
+                        if (!a.score) return -1
+                        else if (!b.score) return 1
                         else return a.score - b.score
-					} else {
-						if (!a.score) return 1
+                    } else {
+                        if (!a.score) return 1
                         else if (!b.score) return -1
                         else return b.score - a.score
-					}
+                    }
             }
-		})
+        })
 
-		console.debug('Sorting by ', field, ' ', sortOrder)
-		setProcessedUserFilms(sortedFilms)
-	}
-
-	const onChangeSortOrderHandler = (field: string) => {
-        if (sortOrder === 'asc') {
-			console.debug('Changing sort order to DESC')
-			setSortOrder('desc')
-
-			if (sortField !== field) {
-                console.debug('Changing sort field to: ', field)
-                setSortField(field)
-            }
-		} 
-        else {
-			console.debug('Changing sort order to ASC')
-			setSortOrder('asc')
-			
-			if (sortField !== field) {
-                console.debug('Changing sort field to: ', field)
-                setSortField(field)
-            }
-		}
+        console.debug('Sorting by ', field, ' ', sortOrder)
+        setProcessedUserFilms(sortedFilms)
     }
 
-	const onFilterHandler = () => {
-		let filteredFilms: Film[] = []
+	// Manages the change in sort order between ascending and descending and triggers a new sort
+    const onChangeSortOrderHandler = (field: string) => {
+        if (sortOrder === 'asc') {
+            console.debug('Changing sort order to DESC')
+            setSortOrder('desc')
 
-		if (filterGenre) {
-			console.debug('Filtering by genre')
-			const filmsToFilter = titleSearch ? searchedFilms : userFilms
+            if (sortField !== field) {
+                console.debug('Changing sort field to: ', field)
+                setSortField(field)
+            }
+        } else {
+            console.debug('Changing sort order to ASC')
+            setSortOrder('asc')
+
+            if (sortField !== field) {
+                console.debug('Changing sort field to: ', field)
+                setSortField(field)
+            }
+        }
+    }
+
+	// Manages the film collection filtering
+    const onFilterHandler = () => {
+        let filteredFilms: Film[] = []
+
+        // Filters by genre is this filter is active
+        if (filterGenre) {
+            console.debug('Filtering by genre')
+            // Filters over the current search result or over the entire collection
+            const filmsToFilter = titleSearch ? searchedFilms : userFilms
             const filteredFilmsByGenre = filmsToFilter.filter((film: Film): boolean => {
                 if (!film.genres || film.genres.length === 0) return false
                 else return film.genres.includes(filterGenreValue)
@@ -178,42 +193,49 @@ const Gallery = () => {
             filteredFilms.push(...filteredFilmsByGenre)
         }
 
-		if (filterWatched) {
-			console.debug('Filtering by watched')
-			const filmsToFilter = filterGenre ? filteredFilms : (titleSearch ? searchedFilms : userFilms)
+        // Filters by watched is this filter is active
+        if (filterWatched) {
+            console.debug('Filtering by watched')
+            // Filters over the result of the genre filtering, the current search result or over the entire collection
+            const filmsToFilter = filterGenre ? filteredFilms : titleSearch ? searchedFilms : userFilms
             const filteredFilmsByWatched = filmsToFilter.filter((film: Film): boolean => film.watched === filterWatchedValue)
-			filteredFilms = filteredFilmsByWatched
+            filteredFilms = filteredFilmsByWatched
         }
 
-		if (filterGenre || filterWatched) {
-			setProcessedUserFilms(filteredFilms)
-		} else if (titleSearch) {
-			setProcessedUserFilms(searchedFilms)
-		} else {
-			setProcessedUserFilms(userFilms)
-		}
+        if (filterGenre || filterWatched) {
+            setProcessedUserFilms(filteredFilms) // Sets the filtering result as the processed film collection if some filter is active
+        } else if (titleSearch) {
+            setProcessedUserFilms(searchedFilms) // Sets the searching result as the processed film collection if none filter is active but searching
+        } else {
+            setProcessedUserFilms(userFilms) // Sets the whole film collection as the current processed collection if not filtering nor searching
+        }
 
-		setFilterChanges(filterChanges + 1)
-	}
+		// Triggers a new sorting
+        setFilterChanges(filterChanges + 1)
+    }
 
-	useEffect(() => {
+	// Filters the collection if searching or filtering are changed
+    useEffect(() => {
         onFilterHandler()
     }, [titleSearch, filterGenre, filterGenreValue, filterWatched, filterWatchedValue])
 
-	useEffect(() => {
-		onSortHandler(sortField)
+	// Sorts the collection at the initial component load, when sort order is changed or the collection is filtered
+    useEffect(() => {
+        onSortHandler(sortField)
     }, [userFilms, sortOrder, filterChanges])
 
+	// Loads the complete user films collection from the Firestore database at the initial component load
     useEffect(() => {
         firestore.getUserFilms().then((films: Film[]) => {
             if (films) dispatch(setFilms(films))
             setUserFilms(films)
-			setProcessedUserFilms(films)
+            setProcessedUserFilms(films)
         })
     }, [userId])
 
     return (
         <main className="w-full px-3 md:px-5">
+            {/* Allows to turn on/off the 3D parallax effect over the film cards, go to new film route or change the size of the film cards */}
             <div className="inline-flex w-full md:w-1/2 gap-x-2 md:gap-x-5 justify-center align-middle mb-1 md:mb-0">
                 <Switch checked={atropos} onChange={atroposHandler} className="switch checked:bg-violet-700" crossOrigin="anonymous" />
                 <p className="flex place-items-center text-sm md:text-base ml-1 md:ml-[-8px]">{t('gallery.3d_effect')}</p>
@@ -232,6 +254,7 @@ const Gallery = () => {
                 </ButtonGroup>
             </div>
 
+            {/* Allows to search films by title, sort by multiple fields or filter by genre or watched */}
             <div className='inline-flex w-full md:w-1/2 gap-x-2 md:gap-x-5 justify-center align-middle my-2 md:mt-0"'>
                 <div className="search flex items-center w-30 md:w-34 p-3 md:px-4 text-xs md:text-sm font-bold outline-none hover:bg-indigo-200 bg-indigo-100 rounded-lg md:rounded-xl">
                     <span className="material-symbols-outlined font-bold text-sm md:text-base">search</span>
@@ -245,6 +268,7 @@ const Gallery = () => {
 						bg-indigo-100 text-dark-gray-900 ml-2 align-middle"
                     />
                 </div>
+				
                 <Menu>
                     <MenuHandler>
                         <Button className="px-2 md:px-3 capitalize !font-black text-sm md:text-base text-black bg-white hover:bg-slate-100 shadow-none">{t('common.sort')}</Button>

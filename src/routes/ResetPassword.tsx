@@ -2,23 +2,26 @@ import FirebaseAuthService from '../services/auth/FirebaseAuthService'
 import { useNavigate, NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
+// Component for resetting a user's password
 const ResetPassword = () => {
     const { t } = useTranslation()
-	const navigate = useNavigate()
+    const navigate = useNavigate()
     const firebaseAuth = new FirebaseAuthService()
 
-	const resetPasswordHandler = () => {
-		const email = (document.querySelector('#email') as HTMLInputElement).value
-		firebaseAuth.resetPassword(email)
-		.then(() => {
-            console.debug('Changed password ', email)
-            navigate('/')
-		})
-		.catch(() => {
-			(document.querySelector('#email') as HTMLInputElement).placeholder = t('reset_password.wrong_email');
-			(document.querySelector('#email') as HTMLInputElement).classList.add('placeholder:text-red-800', 'placeholder:font-bold')
-		})
-	}
+    // Resets the user password through the authentication service
+    const resetPasswordHandler = () => {
+        const email = (document.querySelector('#email') as HTMLInputElement).value
+        firebaseAuth
+            .resetPassword(email)
+            .then(() => {
+                console.debug('Changed password ', email)
+                navigate('/')
+            })
+            .catch(() => {
+                ;(document.querySelector('#email') as HTMLInputElement).placeholder = t('reset_password.wrong_email')
+                ;(document.querySelector('#email') as HTMLInputElement).classList.add('placeholder:text-red-800', 'placeholder:font-bold')
+            })
+    }
 
     return (
         <div className="bg-white rounded-lg h-full">

@@ -1,6 +1,7 @@
 import { Link, useRouteError } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 
+// Generic error page for use across the whole app that shows an error icon and the specific error message
 const ErrorPage = () => {
 	const { t } = useTranslation()
 	const error: any = useRouteError()

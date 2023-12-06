@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import FirebaseAuthService from '../services/auth/FirebaseAuthService'
 import { useTranslation } from 'react-i18next'
 
+// Component for signing up a new user with email and password
 const SignUp = () => {
     const { t } = useTranslation()
     const firebaseAuth = new FirebaseAuthService()
@@ -11,6 +12,7 @@ const SignUp = () => {
 
     const toggleKeepLogin = () => setKeepLogin(!keepLogin)
 
+	// Creates a new account through the authentication service
     const createAccountHandler = () => {
         const email = (document.querySelector('#email') as HTMLInputElement).value
         const password = (document.querySelector('#password') as HTMLInputElement).value

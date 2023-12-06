@@ -3,12 +3,14 @@ import { NavLink, useNavigate } from "react-router-dom"
 import FirebaseAuthService from "../services/auth/FirebaseAuthService"
 import { useTranslation } from "react-i18next"
 
+// Component for logging in a user
 const Login = () => {
 	const { t } = useTranslation()
 	const firebaseAuth = new FirebaseAuthService()
 	const navigate = useNavigate()
 	const [ keepLogin, setKeepLogin ] = useState<boolean>(true)
 
+	// Obtains the result of a Google sign in or sign up
 	useEffect(() => {
         firebaseAuth
             .getSignInGoogleResult()
@@ -23,8 +25,10 @@ const Login = () => {
 
 	const toggleKeepLogin = () => setKeepLogin(!keepLogin)
 
+	// Signs up or sign in a user with Google account
 	const signUpGoogleHandler = () => firebaseAuth.signInGoogle(keepLogin)
 
+	// Signs in a user with email and passoword
 	const emailLoginHandler = () => {
 		const email = (document.querySelector('#email') as HTMLInputElement).value
         const password = (document.querySelector('#password') as HTMLInputElement).value

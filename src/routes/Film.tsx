@@ -15,11 +15,13 @@ import '../styles/Film.css'
 
 const tmd = new TheMovieDatabaseApiService()
 
+// React Router loader that obtains the complete detailed info about the film of the current route
 export const loader = async ({ params }: any) => {
     const filmDetails: FilmModel = await tmd.getMovieById(params.filmId)
     return filmDetails
 }
 
+// Component that shows the complete information about a film
 const Film = () => {
 	const { t } = useTranslation()
     const navigate = useNavigate()
@@ -30,6 +32,7 @@ const Film = () => {
 	const [ watched, setWatched ] = useState<boolean>(false)
 	const [ openDeleteDialog, setOpenDeleteDialog ] = useState<boolean>(false)
 
+	// Obtains the score and watched info abour the current film from the Firestore database
 	useEffect( () => {
 		const getFilmScoreAndWatched =  async () => {
 			const scoreAndWatched = await firestore.getUserFilmScoreAndWatched(filmDetails.id.toString())
@@ -42,19 +45,21 @@ const Film = () => {
 		getFilmScoreAndWatched()
 	}, [])
 
-	// Se muestran como máximo 30 actores del reparto de cada película
+	// Only a maximum of 30 actors of each film are shown
 	const cast = []
 	for (let i=0; i<30; i++) {
 		cast.push(filmDetails.cast![i])
 		if (i == filmDetails.cast!.length-1) break;
 	}
 
+	// Changes the watched state of the film
 	const toggleWatched = async () => {
 		setWatched(!watched)
 		filmDetails.watched = !filmDetails.watched
 		await firestore.updateUserFilmWatched(filmDetails)
 	}
 
+	// Changes the score given to the film
 	const scoreChangeHandler = (e: any) => {
         const scoreInput = document.querySelector('#score') as HTMLInputElement
 		setScore(e.target.value)
@@ -68,6 +73,7 @@ const Film = () => {
 
 	const handleOpenDeleteDialog = () => setOpenDeleteDialog(!openDeleteDialog)
 
+	// Deletes the current film from the current user films list and redirects to the films gallery
 	const handleDeleteFilm = async () => {
 		await firestore.deleteUserFilm(filmDetails)
 		navigate('/')
@@ -89,6 +95,7 @@ const Film = () => {
                     ''
                 )}
 
+                {/* The Atropos library provides a 3D parallax hover effect over the film poster */}
                 <div className="row-span-5 grid grid-cols-[1fr_2fr] md:grid-cols-2 justify-items-center">
                     <Atropos rotateTouch={'scroll-y'} className="w-[35vw] md:w-[15vw]">
                         {filmDetails.posterPath ? (
@@ -138,6 +145,7 @@ const Film = () => {
                             ''
                         )}
 
+                        {/* Shows the watched info of the film while allows to change its value */}
                         <div className="w-full">
                             <span className="material-symbols-outlined align-text-bottom text-xs md:text-sm text-violet-700 mr-1">visibility</span>
                             <span className="font-bold italic mr-2">{t('film.film_watched')}</span>
@@ -151,6 +159,7 @@ const Film = () => {
                             </div>
                         </div>
 
+                        {/* Shows the score info of the film while allows to change its value */}
                         <div className="w-full">
                             <span className="material-symbols-outlined align-text-bottom text-xs md:text-sm text-violet-700 mr-1">star</span>
                             <span className="font-bold italic mr-2">{t('film.film_score')}</span>
@@ -207,7 +216,7 @@ const Film = () => {
                         ''
                     )}
 
-                    {/* Únicamente se mostrarán los directores */}
+                    {/* Only directors are shown */}
                     {filmDetails.crew?.length! > 0 ? (
                         <div className="flex w-full">
                             <div className="font-bold italic mr-4">{t('film.film_directors')}</div>
@@ -253,6 +262,7 @@ const Film = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-white bg-violet-800 md:text-base p-3 md:p-6">
+                {/* Carousel that shows the profile photo and name of the main 30 actors */}
                 {filmDetails.cast?.length! > 0 ? (
                     <div className="flex flex-wrap">
                         <span className="font-bold italic mr-2">{t('film.film_cast')}</span>
@@ -301,6 +311,7 @@ const Film = () => {
             </div>
 
             <div className="flex justify-center gap-4 my-2 md:my-4 ">
+                {/* Delete film functionality with a dialog to confirm the action */}
                 <Button id="delete" onClick={handleOpenDeleteDialog} size="sm" className="text-xs bg-red-700 hover:bg-red-600 ml-1">
                     {t('common.delete_film')}
                 </Button>

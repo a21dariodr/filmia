@@ -6,6 +6,9 @@ import FirebaseFirestoreService from '../services/db/FirebaseFirestoreService'
 import { Film } from '../models/Film'
 import { Button } from '@material-tailwind/react'
 
+/* Component for adding a new film to the current user films collection
+ * The title field acts as an input field that allows a real time title search from The Movie Database API
+ */
 const NewFilmForm = () => {
     const { t } = useTranslation()
     const navigate = useNavigate()
@@ -18,6 +21,7 @@ const NewFilmForm = () => {
 	const [ score, setScore ] = useState()
 	const [ watched, setWatched ] = useState<boolean>(false)
 
+	// Manages the film searching state
 	const searchByTitleHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
 		const searchInputValue = event.target.value
 		searchInputValue ? setSearching(true) : setSearching(false)
@@ -25,6 +29,7 @@ const NewFilmForm = () => {
 		setTitleSearch(searchInputValue)
     }
 
+	// Manages the selection of a film during a search and triggers the form fill with the selected film info
     const selectFilmHandler = async (selectedFilm: Film) => {
 		const film = await tmd.getMovieById(selectedFilm.id)
 		console.debug('Selected film: ', film)
@@ -37,6 +42,7 @@ const NewFilmForm = () => {
 		setSelectedFilm(film)
 	}
 
+	// Saves a film to the current user films collection
 	const saveFilm = () => {
 		selectedFilm!.watched = watched
 		selectedFilm!.score = score ? Number(score) : null
@@ -51,8 +57,10 @@ const NewFilmForm = () => {
 
 	const closeHandler = () => navigate(-1)
 
+	// Changes the watched info of the selected film
 	const toggleWatched = () => setWatched(!watched)
 
+	// Changes the score info of the selected film
 	const scoreChangeHandler = (e: any) => {
 		const saveButton = document.querySelector('#saveFilm') as HTMLInputElement
 		const scoreInput = document.querySelector('#score') as HTMLInputElement
@@ -64,6 +72,7 @@ const NewFilmForm = () => {
 	}
 
 
+	// Manages the real time films search, showing and hiding the film searchs div and disabling and enabling the save button
 	useEffect( () => {
 		const searchResultsDiv = document.querySelector('#searchResults')
 		const saveButton = document.querySelector('#saveFilm') as HTMLInputElement
@@ -229,6 +238,7 @@ const NewFilmForm = () => {
                             </Button>
                         </div>
 
+						{/* Absolutely positioned div that shows the list of the current films search, allowing to selected the desired one */}
                         <div id="searchResults" className="hidden flex-wrap w-full max-w-fit md:max-w-[99%] h-max absolute z-10 top-[15rem] md:top-[16rem] left-0 bg-white border m-2">
                             <p className="w-full text-center text-xl text-deep-purple-700 font-bold italic mb-5 mt-2">{t('new_film.select_film')}</p>
                             {filmsFound.map((film: Film) => {
