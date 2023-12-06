@@ -1,13 +1,31 @@
 # Proyecto fin de ciclo
 
-URL del la aplicación web: [https://filmia-ee910.web.app/](https://filmia-ee910.web.app/)
+[Filmia](https://filmia-ee910.web.app/) es una aplicación que permite llevar un registro de las películas vistas por un usuario, así como de las que tiene pendientes. Incluye funcionalidad para la búsqueda, ordenación y filtrado de las películas en la galería principal, y facilita la inclusión de nuevas entradas en el listado de películas mediante autocompletado a partir de la información obtenida de la API de [The Movie Database](https://www.themoviedb.org/). Asimismo, muestra información detallada y actualizada acerca de cada película incluyendo las plataformas donde puede visualizarse desde España, gracias a la integración de The Movie Database con [Just Watch](https://www.justwatch.com/es).
 
-> *TODO*: Este documento será la "*página de aterrizaje*" de tu proyecto. Será lo primero que vean los que se interesen por él. Cúida su redacción con todo tu mimo. Elimina posteriormente todas las lineas "*TODO*" cuando creas finalizada su redacción.
-> Puedes acompañar a la redacción de este fichero con imágenes o gifs, pero no abuses de ellos.
+## Índice
 
-## Descripción
+> *TODO*: Simplemente indexa ordenadamente todo tu proyecto.
 
-> *TODO*: Realiza una breve descripción del proyecto. No menos de 100 palabras y no más de 300. Resalta lo fundamental **con tus propias palabras**. Utiliza un lenguaje correcto, **pero natural**, que lo entienda todo el mundo, incluso y en especial, las personas que no tengan un conocimiento técnico avanzado. Puede ser un estracto o resumen de apartados que ya contemples en otros ficheros.
+1. Anteproyecto
+    * 1.1. [Idea](doc/templates/1_idea.md)
+    * 1.2. [Necesidades](doc/templates/2_necesidades.md)
+2. [Análisis](doc/templates/3_analise.md)
+3. [Planificación](doc/templates/4_planificacion.md)
+4. [Diseño](doc/templates/5_deseño.md)
+5. [Implantación](doc/templates/6_implantacion.md)
+
+## Arquitectura
+
+La aplicación presenta una arquitectura de dos capas: frontend y backend.
+
+* Para implementar el backend se hace uso de Firebase, un producto de Google que se encuadra dentro de la categoría de backend como servicio (BaaS). Proporciona diversas funcionalidades, dentro de las cuales en este proyecto se hace uso de tres: hosting, autenticación y base de datos.
+  En el caso de la base de datos, se hace uso de Firestore, del tipo noSQL.
+
+* El frontend es la parte más importante de la aplicación y la que proporciona la mayor parte de funcionalidad. Está implementado con el framework de JavaScript React en conjunción con otras tecnologías como React Router o Typescript.
+
+## Tecnologías
+
+En este apartado se detallan la totalidad de las tecnologías empleadas en el proyecto, tanto durante el desarollo como durante la etapa de producción:
 
 ## Instalación / Puesta en marcha
 
@@ -26,18 +44,6 @@ URL del la aplicación web: [https://filmia-ee910.web.app/](https://filmia-ee910
 ## Licencia
 
 Este proyecto está licenciado bajo la [licencia MIT](LICENSE).
-
-## Índice
-
-> *TODO*: Simplemente indexa ordenadamente todo tu proyecto.
-
-1. Anteproyecto
-    * 1.1. [Idea](doc/templates/1_idea.md)
-    * 1.2. [Necesidades](doc/templates/2_necesidades.md)
-2. [Análisis](doc/templates/3_analise.md)
-3. [Planificación](doc/templates/4_planificacion.md)
-4. [Diseño](doc/templates/5_deseño.md)
-5. [Implantación](doc/templates/6_implantacion.md)
 
 ## Guía de contribución
 
