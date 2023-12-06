@@ -7,7 +7,7 @@ const ErrorPage = () => {
 	console.debug(error)
 	
     return (
-        <main className="grid min-h-full place-items-center bg-white px-6 lg:px-8">
+        <main className="grid h-[78%] place-items-center bg-white px-6 lg:px-8">
             <div className="text-center">
                 <span className="material-symbols-outlined text-indigo-600 text-8xl mb-10">error</span>
                 <p className="text-xl font-semibold text-indigo-600">{error.statusText || error.message}</p>
