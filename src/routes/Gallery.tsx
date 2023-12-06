@@ -73,7 +73,7 @@ const Gallery = () => {
 			const searchText = event.target.value.toLowerCase()
             const searchRegexp = new RegExp(`.*${searchText}.*`)
             const filteredResults = userFilms.filter(film => film.title.toLowerCase().match(searchRegexp) || film.originalTitle.toLowerCase().match(searchRegexp))
-			console.log('Filtered search results', filteredResults)
+			console.debug('Filtered search results', filteredResults)
             setProcessedUserFilms(filteredResults)
 			setSearchedFilms(filteredResults)
 		} else {
