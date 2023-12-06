@@ -3,6 +3,9 @@ import { Select, Option } from '@material-tailwind/react'
 import { useTranslation } from 'react-i18next'
 import '../styles/LanguageSelect.css'
 
+/* Language selector component that provides internationalization functionality through i18next
+ * Includes support for english, spanish and galician languages
+ */
 const LanguageSelect = () => {
     const { t, i18n } = useTranslation()
 	const [ selectedLanguage, setSelectedLanguage ] = useState<string>(i18n.resolvedLanguage ? i18n.resolvedLanguage : 'es')

@@ -4,6 +4,7 @@ import FirebaseAuthService from "../services/auth/FirebaseAuthService"
 import { useTranslation } from 'react-i18next'
 import LanguageSelect from "./LanguageSelect"
 
+// Header component that includes a logo that redirects to the root route, a language selector and a close session button
 const Header = () => {
 	const { t } = useTranslation()
 	const authService = new FirebaseAuthService()

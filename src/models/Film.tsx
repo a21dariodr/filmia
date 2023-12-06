@@ -1,33 +1,36 @@
+// Type for actors
 export type Actor = {
 	name: string
 	profilePath: string
 }
 
+// Type for crew members like directors and writers
 export type CrewMember = {
     name: string
     profilePath: string
 	job: string
 }
 
+// Type for production companies
 export type ProductionCompany = {
 	name: string
 	logoUrl: string
 	originCountry: string
 }
 
+// Type for production contries
 export type ProductionCountry = {
     name: string
     iso3166: string
 }
 
+// Type for watch providers
 export type WatchProvider = {
 	name: string,
 	logoUrl: string
 }
 
-/* Clase para mapear los resultados de consultas a la API de TMDB, que puede ser muy útil para un posible
- * guardado de películas en Firestore
- */
+// Class for manage all of the data about a movie
 export class Film {
     private _id: number
     private _title: string
@@ -50,8 +53,8 @@ export class Film {
     private _crew?: CrewMember[] | null
     private _watchProviders?: WatchProvider[] | null
 
-    /* Constructor con parámetros obligatorios usados en la búsqueda de películas
-     * Los demás parámetros de emplean a través de los getters y setters
+    /* Constructor with mandatory fields returned when searching films
+	 * The rest of the parameters are used through getters and setters
      */
     constructor(id: number, title: string, originalTitle: string, releseaseYear: number, posterPath: string, voteAverage: number) {
         this._id = id
