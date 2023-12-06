@@ -11,6 +11,7 @@ const initialState: FilmsState = {
 	filmsList: []
 }
 
+// State slice for storing the complete list of user films
 export const filmsSlice = createSlice({
     name: 'films',
     initialState,

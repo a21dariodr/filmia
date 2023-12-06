@@ -1,3 +1,5 @@
+/* General styles for the whole app and load of TailwindCSS styles and utilities */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

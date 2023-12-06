@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import userReducer from '../../state-slices/userSlice'
 import filmsReducer from '../../state-slices/filmsSlice'
 
+// Redux store for the app that loads the defined user and films state slices
 export const store = configureStore({
     reducer: {
         user: userReducer,
@@ -21,6 +22,6 @@ export const store = configureStore({
         })
 })
 
-// Infiere los tipos de `RootState` y `AppDispatch` a partir del propio store
+// Deduces types of `RootState` and `AppDispatch` from the store itself
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

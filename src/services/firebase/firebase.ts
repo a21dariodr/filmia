@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore/lite'
 
-// Configuración para inicializar Firebase
+// Firebase initialization configuration
 const firebaseConfig = {
     apiKey: 'AIzaSyD8_oZeglhJbK5vdSJFV7Gq3EgVYbxk6aQ',
     authDomain: 'filmia-ee910.firebaseapp.com',
@@ -21,4 +21,5 @@ const db = getFirestore(app)
 
 const firebase = { app, auth, db }
 
+// Makes initialized Firebase authentication and Firestore db services avalilable in the whole app
 export default firebase

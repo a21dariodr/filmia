@@ -2,25 +2,26 @@ import firebase from '../firebase/firebase'
 import { collection, doc, getDocs, getDoc, setDoc, deleteDoc } from 'firebase/firestore/lite'
 import { Film } from '../../models/Film'
 
-// Servicio para obtener y guardar datos en la DB Firestore de Firebase
+// Service for saving and obtaining data from Firebase Firestore database
 export default class FirebaseFirestoreService {
     private readonly firestore = firebase.db
     private userId = localStorage.getItem('userId')!
 
-    // Se accede a cada elemento devuelto con .foreach(doc => doc.id / doc.data)
+    // Returns the complete films list of the current user
     public async getUserFilms() {
         const filmsRef = collection(this.firestore, 'usuarios', this.userId, 'peliculas')
         const filmsDocs = await getDocs(filmsRef)
         return this.filmsMapper(filmsDocs)
     }
 
-    // Devuelve la información de una única película
+    // Returns the score and watched info of a film
     public async getUserFilmScoreAndWatched(filmId: string) {
         const filmRef = doc(this.firestore, 'usuarios', this.userId, 'peliculas', filmId)
         const filmDoc: any = await getDoc(filmRef)
         return { watched: filmDoc.data().watched, score: filmDoc.data().score }
     }
 
+    // Adds a film to the current user's films collection
     public async addUserFilm(film: Film) {
         const filmDoc = doc(this.firestore, 'usuarios', this.userId, 'peliculas', film.id.toString())
         const genres = film.genres?.join(',')
@@ -37,6 +38,7 @@ export default class FirebaseFirestoreService {
         })
     }
 
+    // Updates the watched info of a film
     public async updateUserFilmWatched(film: Film) {
         const filmDoc = doc(this.firestore, 'usuarios', this.userId, 'peliculas', film.id.toString())
         return await setDoc(
@@ -48,6 +50,7 @@ export default class FirebaseFirestoreService {
         )
     }
 
+    // Updates the score info of a film
     public async updateUserFilmScore(film: Film) {
         const filmDoc = doc(this.firestore, 'usuarios', this.userId, 'peliculas', film.id.toString())
         return await setDoc(
@@ -58,12 +61,13 @@ export default class FirebaseFirestoreService {
             { merge: true }
         )
     }
-
+    // Deletes a film from the current user's films collection
     public async deleteUserFilm(film: Film) {
         const filmDoc = doc(this.firestore, 'usuarios', this.userId, 'peliculas', film.id.toString())
         return await deleteDoc(filmDoc)
     }
 
+	// Maps a film from the database films collection and returns a Film object
     private filmsMapper(filmsDocs: any): Film[] {
         const films: Film[] = []
         filmsDocs.forEach((filmDoc: any) => {

@@ -15,6 +15,7 @@ const initialState: UserState = {
 	keepLogin: true
 }
 
+// State slice for storing the current user
 export const userSlice = createSlice({
     name: 'user',
     initialState,

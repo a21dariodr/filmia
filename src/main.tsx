@@ -17,6 +17,7 @@ import 'atropos/css'
 import '/node_modules/flag-icons/css/flag-icons.min.css'
 import { ThemeProvider } from "@material-tailwind/react"
 
+// Customization of Material Tailwind lists styles
 const customTheme = {
     list: {
         styles: {
@@ -31,6 +32,7 @@ const customTheme = {
     }
 }
 
+// Definition of React Router routes
 const router = createBrowserRouter([
     {
         path: '/',
@@ -80,6 +82,7 @@ const router = createBrowserRouter([
     }
 ])
 
+// Initialization of the app with a Redux store and React Router routes
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <Provider store={store}>
