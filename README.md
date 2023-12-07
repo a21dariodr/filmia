@@ -1,54 +1,120 @@
 # Proyecto fin de ciclo
 
+> *TODO*: COMPLETAR Y CORREGIR ÍNDICE Y SU NUMERACIÓN AL FINALIZAR
+
+- [1. Descripción](#1-descripción)
+- [2. Arquitectura](#2-arquitectura)
+  - [2.1 Base de datos](#21-base-de-datos)
+- [3. Requisitos](#3-requisitos)
+  - [3.1 Requisitos funcionales](#31-requisitos-funcionales)
+  - [3.2 Requisitos no funcionales](#32-requisitos-no-funcionales)
+- [4. Tecnologías](#4-tecnologías)
+- [5. Despliegue](#5-despliegue)
+- [6. Uso](#6-uso)
+- [7. Índice](#7-índice)
+- [8. Sobre el autor](#8-sobre-el-autor)
+- [9. Licencia](#9-licencia)
+- [10. Guía de contribución](#10-guía-de-contribución)
+- [11. Links](#11-links)
+
+## 1. Descripción
+
 [Filmia](https://filmia-ee910.web.app/) es una aplicación que permite llevar un registro de las películas vistas por un usuario, así como de las que tiene pendientes. Incluye funcionalidad para la búsqueda, ordenación y filtrado de las películas en la galería principal, y facilita la inclusión de nuevas entradas en el listado de películas mediante autocompletado a partir de la información obtenida de la API de [The Movie Database](https://www.themoviedb.org/). Asimismo, muestra información detallada y actualizada acerca de cada película incluyendo las plataformas donde puede visualizarse desde España, gracias a la integración de The Movie Database con [Just Watch](https://www.justwatch.com/es).
 
-## Índice
+## 2. Arquitectura
+
+La aplicación presenta una arquitectura de dos capas: frontend y backend.
+
+- Para implementar el backend se hace uso de Firebase, un producto de Google que se encuadra dentro de la categoría de backend como servicio (BaaS). Proporciona diversas funcionalidades, dentro de las cuales en este proyecto se hace uso de tres: hosting, autenticación y base de datos.
+  En el caso de la base de datos, se hace uso de Firestore, del tipo noSQL.
+
+- El frontend es la parte más importante de la aplicación y la que proporciona la mayor parte de funcionalidad. Está implementado con el framework de JavaScript React en conjunción con otras tecnologías como React Router o Typescript.
+
+### 2.1 Base de datos
+
+Firestore es una base de datos de tiupo noSQL, que almacena los datos en colecciones de documentos. En este caso se ha planteado una estructura de datos consistente en una colección llamada usuarios que almacena documentos que representan a cada usuario usando el id del usuario como nombre del documento. Cada uno de estos documentos de usuario almacena a su vez una colección de películas, siendo cada película un documento cuyo nombre se corresponde con el id asignado en la API de [The Movie Database](https://www.themoviedb.org/). Es en cada uno de estos documentos donde se almacena la información básica de cada película (título, año, duración, ruta a su imágen de carátula, etc), almacenando únicamente la información esencial para mostrar en la galería y para implementar las funcionalidades de búsqueda, ordenación y filtrado, y obteniendo la información completa de cada película (reparto, plataformas de visualización y demás) únicamente al acceder a la ficha ampliada de cada una de las películas. A continuación se muestra una esquematización de la estructura de datos empleada:
+
+![Representación de la estructura de los datos almacenados en la base de datos Firestore](/doc/img/firestore_structure.png)
+
+## 3. Requisitos
+
+### 3.1. Requisitos funcionales
+
+- **Autenticación y gestión de usuarios**
+  - El usuario debe poder registrarse e iniciar sesión tanto con usuario y contraseña como empleando una cuenta de Google.
+  - Deberá ser posible recuperar la contraseña en caso de pérdida.
+  - El usuario debe poder decidir al iniciar sesión si quiere mantener la sesión iniciada o no.
+- **Internacionalización**
+  - La interfaz de usuario debe poder mostrarse en 3 idiomas: castellano, gallego o inglés.
+  - Debe emplearse un sistema de detección del lenguaje del navegador para configurar el idioma durante la carga inicial.
+- **Gestión de colecciones de películas**
+  - El formulario de adición de nuevas películas a la colección de un usuario debe funcionar mediante autocompletado en tiempo real a partir de los datos obtenidos de la API de [The Movie Database](https://www.themoviedb.org/), pudiendo el usuario modificar únicamente los campos de título (que debe funcionar como campo de búsqueda), puntuación personal y visionado.
+    - Dicho formulario debe comprobar que el valor de puntuación, en caso de introducirse, sea válido, impidiendo el guardado en caso contrario.
+  - La página principal debe mostrar una galería con la colección de películas de un usuario, siempre y cuando el usuario haya iniciado sesión, redirigiendo a la página de login y registro en caso contrario.
+  - La galería de la página principal debe mostrar una tarjeta por cada película de la colección, produciendo un efecto 3D al pasar el ratón por encima o arrastrar horizontalmente en pantallas táctiles, además de mostrar información acerca del título, año, duración, visionado y puntuación personal.
+  - La galería de la página principal debe proporcionar la siguiente funcionalidad:
+    - Activación/desactivación del efecto 3D para compatibilidad con navegadores antiguos.
+    - Botón de navegación a la ruta de adición de nuevas películas.
+    - Cambio de tamaño de las tarjetas para elegir entre tamaño grande y tamaño pequeño.
+    - Búsqueda de películas por título o título original.
+    - Ordenación por título, título original, duración, año, puntuación media en [The Movie Database](https://www.themoviedb.org/) o puntuación personal, tanto de forma ascendente como descendente.
+    - Filtrado por género o por visionado, pudiendo activar y descativar dichos filtros para que actúen juntos, por separado o no actúen en absoluto.
+  - La página de información detallada de cada película debe mostrar la información completa, obtenida de la API de [The Movie Database](https://www.themoviedb.org/) en el momento de acceder a la ruta asociada la página.
+  - La página de información detallada de cada película debe permitir modificar la puntuación personal de dicha película y el estado de visionado (película vista/no vista), así como eliminar la película de la colección.
+  - La página de información detallada de cada película debe estructurarse de forma que se presente de forma adecuada la información obtenida a partir de la API en todos los casos (puesto que no todas las películas disponen de la misma información).
+- **Responsividad**
+  - Todas las páginas de la aplicación deben mostarse y funcionar de forma adecuada con independencia de si se emplea un ordenador portátil o de sobremesa o un dispositivo móvil.
+- **Enrutamiento**
+  - Al tratarse de una aplicación de tipo *single page application* (en adelante SPA, por sus siglas en inglés), debe emplearse un sistema de enrutamiento del lado del cliente que permita acceder a la página deseada mediante su url correspondiente.
+
+### 3.2 Requisitos no funcionales
+
+- Debe asegurarse una alta disponibilidad para la aplicación.
+- Las conexiones deben ser seguras y estar adecuadamente cifradas mediante el empleo del protocolo https junto con un certificado válido.
+- Debe asegurarse un almacenamiento adecuado y seguro de la información de los usuarios.
+- El tiempo de respuesta y velocidad de carga, tanto inicial como durante operaciones tales como el filtrado o las búsquedas a tiempo real deben ser lo más rápidos posibles, garantizando una adecuada usabilidad y experiencia de usuario en la aplicación.
+- Todas las funcionalidades del sistema deben ser intuitivas y fáciles de usar, empleando patrones de diseño y elementos comunes a la mayoría de aplicaciones informáticas que les resulten lo más familiares posible a los usuarios.
+- La aplicación debe controlar posibles errores lanzados en tiempo de ejecución, mostrando una página de error adecuada y permitiendo la recuperación de los mismos mediante redirección a la página principal.
+- La interfaz gráfica de la aplicación debe respetar un diseño común empleando los mismos componentes y colores a lo largo de todas las páginas que la componen.
+
+## 4. Tecnologías
+
+En este apartado se detallan la totalidad de las tecnologías empleadas en el proyecto, tanto durante el desarollo como durante la etapa de producción:
+
+## 5. Despliegue
+
+> *TODO*: En este apartado describe con toda precisión y a poder ser con la mayor simplicidad/facilidad posible, cómo poner en marcha tu aplicación para probarla (en un ambiente local). Se valorará muy positivamente que este proceso sea lo más fácil posible, con una simple instrucción (p. e. un script de instalación).
+> Si tu proyecto es documental, realiza una especificación de cómo va a ser este proceso. En otras palabras, realiza este apartado independientemente que no haya implementación.
+
+## 6. Uso
+
+> *TODO*: Es este apartado describe brevemente cómo se usará el software que proyectas. Si tiene una interfaz de terminal, describe aquí su sintaxis. Si tiene una interfaz gráfica de usuario, describe aquí **sólo el uso** (a modo de sumario) **de los aspectos más relevantes de su funcionamiento** (máxima brevedad, como si fuese un anuncio reclamo o comercial).
+> Si tu proyecto es documental, realiza una especificación de cómo planteas estas interfaces, con ejemplos incluso o esquemas de diseño. En otras palabras, realiza este apartado independientemente que no haya implementación.
+
+## 7. Índice
 
 > *TODO*: Simplemente indexa ordenadamente todo tu proyecto.
 
 1. Anteproyecto
-    * 1.1. [Idea](doc/templates/1_idea.md)
-    * 1.2. [Necesidades](doc/templates/2_necesidades.md)
+    - 1.1. [Idea](doc/templates/1_idea.md)
+    - 1.2. [Necesidades](doc/templates/2_necesidades.md)
 2. [Análisis](doc/templates/3_analise.md)
 3. [Planificación](doc/templates/4_planificacion.md)
 4. [Diseño](doc/templates/5_deseño.md)
 5. [Implantación](doc/templates/6_implantacion.md)
 
-## Arquitectura
-
-La aplicación presenta una arquitectura de dos capas: frontend y backend.
-
-* Para implementar el backend se hace uso de Firebase, un producto de Google que se encuadra dentro de la categoría de backend como servicio (BaaS). Proporciona diversas funcionalidades, dentro de las cuales en este proyecto se hace uso de tres: hosting, autenticación y base de datos.
-  En el caso de la base de datos, se hace uso de Firestore, del tipo noSQL.
-
-* El frontend es la parte más importante de la aplicación y la que proporciona la mayor parte de funcionalidad. Está implementado con el framework de JavaScript React en conjunción con otras tecnologías como React Router o Typescript.
-
-## Tecnologías
-
-En este apartado se detallan la totalidad de las tecnologías empleadas en el proyecto, tanto durante el desarollo como durante la etapa de producción:
-
-## Instalación / Puesta en marcha
-
-> *TODO*: En este apartado describe con toda precisión y a poder ser con la mayor simplicidad/facilidad posible, cómo poner en marcha tu aplicación para probarla (en un ambiente local). Se valorará muy positivamente que este proceso sea lo más fácil posible, con una simple instrucción (p. e. un script de instalación).
-> Si tu proyecto es documental, realiza una especificación de cómo va a ser este proceso. En otras palabras, realiza este apartado independientemente que no haya implementación.
-
-## Uso
-
-> *TODO*: Es este apartado describe brevemente cómo se usará el software que proyectas. Si tiene una interfaz de terminal, describe aquí su sintaxis. Si tiene una interfaz gráfica de usuario, describe aquí **sólo el uso** (a modo de sumario) **de los aspectos más relevantes de su funcionamiento** (máxima brevedad, como si fuese un anuncio reclamo o comercial).
-> Si tu proyecto es documental, realiza una especificación de cómo planteas estas interfaces, con ejemplos incluso o esquemas de diseño. En otras palabras, realiza este apartado independientemente que no haya implementación.
-
-## Sobre el autor
+## 8. Sobre el autor
 
 > *TODO*: Realiza una breve descripción de quien eres (perfil profesional), tus puntos fuertes, o tecnologías que más dominas... y porqué te has decantado por este proyecto. **No más de 200 palabras**. Indica la forma fiable de contactar contigo en el presente y en el futuro.
 
-## Licencia
+## 9. Licencia
 
 Este proyecto está licenciado bajo la [licencia MIT](LICENSE).
 
-## Guía de contribución
+## 10. Guía de contribución
 
 > *TODO*: Tratándose de un proyecto de software libre, es muy importante que expongas cómo se puede contribuir con tu proyecto. Algunos ejemplos de esto son realizar nuevas funcionalidades, corrección y/u optimización del código, realización de tests automatizados, nuevas interfaces de integración, desarrollo de plugins, etc. etc. Sé lo más conciso que puedas.
 
-## Links
+## 11. Links
 
 > *TODO*: Enlaces externos y descipciones de estos enlaces que creas conveniente indicar aquí. Generalmente ya van a estar integrados con tu documentación, pero si requieres realizar un listado de ellos, este es el lugar.
