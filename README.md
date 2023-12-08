@@ -70,6 +70,7 @@ La aplicación presenta una arquitectura de dos capas: frontend y backend.
   En el caso de la base de datos, se hace uso de Firestore, del tipo noSQL.
 
 - El frontend es la parte más importante de la aplicación y la que proporciona la mayor parte de funcionalidad. Está implementado con el framework de JavaScript React en conjunción con otras tecnologías como React Router o Typescript.
+  Puesto que se emplea la versión funcional moderna de los componentes de React en detrimento de los componentes antiguos con orientación a objetos, el paradigma de programación funcional es el predominante en la aplicación, aunque se emplea asimismo programación orientada a objetos para encapsular la información de las películas así como para implementar los servicios (conexión con APIs, Firebase, etc.).
 
 ### 3.1 Base de datos
 
@@ -91,6 +92,7 @@ En este apartado se detallan la totalidad de las tecnologías empleadas en el pr
 - **React Router**: proporciona enrutamiento del lado del cliente, necesario al tratarse de una aplicación de una sola página (SPA)
 - **Redux**: este gestor de estado se emplea como almacén central de información, principalmente para guardar el listado de películas de un usuario con el fin de hacerlo accesible en todas las rutas de la aplicación sin necesidad de realizar llamadas recurrentes a la base de datos.
 - **Atropos**: hace posible la adición de efectos parallax 3D sobre las imágenes, tanto al pasar el ratón por encima como al moverlos mediante gestos en dispositivos móviles.
+- **Animate**: se trata de una librería ligera que ayuda a implementar rápidamente animaciones CSS.
 - **Axios**: se emplea para hacer peticiones a la API de [The Movie Database](https://www.themoviedb.org/) con el fin de obtener información de las películas y proporcionar funcionalidad de búsqueda para añadir nuevas películas a la colección de un usuario.
 - **Vite**, **Rollup** y **Terser**: se emplea **Vite** durante el desarrollo con el fin de disponer de un servidor que permita la ejecución del proyecto y la visualización de cambios en tiempo real gracias a su funcionalidad de reemplazo de módulos en caliente (*HMR*, por sus siglas en inglés). Asimismo, permite la construcción del proyecto para su depsliegue, haciendo uso del bundler **Rollup**. Además, se emplea **Terser** con el fin de eliminar los mensajes de consola empleados durante el desarrollo para la etapa de producción.
 - **NPM**: se emplea el gestor de paquetes de **NodeJS**, **NPM**, para añadir las dependencias necesarias al proyecto. También se hace uso de su sistema de ejecución de scrips para lanzar el servidor de desarrollo de Vite, para construir el proyecto y para desplegarlo en Firebase.
@@ -109,8 +111,7 @@ En este apartado se detallan la totalidad de las tecnologías empleadas en el pr
 
 ## 6. Uso
 
-> *TODO*: Es este apartado describe brevemente cómo se usará el software que proyectas. Si tiene una interfaz de terminal, describe aquí su sintaxis. Si tiene una interfaz gráfica de usuario, describe aquí **sólo el uso** (a modo de sumario) **de los aspectos más relevantes de su funcionamiento** (máxima brevedad, como si fuese un anuncio reclamo o comercial).
-> Si tu proyecto es documental, realiza una especificación de cómo planteas estas interfaces, con ejemplos incluso o esquemas de diseño. En otras palabras, realiza este apartado independientemente que no haya implementación.
+> *TODO*: Es este apartado describe brevemente cómo se usará el software que proyectas. Si tiene una interfaz gráfica de usuario, describe aquí **sólo el uso** (a modo de sumario) **de los aspectos más relevantes de su funcionamiento** (máxima brevedad, como si fuese un anuncio reclamo o comercial).
 
 ## 7. Índice
 

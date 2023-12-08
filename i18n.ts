@@ -5,14 +5,15 @@ import Backend from 'i18next-http-backend'
 
 // Internacionalization with i18next using browser language detection feature
 i18n.use(Backend)
-	.use(LanguageDetector)
+    .use(LanguageDetector)
     .use(initReactI18next)
     .init({
         debug: true,
         fallbackLng: 'es',
         interpolation: {
             escapeValue: false // Not necessary in React as it escapes by default
-        }
+        },
+        load: 'languageOnly'
     })
 
 export default i18n
