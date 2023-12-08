@@ -104,7 +104,7 @@ En este apartado se detallan la totalidad de las tecnologías empleadas en el pr
 - **Flicking**: se trata de un carrusel avanzado y altamente personalizable que se emplea para mostrar de forma visual el listado de actores y actrices de una película.
 - **FlagIcons**: proporciona la bandera de cada país de mundo, y es utilizada para asignar la bandera correspondiente a los países de producción de las películas.
 
-![Collage de logos de las tecnologías empleadas en el proyecto](/doc/img/technologies_collage.png){width=30%}
+![Collage de logos de las tecnologías empleadas en el proyecto](/doc/img/technologies_collage.png){width=40%}
 
 ## 5. Despliegue
 
