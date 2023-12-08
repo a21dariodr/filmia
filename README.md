@@ -108,8 +108,17 @@ En este apartado se detallan la totalidad de las tecnologías empleadas en el pr
 
 ## 5. Despliegue
 
-> *TODO*: En este apartado describe con toda precisión y a poder ser con la mayor simplicidad/facilidad posible, cómo poner en marcha tu aplicación para probarla (en un ambiente local). Se valorará muy positivamente que este proceso sea lo más fácil posible, con una simple instrucción (p. e. un script de instalación).
-> Si tu proyecto es documental, realiza una especificación de cómo va a ser este proceso. En otras palabras, realiza este apartado independientemente que no haya implementación.
+El proyecto se construye mediante Vite, el cual emplea internamente Rollup como empaquetador (*bundler*). Dicha construcción se realiza mediante el script **build** ejecutando por consola la instrucción `npm run build`, la cual realiza primeramente una compilación del código tipado con Typescript a Javascript que pueda ser ejecutado por el navegador. A continuación se realiza la construcción del proyecto propiamente dicha, generando en la carpeta *dist* la versión del proyecto lista para desplegar en producción.
+
+Asimismo, existe un script **preview** que puede ejecutarse mediante la instrucción `npm run preview` y que inicia un servidor de pruebas para poder probar y testear el proyecto una vez construido antes de desplegarlo.
+
+La aplicación es desplegada en el servicio de hosting de Firebase. Para ello se ha configurado el script **deploy**, el cual se ejecuta mediante la instrucción `npm run deploy` y despliega en Firebase el proyecto construido en la carpeta *dist*.
+
+Por otra parte, se ha configurado un pipeline para Gitlab en el fichero [.gitlab-ci.yml](.gitlab-ci.yml), que contruye y despliega el proyecto de forma automática cada vez que se suben cambios al repositorio.
+
+En el caso de que otro desarrollador desee clonar y ejecutar el proyecto, debe modificar la configuración de Firebase para poder desplegar su propia instancia de la aplicación. Para ello, es necesario registrarse en Firebase y crear un nuevo proyecto, habilitando en el nuevo proyecto los servicios de Hosting, Authentication y Firestore Database. A continuación es necesario modificar los parámetros de configuración de Firebase en el proyecto, cambiando los valores de las variables de los ficheros [.env](.env) y [firebase.ts](src/services/firebase/firebase.ts). Finalmente, es necesario añadir algunos valores de variables de entorno a Gitlab (*Settings->CI/CD->Variables*), puesto que por privacidad el fichero [.env](.env) no se sube al repositorio de Gitlab. En concreto, es necesario añadir las variables *FIREBASE_TOKEN* y *VITE_TMD_ACCESS_TOKEN*, empleadas durante la construcción del proyecto mediante el pipeline y en las llamadas a la API de [The Movie Database](https://www.themoviedb.org/), respectivamente.
+
+![Configuración de variables de entorno en Gitlab](/doc/img/gitlab_environment_variables.png)
 
 ## 6. Uso
 
