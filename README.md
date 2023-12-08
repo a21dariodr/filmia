@@ -102,7 +102,9 @@ En este apartado se detallan la totalidad de las tecnologías empleadas en el pr
 - **i18next**: esta librería proporciona la funcionalidad necesaria para traducir la interfaz y poder mostrarla en castellano, gallego o inglés a elección del usuario.
 - **Google Material Icons**: estos iconos modernos se emplean a lo largo de toda la aplicación para ayudar a la identificación visual de la información mostrada.
 - **Flicking**: se trata de un carrusel avanzado y altamente personalizable que se emplea para mostrar de forma visual el listado de actores y actrices de una película.
-- **FlagIcons**: proporciona información variada acerca de cada país de mundo, y es utilizada para asignar la bandera correspondiente a los países de producción de las películas.
+- **FlagIcons**: proporciona la bandera de cada país de mundo, y es utilizada para asignar la bandera correspondiente a los países de producción de las películas.
+
+![Collage de logos de las tecnologías empleadas en el proyecto](/doc/img/technologies_collage.png)
 
 ## 5. Despliegue
 
