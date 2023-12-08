@@ -1,7 +1,5 @@
 # Proyecto fin de ciclo
 
-> *TODO*: COMPLETAR Y CORREGIR ÍNDICE Y SU NUMERACIÓN AL FINALIZAR
-
 - [1. Descripción](#1-descripción)
 - [2. Requisitos](#2-requisitos)
   - [2.1 Requisitos funcionales](#21-requisitos-funcionales)
@@ -15,7 +13,7 @@
 - [8. Sobre el autor](#8-sobre-el-autor)
 - [9. Licencia](#9-licencia)
 - [10. Guía de contribución](#10-guía-de-contribución)
-- [11. Links](#11-links)
+- [11. Otra documentación](#11-otra-documentación)
 
 ## 1. Descripción
 
@@ -149,12 +147,18 @@ Puesto que el tiempo de desarrollo antes de la presentación del proyecto ha sid
 - Vista de grid o tabla en la galería principal.
 - Gráficos con estadísticas de totales de películas y series, totales pendientes/vistas, totales y porcentajes por géneros, etc.
 - Nuevos filtros en la galería: duración, año, etc.
-- Modo oscuro.
 - Importación de películas desde CSV y exportación a CSV o PDF.
+- Modo oscuro.
 
 ## 8. Sobre el autor
 
-> *TODO*: Realiza una breve descripción de quien eres (perfil profesional), tus puntos fuertes, o tecnologías que más dominas... y porqué te has decantado por este proyecto. **No más de 200 palabras**. Indica la forma fiable de contactar contigo en el presente y en el futuro.
+Mi nombre es Darío de la Iglesia Rodríguez y soy un un doctor en química circunstacial pero informático de vocación que a raíz de la pandemia decidió dar un giro a su vida profesional iniciando una formación reglada en campo del desarrollo de software. Siempre busco aprender nuevas cosas y aumentar mis habilidades y además aprendo rápidamente, por lo que puedo desenvolverme en diferentes áreas y adaptarme a los cambios, incluso disfrutando con ello.
+
+Dentro del mundo del desarrollo de software me atrae el desarrollo web y todas las tecnologías surgidas durante los últimos años, tanto del lado del front end como del back end, me gusta comprender todo el proceso desde el servidor hasta el usuario final. En este sentido, actualmente estoy comenzando mi camino aprendiendo tecnologías tan ampliamente usadas como React o Angular en el frontend y Express o Spring para el backend.
+
+Además y debido a mi formación científica previa, estoy acostumbrado y además me gusta el trabajo con datos, desde su obtención hasta su procesamiento y visualización, por lo que procuro nunca dejar de lado el lenguaje Python y sus utilísimas librerías.
+
+Quien desee contactar conmigo puede hacerlo a través de mi [perfil de LinkedIn](https://www.linkedin.com/in/dar%C3%ADo-de-la-iglesia-rodr%C3%ADguez-81279bb4/).
 
 ## 9. Licencia
 
@@ -162,10 +166,10 @@ Este proyecto está licenciado bajo la [licencia MIT](LICENSE).
 
 ## 10. Guía de contribución
 
-> *TODO*: Tratándose de un proyecto de software libre, es muy importante que expongas cómo se puede contribuir con tu proyecto. Algunos ejemplos de esto son realizar nuevas funcionalidades, corrección y/u optimización del código, realización de tests automatizados, nuevas interfaces de integración, desarrollo de plugins, etc. etc. Sé lo más conciso que puedas.
+Cualquiera que desee contribuir con el presente proyecto aportando su granito de arena es bienvenido. Para ello, debe hacer un *fork* de [este repositorio](https://gitlab.iessanclemente.net/dawd/a21dariodr) y crear una nueva rama *develop* sobre la que trabajar. Una vez realizados los cambios pertinentes o añadida la nueva funcionalidad, debe realizar un *merge request* para poder integrar los cambios en el proyecto.
 
-## 11. Links
+En este sentido, cualquiera que desee formar parte del proyecto puede desarrollar cualquiera de las funcionalidades listadas en el apartado [Roadmap](#7-roadmap), las cuales están listadas en orden de prioridad de desarrollo, o incluso optimizar alguna de las funcionalidades ya existentes, desarrollar tests unitarios o *end-to-end* o corregir algún posible *bug* que pueda encontrarse.
 
-> *TODO*: Enlaces externos y descipciones de estos enlaces que creas conveniente indicar aquí. Generalmente ya van a estar integrados con tu documentación, pero si requieres realizar un listado de ellos, este es el lugar.
+## 11. Otra documentación
 
 - [Anteproyecto](Anteproyecto.md)
