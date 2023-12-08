@@ -122,7 +122,17 @@ En el caso de que otro desarrollador desee clonar y ejecutar el proyecto, debe m
 
 ## 6. Uso
 
-> *TODO*: Es este apartado describe brevemente cómo se usará el software que proyectas. Si tiene una interfaz gráfica de usuario, describe aquí **sólo el uso** (a modo de sumario) **de los aspectos más relevantes de su funcionamiento** (máxima brevedad, como si fuese un anuncio reclamo o comercial).
+Desde el punto de vista de los usuarios, el uso de la aplicación es muy sencillo. Al iniciar la aplicación por primera vez o si el usuario no tiene una sesión iniciada, es automáticamente redirigido a la página de inicio de sesión, donde puede loguearse empleando usuario y contraseña o una cuenta de Google, así como registrarse o recuperar su contraseña.
+
+Una vez que un usuario ha iniciado sesión, es redirigido a la página principal que muestra una galería con la totalidad de su colección de películas. Esta página dispone de funcionalidad para activar o desactivar un efecto parallax 3D en las carátulas de las películas, para aumentar o disminuir su tamaño y para realizar un filtrado, ordenación o búsqueda por título en la colección.
+
+En esta misma página de galería el usuario dispone de un botón para la adición de nuevas películas a su colección, que le redirige al formulario correspondiente. Este formulario funciona mediante autocompletado a partir del título en cuestión, mostrando un listado de películas encontradas durante la búsqueda. Al clicar en una de ellas, la información de la película se autorrellena en el formulario, permitiendo al usuario marcar la película como vista, asignarle una puntuación entre 0 y 10 y guardarla para añadirla a su colección.
+
+Por otra parte, al clicar sobre una película cualquiera de la galería se redirige a la página de información completa de la misma, donde se mestra desde un carrusel con el reparto hasta las plataformas donde puede visualizarse en España. Asimismo, desde esta página el susuario puede marcar pa película como vista o no vista, asigar o modificar su puntuación o eliminar la película de la colección.
+
+Por otra parte, los administradores pueden configurar y administrar los parámetros, usuarios y colecciones de películas directamente desde la consola de Firebase. De este modo, pueden modificarse las formas de autenticación de usuarios o añadir nuevos método (como el empleo de cuentas de Facebook o Github), o incluso manipularse de forma directa los datos almacenados en la base de datos Firestore o modificar las reglas de seguridad aplicadas. Asimismo, esta consola proporciona métricas relacionadas con el número de visitas a la página del proyecto o a la soperaciones de lectura y escritura realizadas en la base de datos.
+
+![Consola de Firebase](/doc/img/firebase_console.png)
 
 ## 7. Índice
 
