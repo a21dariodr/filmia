@@ -11,7 +11,7 @@
 - [4. Tecnologías](#4-tecnologías)
 - [5. Despliegue](#5-despliegue)
 - [6. Uso](#6-uso)
-- [7. Índice](#7-índice)
+- [7. Roadmap](#7-roadmap)
 - [8. Sobre el autor](#8-sobre-el-autor)
 - [9. Licencia](#9-licencia)
 - [10. Guía de contribución](#10-guía-de-contribución)
@@ -19,7 +19,13 @@
 
 ## 1. Descripción
 
-[Filmia](https://filmia-ee910.web.app/) es una aplicación que permite llevar un registro de las películas vistas por un usuario, así como de las que tiene pendientes. Incluye funcionalidad para la búsqueda, ordenación y filtrado de las películas en la galería principal, y facilita la inclusión de nuevas entradas en el listado de películas mediante autocompletado a partir de la información obtenida de la API de [The Movie Database](https://www.themoviedb.org/). Asimismo, muestra información detallada y actualizada acerca de cada película incluyendo las plataformas donde puede visualizarse desde España, gracias a la integración de The Movie Database con [Just Watch](https://www.justwatch.com/es).
+[Filmia](https://filmia-ee910.web.app/) es una aplicación que permite llevar un registro de las películas vistas por un usuario, así como de las que tiene pendientes. Incluye funcionalidad para la búsqueda, ordenación y filtrado de las películas en la galería principal, y facilita la inclusión de nuevas entradas en el listado de películas mediante autocompletado a partir de la información obtenida de la API de [The Movie Database](https://www.themoviedb.org/). Todas las páginas de la aplicación se han implementado de forma responsiva, de forma que se muestren de forma adecuada tanto en pantallas grandes como en dispositivos móviles. A continuación se muestra la apariencia de la galería principal de películas en ambos tipos de dispositivo:
+
+![Galería principal de películas de un usuario](/doc/img/film_gallery.png){width=80%}
+
+Asimismo, muestra información detallada y actualizada acerca de cada película incluyendo las plataformas donde puede visualizarse desde España, gracias a la integración de The Movie Database con [Just Watch](https://www.justwatch.com/es). El diseño de esta vista detalla, dada su relevancia en la aplicación, se muestra a continuación tanto para dispositivos móviles como en pantallas de mayor tamaño como ordenadores de sobremesa o portátiles:
+
+![Vista detallada de una película con su información completa](/doc/img/film_details.png){width=80%}
 
 ## 2. Requisitos
 
@@ -134,17 +140,17 @@ Por otra parte, los administradores pueden configurar y administrar los parámet
 
 ![Consola de Firebase](/doc/img/firebase_console.png)
 
-## 7. Índice
+## 7. Roadmap
 
-> *TODO*: Simplemente indexa ordenadamente todo tu proyecto.
+Puesto que el tiempo de desarrollo antes de la presentación del proyecto ha sido limitado, algunas de las funcionalidades inicialmente ideadas no han podido llegar a implementarse, aunque quedan pendientes para su implementación en futuras iteraciones. A continuación se muestra un listado con dichas funcionalidades:
 
-1. Anteproyecto
-    - 1.1. [Idea](doc/templates/1_idea.md)
-    - 1.2. [Necesidades](doc/templates/2_necesidades.md)
-2. [Análisis](doc/templates/3_analise.md)
-3. [Planificación](doc/templates/4_planificacion.md)
-4. [Diseño](doc/templates/5_deseño.md)
-5. [Implantación](doc/templates/6_implantacion.md)
+- Soporte para series.
+- Barra de navegación lateral para acceder a las directamente a galería con películas, series, películas o series pendientes o nuevas funcionalidades.
+- Vista de grid o tabla en la galería principal.
+- Gráficos con estadísticas de totales de películas y series, totales pendientes/vistas, totales y porcentajes por géneros, etc.
+- Nuevos filtros en la galería: duración, año, etc.
+- Modo oscuro.
+- Importación de películas desde CSV y exportación a CSV o PDF.
 
 ## 8. Sobre el autor
 
@@ -161,3 +167,5 @@ Este proyecto está licenciado bajo la [licencia MIT](LICENSE).
 ## 11. Links
 
 > *TODO*: Enlaces externos y descipciones de estos enlaces que creas conveniente indicar aquí. Generalmente ya van a estar integrados con tu documentación, pero si requieres realizar un listado de ellos, este es el lugar.
+
+- [Anteproyecto](Anteproyecto.md)
