@@ -2,10 +2,10 @@
 
 - [1. Descripción](#1-descripción)
 - [2. Requisitos](#2-requisitos)
-  - [2.1 Requisitos funcionales](#21-requisitos-funcionales)
-  - [2.2 Requisitos no funcionales](#22-requisitos-no-funcionales)
+  - [2.1. Requisitos funcionales](#21-requisitos-funcionales)
+  - [2.2. Requisitos no funcionales](#22-requisitos-no-funcionales)
 - [3. Arquitectura](#3-arquitectura)
-  - [3.1 Base de datos](#31-base-de-datos)
+  - [3.1. Base de datos](#31-base-de-datos)
 - [4. Tecnologías](#4-tecnologías)
 - [5. Despliegue](#5-despliegue)
 - [6. Uso](#6-uso)
@@ -56,7 +56,7 @@ Asimismo, muestra información detallada y actualizada acerca de cada película 
 - **Enrutamiento**
   - Al tratarse de una aplicación de tipo *single page application* (en adelante SPA, por sus siglas en inglés), debe emplearse un sistema de enrutamiento del lado del cliente que permita acceder a la página deseada mediante su url correspondiente.
 
-### 2.2 Requisitos no funcionales
+### 2.2. Requisitos no funcionales
 
 - Debe asegurarse una alta disponibilidad para la aplicación.
 - Las conexiones deben ser seguras y estar adecuadamente cifradas mediante el empleo del protocolo https junto con un certificado válido.
@@ -76,7 +76,24 @@ La aplicación presenta una arquitectura de dos capas: frontend y backend.
 - El frontend es la parte más importante de la aplicación y la que proporciona la mayor parte de funcionalidad. Está implementado con el framework de JavaScript React en conjunción con otras tecnologías como React Router o Typescript.
   Puesto que se emplea la versión funcional moderna de los componentes de React en detrimento de los componentes antiguos con orientación a objetos, el paradigma de programación funcional es el predominante en la aplicación, aunque se emplea asimismo programación orientada a objetos para encapsular la información de las películas así como para implementar los servicios (conexión con APIs, Firebase, etc.).
 
-### 3.1 Base de datos
+El flujo de ejecución de la aplicación se apoya en dos tecnologías principales: los componentes de React y el enrutamiento de React Router. Cuando la página de la aplicación es cargada en el navegador se ejecuta el script *main.tsx*, el cual se encarga de inicializar el sistema de enrutamiento junto con otros aspectos como la traducción de la interfaz o la librería de componentes Material Tailwind, además de cargar las hojas de estilos generales para toda la aplicación.
+
+Cada una de las rutas de la apliación tiene asociado su componente componente de React, el cual es cargado al acceder a dicha ruta. Existen cuatro rutas principales, puesto que las funcionalidades de login, registro de usuarios y recuperación de contraseña disponen de ruta propia. El resto de las fucionalidades de la aplicación se muestran en la ruta principal, asociada al componente *Home*, y que a su vez renderiza un componente de cabecera (*Header*), otro de pie de página (*Footer*) y un *Outlet* en el que se renderizan las demás subrutas de la aplicación. Por defecto y una vez que el usuario ha iniciado sesión, se renderiza el componente *Gallery* que muestra la galería de películas del usuario. Es en este mismo espacio donde se muestran el componente de información detallada de cada película y el formulario de adición de nuevas películas a la colección, una vez que el usuario accede a sus rutas correspondientes.
+
+Además de todas estas rutas y componentes principales, existen una serie de clases que tienen un papel primordial en la aplicación. Por una parte, la clase *Film* sirve para modelar objetos de tipo película y se emplea a lo largo de todo el proyecto para manejar la información proveniente o enviada a la base de datos o recibida de la API de películas.
+
+Por otra parte, existen una serie de servicios implementados con orientación a objetos que se encargan de la comunicación con servicios externos:
+
+- *Servicio de Firebase*: contiene la configuración principal de Firebase y se encarga de inicializar los servicios empleados (autenticación y base de datos), proporcionando acceso a los mismos desde cualquier parte de la aplicación a través de la exportación de variables que apuntan a dichos servicios.
+- *Servicio de Firestore*: se encarga de la lectura y escritura de la información guardada en la base de datos.
+- *Servicio de Firebase Authentication*: contiene los métodos correspondientes a todas las funcionalidades del sistema de autenticación, desde el registro de nuevos usuarios hasta la recuperación de contraseñas.
+- *Servicio de comunicación con la API de The Movie Database*: su labor principal es la comunicación con la API de [The Movie Database](https://www.themoviedb.org/), para buscar películas a partir de su título o para obtener su información detallada a partir de su ID. Asimismo, se encarga de mapear la información obtenida devolviendo objetos *Film*.
+
+Una visión esquemática de la arquitectura de la apliación puede verse en la imagen que se muestra a contiunuación:
+
+![Esquematización de la arquitectura de la aplicación](/doc/img/architecture_diagram.png){width=60%}
+
+### 3.1. Base de datos
 
 Firestore es una base de datos de tiupo noSQL, que almacena los datos en colecciones de documentos. En este caso se ha planteado una estructura de datos consistente en una colección llamada usuarios que almacena documentos que representan a cada usuario usando el id del usuario como nombre del documento. Cada uno de estos documentos de usuario almacena a su vez una colección de películas, siendo cada película un documento cuyo nombre se corresponde con el id asignado en la API de [The Movie Database](https://www.themoviedb.org/). Es en cada uno de estos documentos donde se almacena la información básica de cada película (título, año, duración, ruta a su imágen de carátula, etc), almacenando únicamente la información esencial para mostrar en la galería y para implementar las funcionalidades de búsqueda, ordenación y filtrado, y obteniendo la información completa de cada película (reparto, plataformas de visualización y demás) únicamente al acceder a la ficha ampliada de cada una de las películas. A continuación se muestra una esquematización de la estructura de datos empleada:
 
