@@ -42,14 +42,14 @@ const Login = () => {
 	}
 
     return (
-        <div className="bg-white rounded-lg h-full">
+        <div className="bg-white rounded-lg h-full md:w-[50%] mx-auto">
             <div className="container flex flex-col mx-auto bg-white rounded-lg h-full place-items-center">
                 <div className="flex w-full h-full my-auto xl:gap-14 lg:justify-normal md:gap-5 draggable">
                     <div className="flex items-center justify-center w-full lg:p-12">
                         <div className="flex px-4 xl:p-10">
                             <form autoComplete="on" className="flex flex-col w-full h-full text-center bg-white">
-                                <h1 className="hidden md:block pb-14 text-6xl text-bold">FILMIA</h1>
-                                <h3 className="mb-14 text-4xl font-extrabold text-gray-900">{t('login.title')}</h3>
+                                <img src="/logo/logo-black-clipped.svg" alt="Filmia logo" className="w-[70%] md:w-[60%] place-self-center mt-4 md:mt-0 pb-8 md:pb-14" />
+                                <h3 className="mb-8 md:mb-14 text-2xl md:text-4xl font-extrabold text-gray-900">{t('login.title')}</h3>
                                 <button
                                     type="button"
                                     onClick={signUpGoogleHandler}
@@ -98,7 +98,7 @@ const Login = () => {
                                 <button
                                     type="button"
                                     onClick={emailLoginHandler}
-                                    className="w-full px-6 py-5 my-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 rounded-2xl hover:bg-violet-600 focus:ring-4 focus:ring-purple-blue-100 bg-violet-700">
+                                    className="w-full px-6 py-5 my-5 text-sm font-bold leading-none text-white transition duration-300 md:w-96 md:place-self-center rounded-2xl hover:bg-violet-600 focus:ring-4 focus:ring-purple-blue-100 bg-violet-700">
                                     {t('login.sign_in')}
                                 </button>
                                 <p className="text-sm leading-relaxed text-gray-900">
