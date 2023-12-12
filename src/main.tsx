@@ -13,6 +13,7 @@ import Gallery from "./routes/Gallery.tsx"
 import Film, { loader as filmLoader } from "./routes/Film.tsx"
 import NewFilmForm from "./routes/NewFilmForm.tsx"
 import "./styles/index.css"
+import 'animate.css'
 import 'atropos/css'
 import '/node_modules/flag-icons/css/flag-icons.min.css'
 import { ThemeProvider } from "@material-tailwind/react"

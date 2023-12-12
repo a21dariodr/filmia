@@ -1,5 +1,5 @@
 import firebase from '../firebase/firebase'
-import { collection, doc, getDocs, getDoc, setDoc, deleteDoc } from 'firebase/firestore/lite'
+import { collection, doc, getDocs, getDoc, setDoc, deleteDoc, query, orderBy } from 'firebase/firestore/lite'
 import { Film } from '../../models/Film'
 
 // Service for saving and obtaining data from Firebase Firestore database
@@ -7,9 +7,9 @@ export default class FirebaseFirestoreService {
     private readonly firestore = firebase.db
     private userId = localStorage.getItem('userId')!
 
-    // Returns the complete films list of the current user
+    // Returns the complete films list of the current user order by title
     public async getUserFilms() {
-        const filmsRef = collection(this.firestore, 'usuarios', this.userId, 'peliculas')
+        const filmsRef = query(collection(this.firestore, 'usuarios', this.userId, 'peliculas'), orderBy('title'))
         const filmsDocs = await getDocs(filmsRef)
         return this.filmsMapper(filmsDocs)
     }

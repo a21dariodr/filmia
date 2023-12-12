@@ -57,7 +57,7 @@
         "save_film": "Save",
         "select_film": "Select a film"
     },
-	"delet_film": {
+	"delete_film": {
 		"dialog_body": "Confirm that you want to delete the current film"
 	},
 	"film": {

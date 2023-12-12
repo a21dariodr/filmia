@@ -80,7 +80,7 @@ const Film = () => {
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-base p-3 md:p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs md:text-base p-3 md:p-6 md:px-20">
                 <div className="col-span-full justify-self-center uppercase text-center text-xl md:text-3xl font-bold">
                     <h1>{filmDetails.title}</h1>
                 </div>
@@ -145,7 +145,7 @@ const Film = () => {
                         )}
 
                         {/* Shows the watched info of the film while allows to change its value */}
-                        <div className="w-full">
+                        <div className="w-full animate__animated animate__pulse">
                             <span className="material-symbols-outlined align-text-bottom text-xs md:text-sm text-violet-700 mr-1">visibility</span>
                             <span className="font-bold italic mr-2">{t('film.film_watched')}</span>
                             <div className="inline-flex ml-1 md:ml-3 p-2 md:p-3 hover:bg-indigo-200 placeholder:text-gray-700 bg-indigo-100 text-dark-gray-900 rounded-lg md:rounded-xl">
@@ -159,7 +159,7 @@ const Film = () => {
                         </div>
 
                         {/* Shows the score info of the film while allows to change its value */}
-                        <div className="w-full">
+                        <div className="w-full animate__animated animate__pulse">
                             <span className="material-symbols-outlined align-text-bottom text-xs md:text-sm text-violet-700 mr-1">star</span>
                             <span className="font-bold italic mr-2">{t('film.film_score')}</span>
                             <input
@@ -260,7 +260,7 @@ const Film = () => {
                 {filmDetails.overview ? <div className="md:text-sm p-2">{filmDetails.overview}</div> : ''}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-white bg-violet-800 md:text-base p-3 md:p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-white bg-violet-800 md:text-base p-3 md:p-6 md:px-16">
                 {/* Carousel that shows the profile photo and name of the main 30 actors */}
                 {filmDetails.cast?.length! > 0 ? (
                     <div className="flex flex-wrap">

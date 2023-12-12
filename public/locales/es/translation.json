@@ -57,7 +57,7 @@
         "save_film": "Guardar",
         "select_film": "Selecciona una película"
     },
-    "delet_film": {
+    "delete_film": {
         "dialog_body": "Confirme si desea eliminar la película"
     },
     "film": {

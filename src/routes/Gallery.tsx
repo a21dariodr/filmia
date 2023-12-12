@@ -222,7 +222,7 @@ const Gallery = () => {
 	// Sorts the collection at the initial component load, when sort order is changed or the collection is filtered
     useEffect(() => {
         onSortHandler(sortField)
-    }, [userFilms, sortOrder, filterChanges])
+    }, [sortOrder, filterChanges])
 
 	// Loads the complete user films collection from the Firestore database at the initial component load
     useEffect(() => {
@@ -230,7 +230,7 @@ const Gallery = () => {
             if (films) dispatch(setFilms(films))
             setUserFilms(films)
             setProcessedUserFilms(films)
-        })
+        }).catch(() => console.log('Films collection not loaded yet, userID not available'))
     }, [userId])
 
     return (
@@ -268,7 +268,7 @@ const Gallery = () => {
 						bg-indigo-100 text-dark-gray-900 ml-2 align-middle"
                     />
                 </div>
-				
+
                 <Menu>
                     <MenuHandler>
                         <Button className="px-2 md:px-3 capitalize !font-black text-sm md:text-base text-black bg-white hover:bg-slate-100 shadow-none">{t('common.sort')}</Button>
@@ -438,7 +438,7 @@ const Gallery = () => {
                         onClick={() => filmClickHandler(film)}
                         onKeyDown={() => filmClickHandler(film)}
                         key={film.id}
-                        className={'flex flex-wrap ' + (!smallCards ? 'w-40 md:w-60 text-xs md:text-base' : 'smallCards w-24 md:w-32 text-[9px] md:text-xs')}>
+                        className={'flex flex-wrap animate__animated animate__fadeIn ' + (!smallCards ? 'w-40 md:w-60 text-xs md:text-base' : 'smallCards w-24 md:w-32 text-[9px] md:text-xs')}>
                         {atropos ? (
                             <Atropos rotateTouch={'scroll-y'} className="w-full h-full">
                                 <figure className="relative w-full h-full">
