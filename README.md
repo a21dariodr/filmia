@@ -189,4 +189,4 @@ En este sentido, cualquiera que desee formar parte del proyecto puede desarrolla
 
 ## 11. Otra documentación
 
-- [Anteproyecto](Anteproyecto.md)
+- [Anteproyecto](/doc/Anteproyecto.md)
