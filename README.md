@@ -190,3 +190,4 @@ En este sentido, cualquiera que desee formar parte del proyecto puede desarrolla
 ## 11. Otra documentación
 
 - [Anteproyecto](/doc/Anteproyecto.md)
+- [Changelog](/CHANGELOG.md)
