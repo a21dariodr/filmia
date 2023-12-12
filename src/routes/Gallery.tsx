@@ -36,8 +36,8 @@ const Gallery = () => {
     const [openFilterWatchedMenu, setOpenFilterWatchedMenu] = useState<boolean>(false)
     const [openFilterGenreMenu, setOpenFilterGenreMenu] = useState<boolean>(false)
 
-    console.debug('User films: ', userFilms)
-    console.debug('Small cards: ', smallCards)
+    console.log('User films: ', userFilms)
+    console.log('Small cards: ', smallCards)
 
     // Redirects to the route that allows to add new films to the collection
     const newFilmHandler = () => navigate('/newFilm')
@@ -80,7 +80,7 @@ const Gallery = () => {
             const searchText = event.target.value.toLowerCase()
             const searchRegexp = new RegExp(`.*${searchText}.*`)
             const filteredResults = userFilms.filter(film => film.title.toLowerCase().match(searchRegexp) || film.originalTitle.toLowerCase().match(searchRegexp))
-            console.debug('Filtered search results', filteredResults)
+            console.log('Filtered search results', filteredResults)
             setProcessedUserFilms(filteredResults)
             setSearchedFilms(filteredResults)
         } else { // If there is no search the entire movie collection is loaded
@@ -92,7 +92,7 @@ const Gallery = () => {
 	// Manages film collection sorting
     const onSortHandler = (field: string) => {
         if (sortField !== field) {
-            console.debug('Changing sort field to: ', field)
+            console.log('Changing sort field to: ', field)
             setSortField(field)
         }
 
@@ -152,26 +152,26 @@ const Gallery = () => {
             }
         })
 
-        console.debug('Sorting by ', field, ' ', sortOrder)
+        console.log('Sorting by ', field, ' ', sortOrder)
         setProcessedUserFilms(sortedFilms)
     }
 
 	// Manages the change in sort order between ascending and descending and triggers a new sort
     const onChangeSortOrderHandler = (field: string) => {
         if (sortOrder === 'asc') {
-            console.debug('Changing sort order to DESC')
+            console.log('Changing sort order to DESC')
             setSortOrder('desc')
 
             if (sortField !== field) {
-                console.debug('Changing sort field to: ', field)
+                console.log('Changing sort field to: ', field)
                 setSortField(field)
             }
         } else {
-            console.debug('Changing sort order to ASC')
+            console.log('Changing sort order to ASC')
             setSortOrder('asc')
 
             if (sortField !== field) {
-                console.debug('Changing sort field to: ', field)
+                console.log('Changing sort field to: ', field)
                 setSortField(field)
             }
         }
@@ -183,7 +183,7 @@ const Gallery = () => {
 
         // Filters by genre is this filter is active
         if (filterGenre) {
-            console.debug('Filtering by genre')
+            console.log('Filtering by genre')
             // Filters over the current search result or over the entire collection
             const filmsToFilter = titleSearch ? searchedFilms : userFilms
             const filteredFilmsByGenre = filmsToFilter.filter((film: Film): boolean => {
@@ -195,7 +195,7 @@ const Gallery = () => {
 
         // Filters by watched is this filter is active
         if (filterWatched) {
-            console.debug('Filtering by watched')
+            console.log('Filtering by watched')
             // Filters over the result of the genre filtering, the current search result or over the entire collection
             const filmsToFilter = filterGenre ? filteredFilms : titleSearch ? searchedFilms : userFilms
             const filteredFilmsByWatched = filmsToFilter.filter((film: Film): boolean => film.watched === filterWatchedValue)

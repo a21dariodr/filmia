@@ -13,7 +13,7 @@ const firebaseConfig = {
     measurementId: 'G-XTYQG689SB'
 }
 
-console.debug(firebaseConfig)
+console.log(firebaseConfig)
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)

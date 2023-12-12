@@ -12,7 +12,6 @@ import '@egjs/react-flicking/dist/flicking.css'
 import '@egjs/flicking-plugins/dist/arrow.css'
 import '../styles/Film.css'
 
-
 const tmd = new TheMovieDatabaseApiService()
 
 // React Router loader that obtains the complete detailed info about the film of the current route
@@ -40,7 +39,7 @@ const Film = () => {
 			filmDetails.watched = scoreAndWatched.watched
             setScore(scoreAndWatched.score)
             setWatched(scoreAndWatched.watched)
-            console.debug('Film details: ', filmDetails)
+            console.log('Film details: ', filmDetails)
 		}
 		getFilmScoreAndWatched()
 	}, [])

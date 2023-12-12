@@ -16,7 +16,7 @@ const Login = () => {
             .getSignInGoogleResult()
             .then(userCredential => {
                 if (userCredential) {
-                    console.debug('User email: ', userCredential.user.email)
+                    console.log('User email: ', userCredential.user.email)
                     navigate('/')
                 }
             })
@@ -35,7 +35,7 @@ const Login = () => {
 		firebaseAuth
             .signInWithEmail(email, password, keepLogin)
             .then(userCredential => {
-                console.debug('User email: ', userCredential.user.email)
+                console.log('User email: ', userCredential.user.email)
                 navigate('/')
             })
             .catch(() => (document.querySelector('#warning') as HTMLInputElement).classList.remove('hidden'))

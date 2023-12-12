@@ -25,14 +25,14 @@ const NewFilmForm = () => {
 	const searchByTitleHandler = async (event: React.ChangeEvent<HTMLInputElement>) => {
 		const searchInputValue = event.target.value
 		searchInputValue ? setSearching(true) : setSearching(false)
-		console.debug('Search input value: ', searchInputValue)
+		console.log('Search input value: ', searchInputValue)
 		setTitleSearch(searchInputValue)
     }
 
 	// Manages the selection of a film during a search and triggers the form fill with the selected film info
     const selectFilmHandler = async (selectedFilm: Film) => {
 		const film = await tmd.getMovieById(selectedFilm.id)
-		console.debug('Selected film: ', film)
+		console.log('Selected film: ', film)
 		
 		document.querySelector('#filmPoster')!.classList.remove('hidden')
 		const saveButton = (document.querySelector('#saveFilm') as HTMLInputElement)
@@ -50,7 +50,7 @@ const NewFilmForm = () => {
 		firestore
 			.addUserFilm(selectedFilm!)
 			.then(() => {
-				console.debug('New film saved!')
+				console.log('New film saved!')
 				navigate('/')
 			})
 	}
@@ -90,10 +90,10 @@ const NewFilmForm = () => {
                         searchResultsDiv?.classList.remove('flex')
                         searchResultsDiv?.classList.add('hidden')
                     }
-					console.debug('Films found: ', films)
+					console.log('Films found: ', films)
                     setFilmsFound([...films])
                 })
-                .catch( error => console.debug(error) )           
+                .catch( error => console.log(error) )           
         } else {
             searchResultsDiv?.classList.remove('flex')
             searchResultsDiv?.classList.add('hidden')

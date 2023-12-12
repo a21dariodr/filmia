@@ -24,9 +24,9 @@ const Home = () => {
                     localStorage.setItem('userEmail', user.email!)
                     localStorage.setItem('userId', user.uid)
                 }
-                console.debug('User Firebase', user)
-                console.debug('User email: ', userEmail)
-                console.debug('User id: ', userId)
+                console.log('User Firebase', user)
+                console.log('User email: ', userEmail)
+                console.log('User id: ', userId)
             } else {
                 navigate('/login')
             }

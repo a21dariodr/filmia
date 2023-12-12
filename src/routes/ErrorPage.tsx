@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 const ErrorPage = () => {
 	const { t } = useTranslation()
 	const error: any = useRouteError()
-	console.debug(error)
+	console.log(error)
 	
     return (
         <main className="grid h-[78%] place-items-center bg-white px-6 lg:px-8">
