@@ -61,12 +61,12 @@ const NewFilmForm = () => {
 	const toggleWatched = () => setWatched(!watched)
 
 	// Changes the score info of the selected film
-	const scoreChangeHandler = (e: any) => {
+	const scoreInputHandler = (e: any) => {
 		const saveButton = document.querySelector('#saveFilm') as HTMLInputElement
 		const scoreInput = document.querySelector('#score') as HTMLInputElement
 
-		if (scoreInput.validity.valid && saveButton.disabled) saveButton.removeAttribute('disabled')
-		else if (!scoreInput.validity.valid && !saveButton.disabled) saveButton.setAttribute('disabled', '')
+		if (scoreInput.checkValidity() && saveButton.disabled) saveButton.removeAttribute('disabled')
+		else if (!scoreInput.checkValidity() && !saveButton.disabled) saveButton.setAttribute('disabled', '')
 
 		setScore(e.target.value)
 	}
@@ -180,7 +180,7 @@ const NewFilmForm = () => {
                                     step="0.01"
                                     placeholder={t('film.film_score_placeholder')}
                                     value={score}
-                                    onChange={scoreChangeHandler}
+                                    onInput={scoreInputHandler}
                                     className="flex items-center w-full px-5 py-4 mb-5 mr-2 text-sm font-medium outline-none hover:bg-indigo-200 placeholder:text-gray-700 bg-indigo-100 text-dark-gray-900
 										invalid:text-red-800 invalid:bg-red-200 invalid:hover:bg-red-200 invalid:font-bold rounded-2xl"
                                 />
