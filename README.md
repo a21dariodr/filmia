@@ -191,3 +191,5 @@ En este sentido, cualquiera que desee formar parte del proyecto puede desarrolla
 
 - [Anteproyecto](/doc/Anteproyecto.md)
 - [Changelog](/CHANGELOG.md)
+- [Presentación del proyecto en formato PDF](/doc/PFC%20DAW%20-%20Filmia.pdf)
+- [Presentación del proyecto en formato PPTX](/doc/PFC%20DAW%20-%20Filmia.pptx)
